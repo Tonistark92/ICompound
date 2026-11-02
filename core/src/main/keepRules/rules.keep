@@ -1,0 +1,42 @@
+# --- Attributes (merged; you had them declared 3 times) ---
+-keepattributes Signature,InnerClasses,EnclosingMethod,*Annotation*,AnnotationDefault
+-keepattributes RuntimeVisibleParameterAnnotations
+-keepattributes SourceFile,LineNumberTable
+
+# --- Strip logs (only works with optimization enabled) ---
+-assumenosideeffects class android.util.Log {
+    public static int v(...);
+    public static int d(...);
+    public static int i(...);
+    public static int w(...);
+    public static int e(...);
+    public static int wtf(...);
+    public static int println(...);
+}
+
+# --- Gson: keep annotated fields, allow class renaming ---
+-keepclassmembers,allowobfuscation class * {
+    @com.google.gson.annotations.SerializedName <fields>;
+}
+# Models without @SerializedName on every field: keep their fields by package
+-keepclassmembers class com.yourapp.data.remote.dto.** { <fields>; }
+
+# --- Firestore models (only if you use toObject()) ---
+-keepclassmembers class com.yourapp.data.firestore.model.** { *; }
+
+# --- OkHttp warnings only ---
+-dontwarn okhttp3.internal.platform.**
+-dontwarn org.conscrypt.**
+-dontwarn org.bouncycastle.**
+-dontwarn org.openjsse.**
+# Keep fields (names matter for Gson) and the no-arg constructor
+# TODO: add here the needed requests and responses.
+#-keepclassmembers class com.yourapp.data.remote.dto.** {
+#    <fields>;
+#    <init>();
+#}
+
+# --- Retrofit (full-mode helpers) ---
+-keep,allowobfuscation,allowshrinking interface retrofit2.Call
+-keep,allowobfuscation,allowshrinking class retrofit2.Response
+-keep,allowobfuscation,allowshrinking class kotlin.coroutines.Continuation
