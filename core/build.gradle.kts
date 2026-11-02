@@ -46,9 +46,13 @@ android {
         buildConfigField("String", "API_KEY", configValue("API_KEY"))
         buildConfigField("String", "SOCKET_PORT", configValue("SOCKET_PORT"))
         buildConfigField("String", "GOOGLE_CLIENT_ID", configValue("GOOGLE_CLIENT_ID"))
-        buildConfigField("String", "CHATWOOT_BASE_URL", configValue("CHATWOOT_BASE_URL"))
-        buildConfigField("String", "CHATWOOT_WEBSITE_TOKEN", configValue("CHATWOOT_WEBSITE_TOKEN"))
+//        buildConfigField("String", "PIN_PRIMARY", "\"sha256/AAAA...=\"")
+//        buildConfigField("String", "PIN_BACKUP",  "\"sha256/BBBB...=\"")
 
+//        openssl s_client -servername api.icompound.com -connect api.icompound.com:443 </dev/null 2>/dev/null \
+//        | openssl x509 -pubkey -noout \
+//        | openssl pkey -pubin -outform der \
+//        | openssl dgst -sha256 -binary | openssl enc -base64
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
@@ -81,6 +85,9 @@ android {
 }
 
 dependencies {
+
+    implementation(project(":designsystem"))
+
     // AndroidX
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
@@ -122,6 +129,7 @@ dependencies {
     // Retrofit / Networking
     implementation(libs.retrofit)
     implementation(libs.retrofit.kotlin.coroutines.adapter)
+    implementation(libs.gson)
     implementation(libs.logging.interceptor)
 
     // Serialization

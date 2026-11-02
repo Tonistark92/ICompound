@@ -5,14 +5,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 /*
- * KaiTech color tokens, Material 3 shape.
- * Source: KaiTech Design System.dc.html / KaiTech Design System (Markdown)
+ * Icompound color tokens, Material 3 shape.
+ * Source: Icompound Design System.dc.html / Icompound Design System (Markdown)
  *
  * Every value below traces to a token in the source doc (§1 Brand, §2 Color,
- * §7 App shell). Where the requested structure has a field with no KaiTech
+ * §7 App shell). Where the requested structure has a field with no Icompound
  * equivalent, it's mapped to the closest existing token and flagged inline —
  * nothing here is an invented brand color.
  */
+
+//helper functions that allow to access colors without writing the full expression.
+//ex  MaterialTheme.colorScheme.primary == colorPrimary()
 
 @Composable
 fun colorPrimary() = MaterialTheme.colorScheme.primary
@@ -31,7 +34,7 @@ fun colorWhite() = Color.White
 
 object ColorLightTokens {
     // Primary — Action blue (§1 Brand)
-    val Primary = Color(0xFF0170BA)
+    val Primary = Color(0xFF1F4263)
     val OnPrimary = Color(0xFFFFFFFF)
     val PrimaryContainer = Color(0xFFD2E9F9)
     val OnPrimaryContainer = Color(0xFF001F2E)
@@ -39,9 +42,9 @@ object ColorLightTokens {
     val PrimaryActive = Color(0xFF014876)  // pressed state, one tonal step darker
 
     // Secondary — muted blue-grey (no second brand hue in source; derived from neutral scale)
-    val Secondary = Color(0xFF51606E)
+    val Secondary = Color(0xFF142B40)
     val OnSecondary = Color(0xFFFFFFFF)
-    val SecondaryContainer = Color(0xFFD6E4F0)
+    val SecondaryContainer = Color(0xFFF1F4F5)
     val OnSecondaryContainer = Color(0xFF0C1B24)
 
     // Tertiary — Accent teal (§1 Brand: "active nav, highlights, selection")
@@ -51,7 +54,7 @@ object ColorLightTokens {
     val OnTertiaryContainer = Color(0xFF00201F)
 
     // Backgrounds (§2 "Surface & text tokens")
-    val Background = Color(0xFFF9F9FF) // "Canvas / body"
+    val Background = Color(0xFFF8FAFB) // "Canvas / body"
     val OnBackground = Color(0xFF212529)
 
     // Surfaces
@@ -66,13 +69,13 @@ object ColorLightTokens {
     val InversePrimary = Color(0xFFA3D4F2)
 
     // Semantic Colors (§2 "Semantic / status")
-    val Error = Color(0xFFC1443F)          // deepened from brand danger #f46a6a for AA contrast
+    val Error = Color(0xFFB42318)          // deepened from brand danger #f46a6a for AA contrast
     val OnError = Color(0xFFFFFFFF)
     val ErrorContainer = Color(0xFFFFDAD6)
     val OnErrorContainer = Color(0xFF410002)
 
-    val Success = Color(0xFF34C38F) // §2 "$success"
-    val OnSuccess = Color(0xFFFFFFFF)
+    val Success = Color(0xFFB8E3C8) // §2 "$success"
+    val OnSuccess = Color(0xFF216744)
 
     val Warning = Color(0xFFF1B44C) // §2 "$warning"
     val OnWarning = Color(0xFF2A2D2D) // dark text required for contrast on gold

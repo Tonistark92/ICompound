@@ -1,4 +1,4 @@
-package com.icompound.navigation.route
+package com.icompound.navigation.route.bottomnav
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,10 +26,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.kaitech.core.presentation.utils.NoRippleInteractionSource
-import com.kaitech.navigation.model.BottomAppBarModel
-import com.kaitech.navigation.utils.calculateIndicatorOffset
-import com.kaitech.navigation.utils.calculateIndicatorWidth
+import com.icompound.navigation.route.NavScreen
+import com.icompound.navigation.utils.calculateIndicatorOffset
+import com.icompound.navigation.utils.calculateIndicatorWidth
+
+
 
 @Composable
 fun BottomAppBar(

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="error_io_unexpected_message">حدث خطأ غير متوقع. يُرجى المحاولة مرة أخرى لاحقًا.</string>
+
+    <string name="arabic">العربية</string>
+    <string name="english">الإنجليزية</string>
+    <string name="change_language">تغيير اللغة</string>
+</resources>

@@ -1,6 +1,8 @@
 package com.icompound.navigation.route
 
 import androidx.navigation3.runtime.NavKey
+import com.icompound.core.presentation.componenet.ToolBarState
+import com.icompound.navigation.route.bottomnav.BottomAppBarModel
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 
@@ -12,10 +14,7 @@ sealed class NavScreen(
 ) : NavKey
 
 val bottomBarItems = listOf(
-    BottomAppBarModel.Home(),
-    BottomAppBarModel.MyDiplomas(),
-    BottomAppBarModel.Schedule(),
-    BottomAppBarModel.Profile()
+    BottomAppBarModel.Home,
 )
 
 @Serializable

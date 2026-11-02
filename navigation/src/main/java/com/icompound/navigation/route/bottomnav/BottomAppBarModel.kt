@@ -1,18 +1,15 @@
-package com.icompound.navigation.route
+package com.icompound.navigation.route.bottomnav
+
+import com.icompound.navigation.route.NavScreen
 
 
 sealed interface BottomAppBarModel {
-    val title: Int
-    val icon: Int
-    val iconSelected: Int
-    val navScreen: NavScreen
+//    val title: Int
+//    val icon: Int
+//    val iconSelected: Int
+//    val navScreen: NavScreen
 
-//    data class Home(
-//        override val title: Int = R.string.home,
-//        override val icon: Int = R.drawable.ic_home,
-//        override val iconSelected: Int = R.drawable.ic_home_selected,
-//        override val navScreen: NavScreen = HomeNavKey
-//    ) : BottomAppBarModel
+    object Home : BottomAppBarModel
 //
 //    data class MyDiplomas(
 //        override val title: Int = R.string.my_diplomas,
