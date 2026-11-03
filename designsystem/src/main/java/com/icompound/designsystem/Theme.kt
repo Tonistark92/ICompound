@@ -1,6 +1,7 @@
 package com.icompound.designsystem
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
@@ -339,6 +340,10 @@ object ICompoundTheme {
         @Composable
         @ReadOnlyComposable
         get() = LocalICompoundColors.current
+
+    val colorScheme: ColorScheme                      // new
+        @Composable @ReadOnlyComposable
+        get() = MaterialTheme.colorScheme
 
     val spacing: KaiTechAppSpacing
         @Composable

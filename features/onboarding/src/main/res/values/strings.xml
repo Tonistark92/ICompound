@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">A better way to live.</string>
+    <string name="onboarding_description">Gate passes, repairs and bills for your home, all in one calm place.</string>
+
+    <!-- Onboarding actions -->
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="get_started">Get Started</string>
+
+    <!-- Features -->
+    <string name="bills">Bills</string>
+    <string name="facilities">Facilities</string>
+    <string name="requests">Requests</string>
+    <string name="qr_passes">QR Passes</string>
+    <string name="everything_in_one_place">Everything in one place.</string>
+
+
+</resources>

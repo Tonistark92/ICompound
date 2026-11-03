@@ -14,7 +14,11 @@ sealed class NavScreen(
 ) : NavKey
 
 val bottomBarItems = listOf(
-    BottomAppBarModel.Home,
+    BottomAppBarModel.Home(),
+    BottomAppBarModel.Access(),
+    BottomAppBarModel.Bills(),
+    BottomAppBarModel.Location(),
+    BottomAppBarModel.Services(),
 )
 
 @Serializable
@@ -30,30 +34,23 @@ object OnBoardingNavKey : NavScreen()
 object LoginNavKey : NavScreen()
 
 @Serializable
+object OTPNavKey : NavScreen()
+
+@Serializable
 object SignUpNavKey : NavScreen()
 
 @Serializable
-object CompleteProfileNavKey : NavScreen()
+object HomeNavKey : NavScreen()
 
-//@Serializable
-//object EditProfileNavKey : NavScreen(
-//    toolBarState = ToolBarState.TitleWithBack(titleResId = R.string.edit_profile)
-//)
-//
-//@Serializable
-//object ForgetPasswordNavKey : NavScreen(
-//    toolBarState = ToolBarState.AuthTitleWithBack(titleResId = R.string.forget_password_title)
-//)
-//
-//@Serializable
-//object HomeNavKey : NavScreen()
-//
-//@Serializable
-//object ProfileNavKey : NavScreen()
-//
-//@Serializable
-//object MyCertificatesNavKey : NavScreen(
-//    toolBarState = ToolBarState.TitleWithBack(titleResId = R.string.my_certificates)
-//)
+
+@Serializable
+object ServicesNavKey : NavScreen()
+@Serializable
+object AccessNavKey : NavScreen()
+@Serializable
+object BillsNavKey : NavScreen()
+@Serializable
+object LocationNavKey : NavScreen()
+
 
 

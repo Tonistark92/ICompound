@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">حياة أفضل، بطريقة أسهل.</string>
+    <string name="onboarding_description">تصاريح الدخول، والصيانة، وفواتير منزلك، كلها في مكان واحد وبكل سهولة.</string>
+
+    <!-- Onboarding actions -->
+    <string name="next">التالي</string>
+    <string name="skip">تخطي</string>
+    <string name="get_started">ابدأ الآن</string>
+
+    <!-- Features -->
+    <string name="bills">الفواتير</string>
+    <string name="facilities">المرافق</string>
+    <string name="requests">الطلبات</string>
+    <string name="qr_passes">تصاريح QR</string>
+    <string name="everything_in_one_place">كل شيء في مكان واحد.</string>
+
+
+</resources>

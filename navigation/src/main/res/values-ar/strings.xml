@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home">الرئيسية</string>
+    <string name="services">الخدمات</string>
+    <string name="bills">الفواتير</string>
+    <string name="access">الدخول</string>
+    <string name="location">موقع</string>
+
+</resources>

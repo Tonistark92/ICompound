@@ -5,11 +5,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 /*
- * Icompound color tokens, Material 3 shape.
- * Source: Icompound Design System.dc.html / Icompound Design System (Markdown)
+ * ICompound color tokens, Material 3 shape.
+ * Source: ICompound Design System.dc.html / ICompound Design System (Markdown)
  *
  * Every value below traces to a token in the source doc (§1 Brand, §2 Color,
- * §7 App shell). Where the requested structure has a field with no Icompound
+ * §7 App shell). Where the requested structure has a field with no ICompound
  * equivalent, it's mapped to the closest existing token and flagged inline —
  * nothing here is an invented brand color.
  */
@@ -50,7 +50,7 @@ object ColorLightTokens {
     // Tertiary — Accent teal (§1 Brand: "active nav, highlights, selection")
     val Tertiary = Color(0xFF00A09C)
     val OnTertiary = Color(0xFFFFFFFF)
-    val TertiaryContainer = Color(0xFFD2FBF8)
+    val TertiaryContainer = Color(0xFFEEF3F7)
     val OnTertiaryContainer = Color(0xFF00201F)
 
     // Backgrounds (§2 "Surface & text tokens")

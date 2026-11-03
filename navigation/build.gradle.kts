@@ -31,6 +31,7 @@ android {
 dependencies {
 
     implementation(project(":core"))
+    implementation(project(":designsystem"))
 
 
     // AndroidX
@@ -39,6 +40,7 @@ dependencies {
 
     // Material
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.material)
 
     // Jetpack Compose
@@ -65,4 +67,5 @@ dependencies {
     // Instrumentation Testing
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
+    debugImplementation(libs.androidx.ui.tooling)
 }

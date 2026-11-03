@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="home">Home</string>
+    <string name="services">Services</string>
+    <string name="bills">Bills</string>
+    <string name="access">Access</string>
+    <string name="location">Location</string>
+</resources>

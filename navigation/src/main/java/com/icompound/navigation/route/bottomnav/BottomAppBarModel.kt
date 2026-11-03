@@ -1,34 +1,52 @@
 package com.icompound.navigation.route.bottomnav
 
+import com.icompound.navigation.R
+import com.icompound.navigation.route.AccessNavKey
+import com.icompound.navigation.route.BillsNavKey
+import com.icompound.navigation.route.HomeNavKey
+import com.icompound.navigation.route.LocationNavKey
 import com.icompound.navigation.route.NavScreen
+import com.icompound.navigation.route.ServicesNavKey
 
 
 sealed interface BottomAppBarModel {
-//    val title: Int
-//    val icon: Int
-//    val iconSelected: Int
-//    val navScreen: NavScreen
+    val title: Int
+    val icon: Int
+    val iconSelected: Int
+    val navScreen: NavScreen
 
-    object Home : BottomAppBarModel
-//
-//    data class MyDiplomas(
-//        override val title: Int = R.string.my_diplomas,
-//        override val icon: Int = R.drawable.ic_my_diplomas,
-//        override val iconSelected: Int = R.drawable.ic_my_diplomas_selected,
-//        override val navScreen: NavScreen = MyDiplomasNavKey
-//    ) : BottomAppBarModel
-//
-//    data class Schedule(
-//        override val title: Int = R.string.schedule,
-//        override val icon: Int = R.drawable.ic_schedule,
-//        override val iconSelected: Int = R.drawable.ic_schedule_selected,
-//        override val navScreen: NavScreen = ScheduleNavKey
-//    ) : BottomAppBarModel
-//
-//    data class Profile(
-//        override val title: Int = R.string.profile,
-//        override val icon: Int = R.drawable.ic_profile,
-//        override val iconSelected: Int = R.drawable.ic_profile_selected,
-//        override val navScreen: NavScreen = ProfileNavKey
-//    ) : BottomAppBarModel
+    data class Home(
+        override val title: Int = R.string.home,
+        override val icon: Int = R.drawable.ic_home,
+        override val iconSelected: Int = R.drawable.ic_home_selected,
+        override val navScreen: NavScreen = HomeNavKey
+    ) : BottomAppBarModel
+
+    data class Services(
+        override val title: Int = R.string.services,
+        override val icon: Int = R.drawable.ic_services,
+        override val iconSelected: Int = R.drawable.ic_services_selected,
+        override val navScreen: NavScreen = ServicesNavKey
+    ) : BottomAppBarModel
+
+    data class Access(
+        override val title: Int = R.string.access,
+        override val icon: Int = R.drawable.ic_access,
+        override val iconSelected: Int = R.drawable.ic_access_seleced,
+        override val navScreen: NavScreen = AccessNavKey
+    ) : BottomAppBarModel
+
+    data class Location(
+        override val title: Int = R.string.location,
+        override val icon: Int = R.drawable.ic_location,
+        override val iconSelected: Int = R.drawable.ic_location_selected,
+        override val navScreen: NavScreen = LocationNavKey
+    ) : BottomAppBarModel
+
+    data class Bills(
+        override val title: Int = R.string.bills,
+        override val icon: Int = R.drawable.ic_bills,
+        override val iconSelected: Int = R.drawable.ic_bills_selected,
+        override val navScreen: NavScreen = BillsNavKey
+    ) : BottomAppBarModel
 }

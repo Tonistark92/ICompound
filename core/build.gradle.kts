@@ -105,6 +105,7 @@ dependencies {
     // Image Loading & Animations
     api(libs.coil.compose)
     implementation(libs.lottie.compose)
+    implementation(libs.coil.network.okhttp)
 
     // Media3
     implementation(libs.media3.exoplayer)
