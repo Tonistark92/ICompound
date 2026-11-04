@@ -153,6 +153,22 @@ object ColorLightTokens {
     val HeroGradientStart = Color(0xFF04385E)
     val HeroGradientEnd = Color(0xFF0170BA)
     val ChipBorder = Color(0x33FFFFFF)
+
+    val OnMedia = Color(0xFFFFFFFF)
+
+    val OnMediaMuted = Color(0xE6FFFFFF)// 90%
+
+    val MediaScrim = Color(0xFF000000)// base of image gradients
+
+    val MediaGlass = Color(0x1FFFFFFF)// 12%, tile fill
+
+    val MediaGlassBorder = Color(0x2EFFFFFF)      // 18%
+
+    val MediaGlassChip = Color(0x26FFFFFF)        // 15%, icon chip behind tile icons
+
+    val MediaIndicatorInactive = Color(0xFFFFFFFF)
+
+    val MediaButtonContainer = Color(0xFFFFFFFF)
 }
 
 
@@ -277,4 +293,20 @@ object ColorDarkTokens  {
     val HeroGradientStart = Color(0xFF04385E)
     val HeroGradientEnd = Color(0xFF0170BA)
     val ChipBorder = Color(0x33FFFFFF)
+
+    val OnMedia = Color(0xFFFFFFFF)
+
+    val OnMediaMuted = Color(0xE6FFFFFF)// 90%
+
+    val MediaScrim = Color(0xFF000000)// base of image gradients
+
+    val MediaGlass = Color(0x1FFFFFFF)// 12%, tile fill
+
+    val MediaGlassBorder = Color(0x2EFFFFFF)      // 18%
+
+    val MediaGlassChip = Color(0x26FFFFFF)        // 15%, icon chip behind tile icons
+
+    val MediaIndicatorInactive = Color(0xFFFFFFFF)
+
+    val MediaButtonContainer = Color(0xFFFFFFFF)
 }

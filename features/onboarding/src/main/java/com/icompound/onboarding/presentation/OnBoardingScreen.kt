@@ -65,12 +65,14 @@ import com.icompound.onboarding.R
 import com.icompound.onboarding.presentation.components.KenBurnsImage
 import com.icompound.onboarding.presentation.components.Reveal
 import kotlinx.coroutines.launch
+import kotlin.math.abs
+
 @Composable
 fun OnBoardingScreen(
     modifier: Modifier = Modifier,
     onFinished: () -> Unit = {},
-)
-{
+) {
+    val media = ICompoundTheme.colors.media
 
     val title1 = stringResource(R.string.onboarding_title1)
     val description1 = stringResource(R.string.onboarding_description)
@@ -80,8 +82,8 @@ fun OnBoardingScreen(
     val bills = stringResource(R.string.bills)
     val facilities = stringResource(R.string.facilities)
 
-
-    val pages = remember {
+    // keyed on the strings so a language change rebuilds the list
+    val pages = remember(title1, description1, title2, requests, qrPasses, bills, facilities) {
         listOf(
             OnboardingPageUi(
                 image = R.drawable.img_onboarding1,
@@ -108,54 +110,58 @@ fun OnBoardingScreen(
     var started by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) { started = true }
 
+    // White status bar icons on this screen only
     val view = LocalView.current
     DisposableEffect(Unit) {
         val window = (view.context as Activity).window
         val controller = WindowCompat.getInsetsController(window, view)
         val previous = controller.isAppearanceLightStatusBars
-        controller.isAppearanceLightStatusBars = false     // white icons
+        controller.isAppearanceLightStatusBars = false
         onDispose { controller.isAppearanceLightStatusBars = previous }
     }
 
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(media.scrim)
     ) {
 
-        val position = pagerState.currentPage + pagerState.currentPageOffsetFraction
+        // 1) Backgrounds: image + its own gradient move together
         pages.forEachIndexed { index, page ->
             Box(
                 Modifier
                     .fillMaxSize()
                     .graphicsLayer {
+                        // read inside the lambda: no recomposition on every swipe frame
+                        val position = pagerState.currentPage + pagerState.currentPageOffsetFraction
                         val delta = index - position
                         translationX = delta.coerceAtLeast(0f) * size.width * 0.35f
                         alpha = if (delta > 0f) (1f - delta).coerceIn(0f, 1f) else 1f
                     }
             ) {
                 KenBurnsImage(res = page.image)
-                // placed it here to make it follow the image animation
                 CustomGradientOverlay()
             }
         }
 
+        // 2) Page content
         HorizontalPager(
             state = pagerState,
             modifier = Modifier.fillMaxSize(),
         ) { page ->
-            val pageOffset = (pagerState.currentPage - page) + pagerState.currentPageOffsetFraction
-
             PageContent(
                 page = pages[page],
                 visible = started && pagerState.currentPage == page,
                 modifier = Modifier.graphicsLayer {
+                    val pageOffset =
+                        (pagerState.currentPage - page) + pagerState.currentPageOffsetFraction
                     translationX = pageOffset * size.width * 0.1f
-                    alpha = 1f - kotlin.math.abs(pageOffset).coerceIn(0f, 1f)
+                    alpha = 1f - abs(pageOffset).coerceIn(0f, 1f)
                 },
             )
         }
 
+        // 3) Skip
         AnimatedVisibility(
             visible = !isLast,
             enter = fadeIn(),
@@ -168,11 +174,12 @@ fun OnBoardingScreen(
             Text(
                 text = stringResource(R.string.skip),
                 style = MaterialTheme.typography.bodyLarge,
-                color = Color.White,
+                color = media.onMedia,
                 modifier = Modifier.clickableNoRipple(onFinished),
             )
         }
 
+        // 4) Indicator + button
         AnimatedContent(
             targetState = isLast,
             label = "controls",
@@ -180,8 +187,7 @@ fun OnBoardingScreen(
                 .align(Alignment.BottomCenter)
                 .navigationBarsPadding()
                 .padding(horizontal = 24.dp, vertical = 16.dp),
-        )
-        { last ->
+        ) { last ->
             if (last) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -205,7 +211,9 @@ fun OnBoardingScreen(
                     OnboardingButton(
                         text = stringResource(R.string.next),
                         onClick = {
-                            scope.launch { pagerState.animateScrollToPage(pagerState.currentPage + 1) }
+                            scope.launch {
+                                pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                            }
                         },
                     )
                 }
@@ -224,6 +232,8 @@ private fun PageContent(
     visible: Boolean,
     modifier: Modifier = Modifier,
 ) {
+    val media = ICompoundTheme.colors.media
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -236,7 +246,7 @@ private fun PageContent(
             Text(
                 text = page.title,
                 style = MaterialTheme.typography.headlineMedium,
-                color = Color.White,
+                color = media.onMedia,
             )
         }
 
@@ -246,7 +256,7 @@ private fun PageContent(
                 Text(
                     text = it,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = Color.White.copy(alpha = 0.9f),
+                    color = media.onMediaMuted,
                 )
             }
         }
@@ -275,13 +285,15 @@ private fun PageContent(
 @Composable
 private fun FeatureTileCard(
     tile: FeatureTile,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
+    val media = ICompoundTheme.colors.media
+
     Surface(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        color = Color.White.copy(alpha = 0.12f),
-        border = BorderStroke(1.dp, Color.White.copy(alpha = 0.18f)),
+        color = media.glass,
+        border = BorderStroke(1.dp, media.glassBorder),
     ) {
         Row(
             modifier = Modifier.padding(12.dp),
@@ -292,19 +304,22 @@ private fun FeatureTileCard(
                 modifier = Modifier
                     .size(40.dp)
                     .clip(RoundedCornerShape(10.dp))
-                    .background(Color.White.copy(alpha = 0.15f)),
+                    .background(media.glassChip),
                 contentAlignment = Alignment.Center,
             ) {
-                Icon(
-                    painter = painterResource(tile.icon!!),
-                    contentDescription = null,
-                    modifier = modifier.size(30.dp)
-                )
+                tile.icon?.let {
+                    Icon(
+                        painter = painterResource(it),
+                        contentDescription = null,
+                        modifier = Modifier.size(30.dp),
+                        tint = media.onMedia,
+                    )
+                }
             }
             Text(
                 text = tile.label,
                 style = MaterialTheme.typography.bodyLarge,
-                color = Color.White,
+                color = media.onMedia,
             )
         }
     }
@@ -315,7 +330,14 @@ private fun FeatureTileCard(
 // ---------------------------------------------------------------------------
 
 @Composable
-private fun PageIndicator(pageCount: Int, current: Int, modifier: Modifier = Modifier) {
+private fun PageIndicator(
+    pageCount: Int,
+    current: Int,
+    modifier: Modifier = Modifier,
+) {
+    val activeColor = ICompoundTheme.colorScheme.tertiary
+    val inactiveColor = ICompoundTheme.colors.media.indicatorInactive
+
     Row(modifier, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
         repeat(pageCount) { i ->
             val selected = i == current
@@ -325,7 +347,7 @@ private fun PageIndicator(pageCount: Int, current: Int, modifier: Modifier = Mod
                 label = "dotWidth",
             )
             val color by animateColorAsState(
-                targetValue = if (selected) ICompoundTheme.colorScheme.tertiary else Color.White,
+                targetValue = if (selected) activeColor else inactiveColor,
                 label = "dotColor",
             )
             Box(
@@ -345,10 +367,12 @@ private fun OnboardingButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    val contentColor = ICompoundTheme.colorScheme.primary
+
     Surface(
         onClick = onClick,
         shape = RoundedCornerShape(10.dp),
-        color = Color.White,
+        color = ICompoundTheme.colors.media.buttonContainer,
         modifier = modifier,
     ) {
         Row(
@@ -359,21 +383,26 @@ private fun OnboardingButton(
             Text(
                 text = text,
                 style = MaterialTheme.typography.labelLarge,
-                color = ICompoundTheme.colorScheme.primary,
+                color = contentColor,
             )
             Spacer(Modifier.width(8.dp))
-            Icon(painter = painterResource(R.drawable.ic_right), contentDescription = "Right Icon")
+            Icon(
+                painter = painterResource(R.drawable.ic_right),
+                contentDescription = null,          // decorative
+                tint = contentColor,
+            )
         }
     }
 }
 
 // ---------------------------------------------------------------------------
-// Gradient (alpha fixed to 1.0f)
+// Gradient
 // ---------------------------------------------------------------------------
 
 @Composable
 fun CustomGradientOverlay(modifier: Modifier = Modifier) {
     val brand = ICompoundTheme.colorScheme.primary
+    val scrim = ICompoundTheme.colors.media.scrim
 
     Box(modifier = modifier.fillMaxSize()) {
         Box(
@@ -408,10 +437,10 @@ fun CustomGradientOverlay(modifier: Modifier = Modifier) {
                 .background(
                     Brush.verticalGradient(
                         colorStops = arrayOf(
-                            0.45f to Color.Black.copy(alpha = 0f),
-                            0.70f to Color.Black.copy(alpha = 0.30f),
-                            0.88f to Color.Black.copy(alpha = 0.60f),
-                            1.00f to Color.Black.copy(alpha = 0.65f),
+                            0.45f to scrim.copy(alpha = 0f),
+                            0.70f to scrim.copy(alpha = 0.30f),
+                            0.88f to scrim.copy(alpha = 0.60f),
+                            1.00f to scrim.copy(alpha = 0.65f),
                         )
                     )
                 )
@@ -435,8 +464,7 @@ private data class OnboardingPageUi(
     val tiles: List<FeatureTile> = emptyList(),
 )
 
-private val ControlsHeight = 120.dp   // space reserved for the indicator and button
-
+private val ControlsHeight = 120.dp
 
 //@Preview(name = "Page 1 - final state", showBackground = true, showSystemUi = true)
 //@Composable

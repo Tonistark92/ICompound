@@ -9,6 +9,7 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
@@ -182,8 +183,21 @@ data class ICompoundExtendedColors(
     val heroGradientStart: Color,
     val heroGradientEnd: Color,
     val chipBorder: Color,
+
+    val media: ICompoundMediaColors
 )
 
+@Immutable
+data class ICompoundMediaColors(
+    val onMedia: Color,
+    val onMediaMuted: Color,
+    val scrim: Color,
+    val glass: Color,
+    val glassBorder: Color,
+    val glassChip: Color,
+    val indicatorInactive: Color,
+    val buttonContainer: Color,
+)
 // ------------------------------------------------------------
 // Light Extended Colors
 // ------------------------------------------------------------
@@ -254,6 +268,16 @@ private val LightExtendedColors = ICompoundExtendedColors(
     heroGradientStart = ColorLightTokens.HeroGradientStart,
     heroGradientEnd = ColorLightTokens.HeroGradientEnd,
     chipBorder = ColorLightTokens.ChipBorder,
+    media = ICompoundMediaColors(
+        onMedia = ColorLightTokens.OnMedia,
+        onMediaMuted = ColorLightTokens.OnMediaMuted,
+        scrim = ColorLightTokens.MediaScrim,
+        glass = ColorLightTokens.MediaGlass,
+        glassBorder = ColorLightTokens.MediaGlassBorder,
+        glassChip = ColorLightTokens.MediaGlassChip,
+        indicatorInactive = ColorLightTokens.MediaIndicatorInactive,
+        buttonContainer = ColorLightTokens.MediaButtonContainer,
+    ),
 )
 
 // ------------------------------------------------------------
@@ -326,6 +350,17 @@ private val DarkExtendedColors = ICompoundExtendedColors(
     heroGradientStart = ColorDarkTokens.HeroGradientStart,
     heroGradientEnd = ColorDarkTokens.HeroGradientEnd,
     chipBorder = ColorDarkTokens.ChipBorder,
+
+    media = ICompoundMediaColors(
+        onMedia = ColorLightTokens.OnMedia,
+        onMediaMuted = ColorLightTokens.OnMediaMuted,
+        scrim = ColorLightTokens.MediaScrim,
+        glass = ColorLightTokens.MediaGlass,
+        glassBorder = ColorLightTokens.MediaGlassBorder,
+        glassChip = ColorLightTokens.MediaGlassChip,
+        indicatorInactive = ColorLightTokens.MediaIndicatorInactive,
+        buttonContainer = ColorLightTokens.MediaButtonContainer,
+    ),
 )
 
 
