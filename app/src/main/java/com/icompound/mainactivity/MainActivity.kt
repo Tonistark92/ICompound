@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -14,7 +14,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.graphics.Color
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigationevent.NavigationEvent
@@ -25,15 +24,13 @@ import com.icompound.navigation.AppScaffold
 import com.icompound.navigation.compose.LocalNavigator
 import com.icompound.navigation.navigator.Navigator
 import com.icompound.navigation.navigator.NavigatorImpl
-import com.icompound.navigation.route.LoginNavKey
+import com.icompound.navigation.route.OnBoardingNavKey
 import com.icompound.navigation.route.SplashNavKey
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlin.getValue
 
 class MainActivity : ComponentActivity() {
-    private val viewModel: MainViewModel by viewModels()
-    private var currentNavigator: Navigator? = null
+    private val viewModel: MainViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -41,7 +38,7 @@ class MainActivity : ComponentActivity() {
             ICompoundTheme {
 
                 val isLoading by viewModel.isLoading.collectAsState()
-                val snackbarHostState = remember {
+                val snackBarHostState = remember {
                     SnackbarHostState()
                 }
 
@@ -49,11 +46,11 @@ class MainActivity : ComponentActivity() {
                     mutableStateOf<String?>(null)
                 }
 
-                var snackbarColor by remember {
+                var snackBarColor by remember {
                     mutableStateOf(Color.Gray)
                 }
 
-                LaunchedEffect(viewModel, snackbarHostState) {
+                LaunchedEffect(viewModel, snackBarHostState) {
                     viewModel.uiMessages.collectLatest { message ->
                         when (message) {
                             is MessageTypeUi.Dialog -> {
@@ -61,19 +58,19 @@ class MainActivity : ComponentActivity() {
                             }
 
                             is MessageTypeUi.Text -> {
-                                snackbarColor =
+                                snackBarColor =
                                     message.type.getSnackbarColor()
 
-                                snackbarHostState.showSnackbar(
+                                snackBarHostState.showSnackbar(
                                     message.message
                                 )
                             }
 
                             is MessageTypeUi.Resource -> {
-                                snackbarColor =
+                                snackBarColor =
                                     message.type.getSnackbarColor()
 
-                                snackbarHostState.showSnackbar(
+                                snackBarHostState.showSnackbar(
                                     getString(message.messageResId)
                                 )
                             }
@@ -82,41 +79,37 @@ class MainActivity : ComponentActivity() {
                 }
 
                 // Create the Navigation 3 back stack and its navigator.
-                val backStack = rememberNavBackStack(SplashNavKey)
+                val backStack = rememberNavBackStack(OnBoardingNavKey)
 
                 val navigator = remember(backStack) { NavigatorImpl(backStack) }
 
-                // Make this exact navigator available to onNewIntent().
-                SideEffect {
-                    currentNavigator = navigator
-                }
 
                 // Process a notification deferred during the splash screen.
-                LaunchedEffect(viewModel, navigator) {
-                    snapshotFlow {
-                        navigator.backStack.firstOrNull()
-                    }.first { key ->
-                        key != null && key !is SplashNavKey
-                    }
-
-                    val pendingEvent =
-                        viewModel.consumePendingNavigationEvent()
-
-                    if (
-                        pendingEvent != null &&
-                        navigator.backStack.firstOrNull() !is LoginNavKey
-                    ) {
-                        handleNavigationEvent(
-                            event = pendingEvent,
-                            navigator = navigator,
-                        )
-                    }
-                }
+//                LaunchedEffect(viewModel, navigator) {
+//                    snapshotFlow {
+//                        navigator.backStack.firstOrNull()
+//                    }.first { key ->
+//                        key != null && key !is SplashNavKey
+//                    }
+//
+//                    val pendingEvent =
+//                        viewModel.consumePendingNavigationEvent()
+//
+//                    if (
+//                        pendingEvent != null &&
+//                        navigator.backStack.firstOrNull() !is LoginNavKey
+//                    ) {
+//                        handleNavigationEvent(
+//                            event = pendingEvent,
+//                            navigator = navigator,
+//                        )
+//                    }
+//                }
 
                 // Global dialogs
                 dialogMessage?.let { dialog ->
 //                    PriorityAlertDialog(
-//                        title = dialog.title ?: stringResource(dialogز\ ?: R.string.alert),
+//                        title = dialog.title ?: stringResource(dialog\ ?: R.string.alert),
 //                        message = dialog.message ?: stringResource(
 //                            dialog.messageResId ?: R.string.alert
 //                        ),
@@ -135,8 +128,8 @@ class MainActivity : ComponentActivity() {
                     AppScaffold(
                         navigator = navigator,
                         isLoading = isLoading,
-                        snackbarHostState = snackbarHostState,
-                        snackbarColor = snackbarColor,
+                        snackBarHostState = snackBarHostState,
+                        snackBarColor = snackBarColor,
                     )
                 }
             }

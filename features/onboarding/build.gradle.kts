@@ -30,6 +30,7 @@ android {
 dependencies {
 
     implementation(project(":designsystem"))
+    implementation(project(":core"))
 
     // AndroidX
     implementation(libs.androidx.appcompat)

@@ -28,8 +28,10 @@ object SplashNavKey : NavScreen(
 )
 
 @Serializable
-object OnBoardingNavKey : NavScreen()
-
+object OnBoardingNavKey : NavScreen(
+    hasTopPadding = false,
+    hasBottomPadding = false,
+)
 @Serializable
 object LoginNavKey : NavScreen()
 
@@ -45,10 +47,13 @@ object HomeNavKey : NavScreen()
 
 @Serializable
 object ServicesNavKey : NavScreen()
+
 @Serializable
 object AccessNavKey : NavScreen()
+
 @Serializable
 object BillsNavKey : NavScreen()
+
 @Serializable
 object LocationNavKey : NavScreen()
 

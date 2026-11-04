@@ -2,6 +2,12 @@ package com.icompound.navigation
 
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
+import com.icompound.navigation.compose.LocalNavigator
+import com.icompound.navigation.route.HomeNavKey
+import com.icompound.navigation.route.LoginNavKey
+import com.icompound.navigation.route.OTPNavKey
+import com.icompound.navigation.route.OnBoardingNavKey
+import com.icompound.onboarding.presentation.OnBoardingScreen
 import java.util.Map.entry
 
 
@@ -23,32 +29,18 @@ fun EntryProviderScope<NavKey>.appNavigationEntries() {
 //        )
 //    }
 //
-//    entry<OnBoardingNavKey> {
-//        val navigator = LocalNavigator.current
-//
-//        OnBoardingScreen {
-//            navigator.navigateAndClearBackStack(LoginNavKey)
-//            }
-//        }
-//
-//        entry<LoginNavKey> {
-//            val navigator = LocalNavigator.current
-//
-//            LoginScreen(
-//                toHomeScreen = {
-//                    navigator.navigateAndClearBackStack(HomeNavKey)
-//                },
-//                toSignUpScreen = {
-//                    navigator.navigate(SignUpNavKey)
-//                },
-//                toCompleteProfileScreen = {
-//                    navigator.navigate(CompleteProfileNavKey)
-//                },
-//                toForgetPassword = {
-//                    navigator.navigate(ForgetPasswordNavKey)
-//                },
-//            )
-//        }
+    entry<OnBoardingNavKey> {
+        val navigator = LocalNavigator.current
+
+        OnBoardingScreen {
+            navigator.navigateAndClearBackStack(LoginNavKey)
+            }
+        }
+
+        entry<OTPNavKey> {
+            val navigator = LocalNavigator.current
+
+        }
 //
 //        entry<SignUpNavKey> {
 //            val navigator = LocalNavigator.current

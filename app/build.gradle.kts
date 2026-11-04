@@ -49,6 +49,7 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":designsystem"))
     implementation(project(":navigation"))
+    implementation(project(":features:onboarding"))
     // Compose BOM
     implementation(platform(libs.androidx.compose.bom))
 

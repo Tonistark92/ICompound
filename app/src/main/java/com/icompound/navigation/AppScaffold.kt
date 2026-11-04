@@ -32,20 +32,20 @@ import com.icompound.navigation.route.bottomnav.BottomAppBar
 fun AppScaffold(
     navigator: Navigator,
     isLoading: Boolean,
-    snackbarHostState: SnackbarHostState,
-    snackbarColor: Color = Color.Gray,
+    snackBarHostState: SnackbarHostState,
+    snackBarColor: Color = Color.Gray,
 ) {
     val currentKey: NavKey? = navigator.backStack.lastOrNull()
     val currentScreen = currentKey as? NavScreen
-//
-//    val showBottomBar by remember(currentKey) {
-//        derivedStateOf {
-//            currentKey != null &&
-//                    bottomBarItems.any { item ->
-//                        item.navScreen::class == currentKey::class
-//                    }
-//        }
-//    }
+
+    val showBottomBar by remember(currentKey) {
+        derivedStateOf {
+            currentKey != null &&
+                    bottomBarItems.any { item ->
+                        item.navScreen::class == currentKey::class
+                    }
+        }
+    }
 
     val toolbar = currentScreen?.toolBarState
         ?: ToolBarState.Hidden
@@ -65,19 +65,19 @@ fun AppScaffold(
 
                 DefaultAppBar(updatedToolbar)
             },
-//            bottomBar = {
-//                if (showBottomBar && currentScreen != null) {
-//                    BottomAppBar(
-//                        currentKey = currentScreen,
-//                        items = bottomBarItems,
-//                    ) { item ->
-////                        navigator.popToAndPush(
-////                            target = item.navScreen,
-////                            newKey = item.navScreen,
-////                        )
-//                    }
-//                }
-//            },
+            bottomBar = {
+                if (showBottomBar && currentScreen != null) {
+                    BottomAppBar(
+                        currentKey = currentScreen,
+                        items = bottomBarItems,
+                    ) { item ->
+                        navigator.popToAndPush(
+                            target = item.navScreen,
+                            newKey = item.navScreen,
+                        )
+                    }
+                }
+            },
         ) { innerPadding ->
             val contentPadding = PaddingValues(
                 top = if (currentScreen?.hasTopPadding == true) {
@@ -123,14 +123,14 @@ fun AppScaffold(
 
         // Global snackbar for messages
         SnackbarHost(
-            hostState = snackbarHostState,
+            hostState = snackBarHostState,
             modifier = Modifier
                 .align(Alignment.TopCenter)
                 .padding(top = 26.dp),
         ) { data ->
             Snackbar(
                 snackbarData = data,
-                containerColor = snackbarColor,
+                containerColor = snackBarColor,
                 shape = RoundedCornerShape(16.dp),
                 contentColor = Color.White,
                 modifier = Modifier.padding(14.dp),

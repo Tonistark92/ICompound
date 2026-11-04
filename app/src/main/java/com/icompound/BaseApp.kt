@@ -1,11 +1,11 @@
 package com.icompound
 
 import android.app.Application
-import com.icompound.core.di.coroutineModule
 import com.icompound.core.di.iCompoundCoreModule
+import com.icompound.di.featuresModule
+import com.icompound.navigation.di.navigationModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.GlobalContext
 import org.koin.core.context.startKoin
 
 class BaseApp : Application() {
@@ -19,8 +19,8 @@ class BaseApp : Application() {
 
             modules(
                 iCompoundCoreModule,
-//                appModule
-                // featuresModule, when you have feature modules
+                featuresModule,
+                navigationModule,
             )
         }
     }

@@ -2,7 +2,8 @@
 <resources>
 
     <!-- Onboarding -->
-    <string name="onboarding_title">A better way to live.</string>
+    <string name="onboarding_title1">A better way to live.</string>
+    <string name="onboarding_title2">Everything in one place.</string>
     <string name="onboarding_description">Gate passes, repairs and bills for your home, all in one calm place.</string>
 
     <!-- Onboarding actions -->
