@@ -8,8 +8,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 /*
- * KaiTech → Material 3 Typography
- * Source: KaiTech Design System §3 "Typography"
+ * ICompound → Material 3 Typography
+ * Source: KaiTech Design System §3 "ICompound"
  *
  * Doc scale (9 styles):
  *   Display 40/300 · H1 32/600 · H2 26/600 · H3 23/600 · H4 20/600 ·

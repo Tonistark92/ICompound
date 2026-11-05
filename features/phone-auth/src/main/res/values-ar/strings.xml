@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Phone Number Verification -->
+    <string name="enter_phone_number">أدخل رقم هاتفك</string>
+    <string name="phone_verification_description">سنرسل إليك رمز تحقق لمرة واحدة عبر رسالة نصية للتأكد من هويتك. استخدم الرقم المسجل لدى إدارة الكمبوند.</string>
+    <string name="mobile_number">رقم الهاتف المحمول</string>
+    <string name="unit_privacy_notice">ستظل تفاصيل وحدتك مخفية حتى تقوم بتأكيد الرمز.</string>
+    <string name="send_code">إرسال الرمز</string>
+    <string name="invalid_phone_number">يبدو أن رقم الهاتف غير صحيح.</string>
+    <string name="phone_number_format_hint">أدخل 9 أرقام تبدأ بالرقم 1، مثال: 1XXX XX</string>
+    <string name="checking_phone_number">جارٍ التحقق من رقم هاتفك...</string>
+    <string name="unit_privacy_multiline">لن تظهر أي معلومات عن وحدتك\nحتى تقوم بتأكيد رمز التحقق.</string>
+
+    <!-- Phone Number Error -->
+    <string name="phone_verification_failed">تعذر المتابعة باستخدام هذا الرقم.</string>
+    <string name="phone_verification_failed_description">تحقق من الرقم وحاول مرة أخرى، أو تواصل مع إدارة الكمبوند.</string>
+    <string name="what_can_you_do">ماذا يمكنك أن تفعل؟</string>
+    <string name="register_phone_with_management">اطلب من فريق الإدارة تسجيل رقم هاتفك على وحدتك.</string>
+    <string name="retry_registered_phone">أو حاول باستخدام الرقم الذي قدمته عند انتقالك للسكن لأول مرة.</string>
+    <string name="contact_compound_management">تواصل مع إدارة الكمبوند</string>
+    <string name="try_different_number">استخدم رقمًا آخر</string>
+
+    <!-- SMS Sending -->
+    <string name="sending_code">جارٍ إرسال رمز التحقق...</string>
+    <string name="texting">إرسال رسالة نصية</string>
+    <string name="sms_sending_failed">تعذر إرسال رمز التحقق</string>
+    <string name="sms_sending_failed_description">حدثت مشكلة أثناء إرسال الرسالة النصية أو انقطع الاتصال بالإنترنت. رقمك سليم، ويمكنك المحاولة مرة أخرى.</string>
+    <string name="sms_retry_hint">تأكد من اتصالك بالإنترنت ثم حاول مرة أخرى. إذا استمرت المشكلة، يمكن لفريق الدعم مساعدتك.</string>
+
+    <!-- OTP Verification -->
+    <string name="enter_verification_code">أدخل رمز التحقق المكون من 6 أرقام</string>
+    <string name="sent_by_sms_to">تم الإرسال عبر رسالة نصية إلى</string>
+    <string name="didnt_receive_code">لم يصلك الرمز؟</string>
+    <string name="resends_left">%1$d من %2$d محاولات إعادة الإرسال المتبقية</string>
+    <string name="resend_in">%1$d ثانية</string>
+    <string name="incorrect_code">رمز غير صحيح،</string>
+    <string name="attempts_left">متبقي %1$d محاولات قبل قفل الدخول</string>
+    <string name="resend_code">إعادة إرسال الرمز</string>
+    <string name="expired_verification_code">انتهت صلاحية هذا الرمز. اطلب رمزًا جديدًا للمتابعة.</string>
+
+    <!-- OTP Security -->
+    <string name="too_many_attempts">عدد كبير جدًا من المحاولات</string>
+    <string name="last_attempt_locked">كانت هذه آخر محاولة لك. لحمايتك، أوقفنا تسجيل الدخول مؤقتًا باستخدام هذا الرقم.</string>
+    <string name="request_new_code_in">يمكنك طلب رمز جديد خلال</string>
+
+    <!-- Unit Selection -->
+    <string name="select_unit_title">أي وحدة ترغب في الدخول إليها؟</string>
+    <string name="multiple_units_description">رقم هاتفك مرتبط بأكثر من وحدة. يمكنك التبديل بينها لاحقًا من الملف الشخصي.</string>
+    <string name="owner">مالك</string>
+    <string name="tenant">مستأجر</string>
+    <string name="registered_units_notice">تظهر فقط الوحدات المسجلة باسمك.</string>
+
+    <!-- User Profile -->
+    <string name="full_name">الاسم الكامل</string>
+    <string name="edit">تعديل</string>
+    <string name="mobile">رقم الهاتف</string>
+    <string name="welcome_review_details">مرحبًا بك. راجع بياناتك.</string>
+    <string name="profile_visibility_description">أكد كيف ستظهر بياناتك لإدارة الكمبوند والجيران. يمكنك تعديلها في أي وقت.</string>
+
+    <!-- Notifications -->
+    <string name="visitor_notification_title">اعرف متى يصل زوارك</string>
+    <string name="notification_permission_description">فعّل الإشعارات لمعرفة وصول الزوار وتحديثات الصيانة وتنبيهات السلامة.</string>
+    <string name="allow_notification">السماح بالإشعارات</string>
+    <string name="not_now">ليس الآن</string>
+
+    <!-- Common Actions -->
+    <string name="try_again">حاول مرة أخرى</string>
+    <string name="contact_support">تواصل مع الدعم</string>
+    <string name="verify">تأكيد</string>
+    <string name="back_to_start">العودة إلى البداية</string>
+    <string name="_continue">متابعة</string>
+    <string name="finish_setup">إنهاء الإعداد</string>
+
+</resources>

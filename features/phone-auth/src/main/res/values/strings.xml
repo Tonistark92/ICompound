@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Phone Number Verification -->
+    <string name="enter_phone_number">Enter your phone number</string>
+    <string name="phone_verification_description">We’ll text you a one-time code to confirm it’s you. Use the number registered with management.</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="unit_privacy_notice">Your unit details stay hidden until you verify the code.</string>
+    <string name="send_code">Send Code</string>
+    <string name="invalid_phone_number">That number doesn’t look right.</string>
+    <string name="phone_number_format_hint">Enter 9 digits starting with 1, for example 1XXX XX</string>
+    <string name="checking_phone_number">Checking Your Number...</string>
+    <string name="unit_privacy_multiline">Nothing about your unit\nis shown until you verify the code.</string>
+
+    <!-- Phone Number Error -->
+    <string name="phone_verification_failed">We couldn’t continue with this number.</string>
+    <string name="phone_verification_failed_description">Check the number and try again, or contact compound management.</string>
+    <string name="what_can_you_do">What can you do?</string>
+    <string name="register_phone_with_management">Ask the management team to register your number to your unit.</string>
+    <string name="retry_registered_phone">Or retry with the number you gave when you first moved in.</string>
+    <string name="contact_compound_management">Contact Compound Management</string>
+    <string name="try_different_number">Try a Different Number</string>
+
+    <!-- SMS Sending -->
+    <string name="sending_code">Sending your code...</string>
+    <string name="texting">Texting</string>
+    <string name="sms_sending_failed">We couldn’t send the code</string>
+    <string name="sms_sending_failed_description">Something interrupted the SMS, or your connection dropped. Your number is fine, so you can try again.</string>
+    <string name="sms_retry_hint">Check that you’re online, then retry. If it keeps failing, support can help.</string>
+
+    <!-- OTP Verification -->
+    <string name="enter_verification_code">Enter the 6-digit code</string>
+    <string name="sent_by_sms_to">Sent by SMS to</string>
+    <string name="didnt_receive_code">Didn’t get it?</string>
+    <string name="resends_left">%1$d of %2$d resends left</string>
+    <string name="resend_in">%1$d s</string>
+    <string name="incorrect_code">Incorrect code,</string>
+    <string name="attempts_left">%1$d attempts left before entry is locked</string>
+    <string name="resend_code">Resend Code</string>
+    <string name="expired_verification_code">This code has expired. Request a new code to continue.</string>
+
+    <!-- OTP Security -->
+    <string name="too_many_attempts">Too many attempts</string>
+    <string name="last_attempt_locked">That was your last attempt. For your security, we’ve paused sign-in on this number.</string>
+    <string name="request_new_code_in">You can request a new code in</string>
+
+    <!-- Unit Selection -->
+    <string name="select_unit_title">Which unit would you like to access?</string>
+    <string name="multiple_units_description">Your number is linked to more than one unit. You can switch later from profile.</string>
+    <string name="owner">Owner</string>
+    <string name="tenant">Tenant</string>
+    <string name="registered_units_notice">Only units registered to you are listed.</string>
+
+    <!-- User Profile -->
+    <string name="full_name">Full Name</string>
+    <string name="edit">Edit</string>
+    <string name="mobile">Mobile</string>
+    <string name="welcome_review_details">Welcome. Review your details.</string>
+    <string name="profile_visibility_description">Confirm how management and neighbors will see you. You can edit this anytime.</string>
+
+    <!-- Notifications -->
+    <string name="visitor_notification_title">Know when a visitor arrives</string>
+    <string name="notification_permission_description">Turn on notifications for visitor arrivals, maintenance updates and safety alerts.</string>
+    <string name="allow_notification">Allow Notification</string>
+    <string name="not_now">Not Now</string>
+
+    <!-- Common Actions -->
+    <string name="try_again">Try Again</string>
+    <string name="contact_support">Contact Support</string>
+    <string name="verify">Verify</string>
+    <string name="back_to_start">Back To Start</string>
+    <string name="_continue">Continue</string>
+    <string name="finish_setup">Finish Setup</string>
+
+</resources>
