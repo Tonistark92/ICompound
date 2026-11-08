@@ -1,19 +1,25 @@
 package com.icompound.core.domain.usecase
 
 import com.icompound.core.data.model.Resource
+import com.icompound.core.domain.model.User
 import com.icompound.core.domain.model.error.ErrorHandler
+import com.icompound.core.domain.repo.local.IPreferenceRepository
 import com.icompound.core.presentation.base.DispatcherProvider
+import com.icompound.core.util.toJson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import org.koin.core.component.KoinComponent
 
 abstract class BaseUseCase<Domain, in Body>(
     private val errorHandler: ErrorHandler,
     private val dispatchers: DispatcherProvider,
-) {
+): KoinComponent {
     protected fun requireBody(body: Body?): @UnsafeVariance Body =
         body ?: throw IllegalArgumentException("UseCase body is required and was null")
 

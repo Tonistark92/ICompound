@@ -25,7 +25,6 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.remote.creation.compose.capture.toPx
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -52,10 +51,11 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.icompound.designsystem.ColorLightTokens
 import com.icompound.designsystem.ICompoundTheme
+import com.icompound.phone_auth.domain.OtpStatus
 import kotlinx.coroutines.delay
 
 
-enum class OtpStatus { Idle, Error, Success }
+enum class OtpUiStatus { Idle, Error, Success }
 
 @Composable
 fun OtpField(
@@ -63,7 +63,7 @@ fun OtpField(
     onCodeChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     length: Int = 6,
-    status: OtpStatus = OtpStatus.Idle,
+    status: OtpStatus = OtpUiStatus.Idle,
     autoFocus: Boolean = true,
     onComplete: (String) -> Unit = {},
 ) {
@@ -78,7 +78,7 @@ fun OtpField(
     // Shake + haptic when the status becomes Error
     LaunchedEffect(status) {
         when (status) {
-            OtpStatus.Error -> {
+            OtpUiStatus.Error -> {
                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 shakeX.animateTo(0f, keyframes {
                     durationMillis = 420
@@ -91,7 +91,7 @@ fun OtpField(
                     0f at 420
                 })
             }
-            OtpStatus.Success ->
+            OtpUiStatus.Success ->
                 haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
             else -> Unit
         }
@@ -111,7 +111,7 @@ fun OtpField(
                 .focusRequester(focusRequester)
                 .onFocusChanged { hasFocus = it.isFocused },
             // Lock input while the result animation plays
-            enabled = status == OtpStatus.Idle,
+            enabled = status == OtpUiStatus.Idle,
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
             textStyle = TextStyle(color = Color.Transparent),
@@ -127,7 +127,7 @@ fun OtpField(
                         OtpBox(
                             index = index,
                             char = code.getOrNull(index),
-                            isActive = hasFocus && status == OtpStatus.Idle &&
+                            isActive = hasFocus && status == OtpUiStatus.Idle &&
                                     index == code.length.coerceAtMost(length - 1),
                             status = status,
                         )
@@ -143,7 +143,7 @@ private fun OtpBox(
     index: Int,
     char: Char?,
     isActive: Boolean,
-    status: OtpStatus,
+    status: OtpUiStatus,
     modifier: Modifier = Modifier,
 ) {
     val colors = MaterialTheme.colorScheme
@@ -170,7 +170,7 @@ private fun OtpBox(
 
     // Success wave (unchanged)
     LaunchedEffect(status) {
-        if (status == OtpStatus.Success) {
+        if (status == OtpUiStatus.Success) {
             delay(index * 70L)
             lift.animateTo(-liftPx, tween(140, easing = FastOutSlowInEasing))
             lift.animateTo(0f, spring(Spring.DampingRatioMediumBouncy))
@@ -178,8 +178,8 @@ private fun OtpBox(
     }
 
     val targetBorder = when {
-        status == OtpStatus.Error -> colors.error
-        status == OtpStatus.Success -> ColorLightTokens.CompletedGreen
+        status == OtpUiStatus.Error -> colors.error
+        status == OtpUiStatus.Success -> ColorLightTokens.CompletedGreen
         isActive -> colors.primary
         char != null -> colors.primary.copy(alpha = .6f)
         else -> colors.outlineVariant
@@ -187,14 +187,14 @@ private fun OtpBox(
     val borderColor by animateColorAsState(targetBorder, tween(200), label = "otpBorder")
 
     val container = when {
-        status == OtpStatus.Error -> colors.errorContainer.copy(alpha = .35f)
-        status == OtpStatus.Success -> ColorLightTokens.Success.copy(alpha = .35f)
+        status == OtpUiStatus.Error -> colors.errorContainer.copy(alpha = .35f)
+        status == OtpUiStatus.Success -> ColorLightTokens.Success.copy(alpha = .35f)
         char != null -> colors.surface
         else -> ColorLightTokens.SurfaceContainer
     }
     val textColor = when (status) {
-        OtpStatus.Error -> colors.error
-        OtpStatus.Success -> ColorLightTokens.OnSuccess
+        OtpUiStatus.Error -> colors.error
+        OtpUiStatus.Success -> ColorLightTokens.OnSuccess
         else -> colors.onBackground
     }
 
@@ -262,31 +262,31 @@ private fun OtpFieldAllStatesPreview() {
             OtpPreviewItem(
                 title = "Idle - Empty",
                 code = "",
-                status = OtpStatus.Idle
+                status = OtpUiStatus.Idle
             )
 
             OtpPreviewItem(
                 title = "Idle - Partially Filled",
                 code = "123",
-                status = OtpStatus.Idle
+                status = OtpUiStatus.Idle
             )
 
             OtpPreviewItem(
                 title = "Idle - Completed",
                 code = "123456",
-                status = OtpStatus.Idle
+                status = OtpUiStatus.Idle
             )
 
             OtpPreviewItem(
                 title = "Error",
                 code = "123456",
-                status = OtpStatus.Error
+                status = OtpUiStatus.Error
             )
 
             OtpPreviewItem(
                 title = "Success",
                 code = "123456",
-                status = OtpStatus.Success
+                status = OtpUiStatus.Success
             )
         }
     }
@@ -296,7 +296,7 @@ private fun OtpFieldAllStatesPreview() {
 private fun OtpPreviewItem(
     title: String,
     code: String,
-    status: OtpStatus
+    status: OtpUiStatus
 ) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)

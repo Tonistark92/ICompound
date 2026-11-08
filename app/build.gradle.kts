@@ -50,6 +50,7 @@ dependencies {
     implementation(project(":designsystem"))
     implementation(project(":navigation"))
     implementation(project(":features:onboarding"))
+    implementation(project(":features:phone-auth"))
     // Compose BOM
     implementation(platform(libs.androidx.compose.bom))
 

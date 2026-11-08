@@ -36,7 +36,7 @@ object OnBoardingNavKey : NavScreen(
 object LoginNavKey : NavScreen()
 
 @Serializable
-object OTPNavKey : NavScreen()
+object PhoneAuthNavKey : NavScreen()
 
 @Serializable
 object SignUpNavKey : NavScreen()

@@ -35,7 +35,7 @@ fun Navigation(
             rememberSaveableStateHolderNavEntryDecorator(),
             rememberViewModelStoreNavEntryDecorator(),
         ),
-        entryProvider = entryProvider<NavKey> {
+        entryProvider = entryProvider {
             appNavigationEntries()
         },
     )

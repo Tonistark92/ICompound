@@ -194,7 +194,7 @@ object ColorDarkTokens  {
     val OnTertiaryContainer = Color(0xFF00201F)
 
     // Backgrounds (§2 "Surface & text tokens")
-    val Background = Color(0xFFF8FAFB) // "Canvas / body"
+    val Background = Color(0xFF080D24) // "Canvas / body"
     val OnBackground = Color(0xFF212529)
 
     // Surfaces

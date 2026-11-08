@@ -26,9 +26,9 @@ import com.icompound.designsystem.ICompoundTheme
 
 enum class StatusType { Error, Warning, Success, Info }
 
-private data class StatusColors(val container: Color, val border: Color, val content: Color)
+data class StatusColors(val container: Color, val border: Color, val content: Color)
 
-private fun StatusType.colors() = when (this) {
+ fun StatusType.colors() = when (this) {
     StatusType.Error -> StatusColors(
         ColorLightTokens.ErrorContainer, ColorLightTokens.Error.copy(alpha = .4f), ColorLightTokens.Error)
     StatusType.Warning -> StatusColors(

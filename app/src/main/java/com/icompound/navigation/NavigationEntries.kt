@@ -3,12 +3,10 @@ package com.icompound.navigation
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import com.icompound.navigation.compose.LocalNavigator
-import com.icompound.navigation.route.HomeNavKey
 import com.icompound.navigation.route.LoginNavKey
-import com.icompound.navigation.route.OTPNavKey
+import com.icompound.navigation.route.PhoneAuthNavKey
 import com.icompound.navigation.route.OnBoardingNavKey
 import com.icompound.onboarding.presentation.OnBoardingScreen
-import java.util.Map.entry
 
 
 fun EntryProviderScope<NavKey>.appNavigationEntries() {
@@ -37,7 +35,7 @@ fun EntryProviderScope<NavKey>.appNavigationEntries() {
             }
         }
 
-        entry<OTPNavKey> {
+        entry<PhoneAuthNavKey> {
             val navigator = LocalNavigator.current
 
         }

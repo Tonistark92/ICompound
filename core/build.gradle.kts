@@ -46,6 +46,7 @@ android {
         buildConfigField("String", "API_KEY", configValue("API_KEY"))
         buildConfigField("String", "SOCKET_PORT", configValue("SOCKET_PORT"))
         buildConfigField("String", "GOOGLE_CLIENT_ID", configValue("GOOGLE_CLIENT_ID"))
+        buildConfigField("String", "IC_COMPOUND_DATASTORE_NAME", configValue("IC_COMPOUND_DATASTORE_NAME"))
 //        buildConfigField("String", "PIN_PRIMARY", "\"sha256/AAAA...=\"")
 //        buildConfigField("String", "PIN_BACKUP",  "\"sha256/BBBB...=\"")
 

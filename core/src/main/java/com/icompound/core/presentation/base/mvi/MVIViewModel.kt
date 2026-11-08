@@ -26,7 +26,7 @@ abstract class MVIViewModel<
 
     private val _viewState = MutableStateFlow(initialState)
 
-    val viewState: StateFlow<S> = _viewState.asStateFlow()
+    val state: StateFlow<S> = _viewState.asStateFlow()
 
     val currentViewState: S
         get() = _viewState.value
@@ -54,7 +54,7 @@ abstract class MVIViewModel<
 
     private val eventChannel = Channel<E>(Channel.UNLIMITED)
 
-    val singleEvent: Flow<E> = eventChannel.receiveAsFlow()
+    val event: Flow<E> = eventChannel.receiveAsFlow()
 
     /**
      * Sends a one-time event to the UI.

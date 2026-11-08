@@ -44,6 +44,20 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.material.icons)
 
+    // Retrofit / Networking
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.kotlin.coroutines.adapter)
+    implementation(libs.gson)
+
+    // Serialization
+    api(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.serialization.converter)
+
+    // Koin - Dependency Injection
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+
     // Image Loading & Animations
     api(libs.coil.compose)
     implementation(libs.lottie.compose)

@@ -4,6 +4,7 @@ import android.app.Application
 import com.icompound.core.di.iCompoundCoreModule
 import com.icompound.di.featuresModule
 import com.icompound.navigation.di.navigationModule
+import com.icompound.phone_auth.di.phoneAuthModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -19,6 +20,7 @@ class BaseApp : Application() {
 
             modules(
                 iCompoundCoreModule,
+                phoneAuthModule,
                 featuresModule,
                 navigationModule,
             )
