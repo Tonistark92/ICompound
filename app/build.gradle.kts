@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.detekt)
 
 }
 
@@ -44,6 +45,15 @@ android {
         }
     }
 }
+detekt {
+    buildUponDefaultConfig = true
+
+    allRules = false
+
+    config.setFrom(
+        files("$rootDir/config/detekt/detekt.yml")
+    )
+}
 
 dependencies {
     implementation(project(":core"))
@@ -51,6 +61,7 @@ dependencies {
     implementation(project(":navigation"))
     implementation(project(":features:onboarding"))
     implementation(project(":features:phone-auth"))
+    lintChecks(project(":quality:lint-rules"))
     // Compose BOM
     implementation(platform(libs.androidx.compose.bom))
 

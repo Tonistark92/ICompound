@@ -63,7 +63,8 @@ fun OtpField(
     onCodeChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     length: Int = 6,
-    status: OtpStatus = OtpUiStatus.Idle,
+    status: OtpUiStatus = OtpUiStatus.Idle,
+    locked: Boolean = false,
     autoFocus: Boolean = true,
     onComplete: (String) -> Unit = {},
 ) {
@@ -107,6 +108,7 @@ fun OtpField(
                     if (digits.length == length) onComplete(digits)
                 }
             },
+            readOnly = locked || status != OtpUiStatus.Idle,
             modifier = modifier
                 .focusRequester(focusRequester)
                 .onFocusChanged { hasFocus = it.isFocused },

@@ -7,6 +7,7 @@ import com.icompound.navigation.route.LoginNavKey
 import com.icompound.navigation.route.PhoneAuthNavKey
 import com.icompound.navigation.route.OnBoardingNavKey
 import com.icompound.onboarding.presentation.OnBoardingScreen
+import com.icompound.phone_auth.presentation.PhoneAuthScreen
 
 
 fun EntryProviderScope<NavKey>.appNavigationEntries() {
@@ -31,13 +32,15 @@ fun EntryProviderScope<NavKey>.appNavigationEntries() {
         val navigator = LocalNavigator.current
 
         OnBoardingScreen {
-            navigator.navigateAndClearBackStack(LoginNavKey)
+            navigator.navigateAndClearBackStack(PhoneAuthNavKey)
             }
         }
 
         entry<PhoneAuthNavKey> {
             val navigator = LocalNavigator.current
-
+            PhoneAuthScreen{
+//                navigator.navigateAndClearBackStack(LoginNavKey)
+            }
         }
 //
 //        entry<SignUpNavKey> {

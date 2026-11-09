@@ -10,7 +10,7 @@ val phoneAuthPresentationModule = module {
 
     viewModel {
         PhoneAuthViewModel(
-            getManagerContact = get<GetManagerContactUC>(),
+//            getManagerContact = get<GetManagerContactUC>(),
 //            checkNumber = get<CheckNumberUseCase>(),
 //            sendCode = get<SendCodeUseCase>(),
 //            verifyCode = get<VerifyOTPCodeUseCase>(),

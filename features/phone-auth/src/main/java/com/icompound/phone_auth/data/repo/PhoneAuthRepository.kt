@@ -3,7 +3,6 @@ package com.icompound.phone_auth.data.repo
 import com.icompound.core.domain.model.request.RemoteRequest
 import com.icompound.core.domain.repo.remote.INetworkProvider
 import com.icompound.phone_auth.data.mapper.ManagerContactMapper
-import com.icompound.phone_auth.data.model.dto.ManagerContactDto
 import com.icompound.phone_auth.data.model.dto.ManagerContactResponseDto
 import com.icompound.phone_auth.domain.ManagerContact
 import com.icompound.phone_auth.domain.repo.IPhoneAuthRepository
@@ -14,12 +13,12 @@ class PhoneAuthRepository(
     private val managerContactMapper: ManagerContactMapper,
 ) : IPhoneAuthRepository {
 
-    override suspend fun getManagerContact(request: RemoteRequest): ManagerContact {
+    override suspend fun getManagerContact(remoteRequest: RemoteRequest): ManagerContact {
         val dto = network.get<ManagerContactResponseDto>(
             responseWrappedModel = ManagerContactResponseDto::class.java,
             pathUrl = MANAGER_CONTACT_PATH,
-            headers = request.requestHeaders,
-            queryParams = request.requestQueries,
+            headers = remoteRequest.requestHeaders,
+            queryParams = remoteRequest.requestQueries,
         )
         return managerContactMapper.dtoToDomain(dto)
     }

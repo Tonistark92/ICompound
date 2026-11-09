@@ -1,4 +1,4 @@
-package com.icompound.core
+package com.icompound.konsist
 
 import org.junit.Test
 

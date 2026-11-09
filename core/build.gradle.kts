@@ -15,10 +15,11 @@ android {
 
     val properties = Properties()
     val configFile = listOf("config", "Config")
-        .map { project.rootProject.file(it) }
-        .firstOrNull { it.canRead() }
-    if (configFile != null) {
-        properties.load(FileInputStream(configFile))
+        .map { rootProject.file(it) }
+        .firstOrNull { it.isFile && it.canRead() }
+
+    configFile?.inputStream()?.use {
+        properties.load(it)
     }
 
     // Also read local.properties, so keys placed there are picked up too
@@ -83,11 +84,16 @@ android {
         buildConfig = true
         compose = true
     }
+
+    testOptions {
+        unitTests.isReturnDefaultValues = true
+    }
 }
 
 dependencies {
 
     implementation(project(":designsystem"))
+    lintChecks(project(":quality:lint-rules"))
 
     // AndroidX
     implementation(libs.androidx.appcompat)
@@ -133,6 +139,7 @@ dependencies {
     implementation(libs.retrofit.kotlin.coroutines.adapter)
     implementation(libs.gson)
     implementation(libs.logging.interceptor)
+    testImplementation(libs.converter.gson)
 
     // Serialization
     api(libs.kotlinx.serialization.json)
@@ -160,4 +167,5 @@ dependencies {
     // Debug
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    testImplementation(kotlin("test"))
 }

@@ -66,11 +66,11 @@ internal class GeneralErrorHandlerImpl : ErrorHandler {
      */
     private fun extractErrorMessage(json: JSONObject, fallback: String?): String? {
         return when {
-            json.has("details") -> json.optString("details", fallback)
-            json.has("error_description") -> json.optString("error_description", fallback)
-            json.has("error") -> json.optString("error", fallback)
-            json.has("message") -> json.optString("message", fallback)
-            json.has("title") -> json.optString("title", fallback)
+            json.has("details") -> json.optString("details", fallback!!)
+            json.has("error_description") -> json.optString("error_description", fallback!!)
+            json.has("error") -> json.optString("error", fallback!!)
+            json.has("message") -> json.optString("message", fallback!!)
+            json.has("title") -> json.optString("title", fallback!!)
             else -> fallback
         }
     }

@@ -42,7 +42,7 @@ fun Navigator.Display(
 ) {
     @Suppress("UNCHECKED_CAST")
     NavDisplay(
-        backStack = backStack as NavBackStack<NavKey>,
+        backStack = backStack,
         onBack = onBack,
         modifier = modifier,
         entryProvider = entryProvider(builder = content),

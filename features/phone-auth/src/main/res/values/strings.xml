@@ -64,6 +64,10 @@
     <string name="allow_notification">Allow Notification</string>
     <string name="not_now">Not Now</string>
 
+    <string name="get_notified_about_visitors">Get notified about visitors, deliveries and compound updates.</string>
+    <string name="only_units_registered_to_number">Only units registered to your number are listed.</string>
+    <string name="no_resends_left">No resends left</string>
+
     <!-- Common Actions -->
     <string name="try_again">Try Again</string>
     <string name="contact_support">Contact Support</string>
@@ -71,5 +75,8 @@
     <string name="back_to_start">Back To Start</string>
     <string name="_continue">Continue</string>
     <string name="finish_setup">Finish Setup</string>
+    <string name="unit">Unit</string>
+    <string name="of">of</string>
+    <string name="s">S</string>
 
 </resources>

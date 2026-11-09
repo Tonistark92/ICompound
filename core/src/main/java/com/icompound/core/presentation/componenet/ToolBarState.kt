@@ -84,13 +84,14 @@ fun DefaultAppBar(
                 else -> Unit
             }
         },
-        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+        colors = TopAppBarDefaults.topAppBarColors(
             containerColor = if (state is ToolBarState.AuthTitleWithBack)
                 MaterialTheme.colorScheme.background
             else
                 MaterialTheme.colorScheme.surface,
-            titleContentColor = MaterialTheme.colorScheme.onSurface,
+            scrolledContainerColor = Color.Unspecified,
             navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+            titleContentColor = MaterialTheme.colorScheme.onSurface,
             actionIconContentColor = MaterialTheme.colorScheme.onSurface
         )
     )

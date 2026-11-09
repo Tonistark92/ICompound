@@ -1,6 +1,5 @@
 package com.icompound.core.di
 
-import android.R.attr.level
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -9,12 +8,14 @@ import com.icompound.core.data.repo.remote.ApiService
 import com.icompound.core.data.repo.remote.HeaderInterceptor
 import com.icompound.core.data.repo.remote.RetrofitNetworkProvider
 import com.icompound.core.data.repo.remote.auth.AuthRefreshApi
+import com.icompound.core.data.repo.remote.auth.DefaultTokenStore
+import com.icompound.core.data.repo.remote.auth.SessionEvents
 import com.icompound.core.data.repo.remote.auth.TokenAuthenticator
+import com.icompound.core.data.repo.remote.auth.TokenStore
 import com.icompound.core.domain.repo.remote.INetworkProvider
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.Cache
-import okhttp3.ConnectionPool
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -26,13 +27,27 @@ import retrofit2.Retrofit
 import java.io.File
 import java.util.UUID
 import java.util.concurrent.TimeUnit
-import kotlin.jvm.java
 
 private const val REFRESH = "refresh"
 
 internal val networkModule = module {
     single<Gson> {
         GsonBuilder().create()
+    }
+
+    single<Json> {
+        Json {
+            ignoreUnknownKeys = true
+            isLenient = true
+            explicitNulls = false
+            coerceInputValues = true
+        }
+    }
+
+    single { SessionEvents() }
+
+    single<TokenStore> {
+        DefaultTokenStore(get())
     }
 
     single<ApiService> {
@@ -58,12 +73,12 @@ internal val networkModule = module {
     single { TokenAuthenticator(get(), get(), get()) }
 
     single<Interceptor> {
-        HeaderInterceptor()
+        HeaderInterceptor(get())
     }
 
     single<OkHttpClient> {
         baseClient(androidContext())
-            .addInterceptor(HeaderInterceptor())      // your existing one
+            .addInterceptor(get<Interceptor>())
             .authenticator(get<TokenAuthenticator>())
             .build()
     }

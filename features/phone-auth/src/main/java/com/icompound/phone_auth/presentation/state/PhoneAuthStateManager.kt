@@ -5,6 +5,7 @@ import com.icompound.core.presentation.base.mvi.ViewEvent
 import com.icompound.core.presentation.base.mvi.ViewState
 import com.icompound.phone_auth.domain.AuthStep
 import com.icompound.phone_auth.domain.ManagerContact
+import com.icompound.phone_auth.domain.ResidentUnit
 
 sealed interface ManagerContactState {
     data object Loading : ManagerContactState
@@ -14,7 +15,9 @@ sealed interface ManagerContactState {
 
 data class PhoneAuthState(
     val step: AuthStep = AuthStep.Phone(),
-    var number :String? = null,
+    var number: String? = null,
+    var fullName: String? = null,
+    var units: List<ResidentUnit> = emptyList(),
     val manager: ManagerContactState = ManagerContactState.Loading,
 ) : ViewState
 

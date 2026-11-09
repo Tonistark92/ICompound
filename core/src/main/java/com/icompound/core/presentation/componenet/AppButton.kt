@@ -63,7 +63,9 @@ fun AppButton(
     Button(
         onClick = { if (!loading) onClick() },   // loading keeps normal colors
         enabled = enabled,
-        modifier = modifier.fillMaxWidth().height(48.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(48.dp),
         shape = RoundedCornerShape(8.dp),
         border = borderColor?.let { BorderStroke(1.dp, if (enabled) it else it.copy(alpha = .4f)) },
         colors = ButtonDefaults.buttonColors(
@@ -82,7 +84,11 @@ fun AppButton(
                 leadingIcon?.invoke()
                 Text(text, style = MaterialTheme.typography.labelLarge)
             }
-            if (loading) CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp, color = contentColor)
+            if (loading) CircularProgressIndicator(
+                Modifier.size(18.dp),
+                strokeWidth = 2.dp,
+                color = contentColor
+            )
         }
     }
 }
@@ -92,16 +98,29 @@ fun PrimaryButton(
     text: String, onClick: () -> Unit, modifier: Modifier = Modifier,
     leadingIcon: (@Composable () -> Unit)? = null,
     enabled: Boolean = true, loading: Boolean = false,
-) = AppButton(text, onClick, modifier, leadingIcon = leadingIcon, enabled = enabled, loading = loading)
+) = AppButton(
+    text,
+    onClick,
+    modifier,
+    leadingIcon = leadingIcon,
+    enabled = enabled,
+    loading = loading
+)
 
 @Composable
 fun SecondaryButton(
-    text: String, onClick: com.icompound.phone_auth.presentation.state.PhoneAuthAction.ContactSupportClicked, modifier: Modifier = Modifier,
-    leadingIcon: (() -> Unit)? = null, enabled: Boolean = true,
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    leadingIcon: (@Composable () -> Unit)? = null,
+    enabled: Boolean = true,
 ) = AppButton(
-    text = text, onClick = onClick, modifier = modifier,
+    text = text,
+    onClick = onClick,
+    modifier = modifier,
     containerColor = MaterialTheme.colorScheme.surface,
     contentColor = MaterialTheme.colorScheme.primary,
     borderColor = MaterialTheme.colorScheme.outlineVariant,
-    leadingIcon = leadingIcon, enabled = enabled,
+    leadingIcon = leadingIcon,
+    enabled = enabled,
 )

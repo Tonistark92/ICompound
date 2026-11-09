@@ -64,6 +64,10 @@
     <string name="allow_notification">السماح بالإشعارات</string>
     <string name="not_now">ليس الآن</string>
 
+    <string name="get_notified_about_visitors">احصل على إشعارات عند وصول الزوار وعمليات التوصيل وتحديثات الكمباوند.</string>
+    <string name="only_units_registered_to_number">تظهر هنا الوحدات المسجلة برقم هاتفك فقط.</string>
+    <string name="no_resends_left">لا توجد محاولات إعادة إرسال متبقية.</string>
+
     <!-- Common Actions -->
     <string name="try_again">حاول مرة أخرى</string>
     <string name="contact_support">تواصل مع الدعم</string>
@@ -71,5 +75,9 @@
     <string name="back_to_start">العودة إلى البداية</string>
     <string name="_continue">متابعة</string>
     <string name="finish_setup">إنهاء الإعداد</string>
+    <string name="unit">وحدة</string>
+    <string name="of">من</string>
+    <string name="s">ث</string>
+
 
 </resources>

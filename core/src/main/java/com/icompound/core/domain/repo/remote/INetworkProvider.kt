@@ -1,5 +1,11 @@
 package com.icompound.core.domain.repo.remote
 
+import okhttp3.ResponseBody
+import retrofit2.http.Body
+import retrofit2.http.HTTP
+import retrofit2.http.HeaderMap
+import retrofit2.http.Path
+import retrofit2.http.QueryMap
 import java.io.File
 import java.lang.reflect.Type
 
@@ -9,6 +15,15 @@ interface INetworkProvider {
         responseWrappedModel: Type, pathUrl: String, headers: Map<String, Any>? = null,
         queryParams: Map<String, Any>? = null, requestBody: RequestBody? = null
     ): ResponseBody
+
+//    @HTTP(method = "DELETE", path = "{pathUrl}", hasBody = true)
+//    @JvmSuppressWildcards
+//    suspend fun delete(
+//        @Path(value = "pathUrl", encoded = true) pathUrl: String,
+//        @Body body: Any,
+//        @HeaderMap headerMap: Map<String, Any>,
+//        @QueryMap queryParams: Map<String, Any>
+//    ): ResponseBody
 
     suspend fun <ResponseBody, RequestBody> post(
         responseWrappedModel: Type, pathUrl: String, headers: Map<String, Any>? = null,

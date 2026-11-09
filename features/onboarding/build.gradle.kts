@@ -31,6 +31,7 @@ dependencies {
 
     implementation(project(":designsystem"))
     implementation(project(":core"))
+    lintChecks(project(":quality:lint-rules"))
 
     // AndroidX
     implementation(libs.androidx.appcompat)

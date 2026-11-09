@@ -28,10 +28,10 @@ android {
 dependencies {
     implementation(project(":designsystem"))
     implementation(project(":core"))
+    lintChecks(project(":quality:lint-rules"))
 
     // AndroidX
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.compose.remote.creation.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)
 
