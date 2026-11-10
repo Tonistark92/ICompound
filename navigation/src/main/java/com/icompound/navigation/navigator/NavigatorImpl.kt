@@ -7,7 +7,6 @@ import kotlin.reflect.KClass
 class NavigatorImpl(
     override val backStack: NavBackStack<NavKey>,
 ) : Navigator {
-
     override fun navigate(route: NavKey) {
         backStack.add(route)
     }
@@ -17,7 +16,10 @@ class NavigatorImpl(
         backStack.add(route)
     }
 
-    override fun popUpTo(route: NavKey, inclusive: Boolean) {
+    override fun popUpTo(
+        route: NavKey,
+        inclusive: Boolean,
+    ) {
         val targetIndex = backStack.indexOfLast { it == route }
         if (targetIndex == -1) return
 
@@ -29,9 +31,7 @@ class NavigatorImpl(
         }
     }
 
-    override fun dropAllOfType(
-        routeClass: KClass<out NavKey>,
-    ) {
+    override fun dropAllOfType(routeClass: KClass<out NavKey>) {
         backStack.removeAll { route ->
             route::class == routeClass
         }
@@ -56,9 +56,8 @@ class NavigatorImpl(
         }
     }
 
-    override fun canNavigateBack(): Boolean {
-        return backStack.size > 1
-    }
+    override fun canNavigateBack(): Boolean = backStack.size > 1
+
     override fun popToAndPush(
         target: NavKey,
         newKey: NavKey,
@@ -77,11 +76,12 @@ class NavigatorImpl(
             return
         }
 
-        val destinationIndex = if (inclusive) {
-            targetIndex - 1
-        } else {
-            targetIndex
-        }
+        val destinationIndex =
+            if (inclusive) {
+                targetIndex - 1
+            } else {
+                targetIndex
+            }
 
         while (backStack.lastIndex > destinationIndex) {
             backStack.removeAt(backStack.lastIndex)
@@ -95,6 +95,4 @@ class NavigatorImpl(
             backStack.add(newKey)
         }
     }
-
-
 }

@@ -2,7 +2,6 @@ package com.icompound.phone_auth.data.model.dto
 
 import com.google.gson.annotations.SerializedName
 import com.icompound.core.data.model.dto.BaseDto
-import com.icompound.phone_auth.domain.ManagerContact
 
 /**
  * PLACEHOLDER field names – align with the EyeCompound OpenAPI spec for the manager-contact endpoint.

@@ -4,7 +4,7 @@ import com.icompound.core.domain.model.request.RemoteRequest
 import com.icompound.core.domain.repo.remote.INetworkProvider
 import com.icompound.phone_auth.data.mapper.ManagerContactMapper
 import com.icompound.phone_auth.data.model.dto.ManagerContactResponseDto
-import com.icompound.phone_auth.domain.ManagerContact
+import com.icompound.phone_auth.domain.model.ManagerContact
 import com.icompound.phone_auth.domain.repo.IPhoneAuthRepository
 import kotlin.jvm.java
 

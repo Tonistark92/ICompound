@@ -1,8 +1,8 @@
-package com.icompound.phone_auth.domain
+package com.icompound.phone_auth.domain.model
 
 sealed interface VerifyResult {
 
-    data class Valid(
+    data class alid(
         val userId: String,
 //        val units: List<CompoundUnit>,
     ) : VerifyResult

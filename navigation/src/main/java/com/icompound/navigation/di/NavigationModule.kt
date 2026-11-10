@@ -6,10 +6,11 @@ import com.icompound.navigation.navigator.Navigator
 import com.icompound.navigation.navigator.NavigatorImpl
 import org.koin.dsl.module
 
-val navigationModule = module {
-    single<Navigator> {
-        NavigatorImpl(
-            backStack = get<NavBackStack<NavKey>>()
-        )
+val navigationModule =
+    module {
+        single<Navigator> {
+            NavigatorImpl(
+                backStack = get<NavBackStack<NavKey>>(),
+            )
+        }
     }
-}

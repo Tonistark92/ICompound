@@ -3,9 +3,9 @@ package com.icompound.phone_auth.presentation.state
 import com.icompound.core.presentation.base.mvi.ViewAction
 import com.icompound.core.presentation.base.mvi.ViewEvent
 import com.icompound.core.presentation.base.mvi.ViewState
-import com.icompound.phone_auth.domain.AuthStep
-import com.icompound.phone_auth.domain.ManagerContact
-import com.icompound.phone_auth.domain.ResidentUnit
+import com.icompound.phone_auth.domain.model.AuthStep
+import com.icompound.phone_auth.domain.model.ManagerContact
+import com.icompound.phone_auth.domain.model.ResidentUnit
 
 sealed interface ManagerContactState {
     data object Loading : ManagerContactState

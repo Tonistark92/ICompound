@@ -8,6 +8,7 @@ import com.icompound.quality.lint_rules.detectors.HardcodedColorDetector
 import com.icompound.quality.lint_rules.detectors.HardcodedSpacingDetector
 import com.icompound.quality.lint_rules.detectors.HardcodedTextDetector
 import com.icompound.quality.lint_rules.detectors.HardcodedTypographyDetector
+import com.icompound.quality.lint_rules.detectors.NoDirectLoggingDetector
 import com.icompound.quality.lint_rules.detectors.PrintStackTraceDetector
 
 class ICompoundIssueRegistry : IssueRegistry() {
@@ -18,7 +19,7 @@ class ICompoundIssueRegistry : IssueRegistry() {
         HardcodedColorDetector.ISSUE,
         HardcodedTypographyDetector.ISSUE,
         HardcodedSpacingDetector.ISSUE,
-
+        NoDirectLoggingDetector.ISSUE,
         // Code quality
         AndroidLogDetector.ISSUE,
         PrintStackTraceDetector.ISSUE

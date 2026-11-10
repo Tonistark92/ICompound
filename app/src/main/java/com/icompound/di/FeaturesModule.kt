@@ -12,14 +12,13 @@ val featuresModule = module {
 
     viewModel {
         MainViewModel(
-            uiEventManager = get()
+            uiEventManager = get(),
         )
     }
 //    includes(
 //        loginModule,
 //        profileModule
 //    )
-
 
 //    single {
 //        AppConfig(
@@ -29,8 +28,8 @@ val featuresModule = module {
 //    }
 }
 
-//if you need BuildConfig values through Koin
-//data class AppConfig(
+// if you need BuildConfig values through Koin
+// data class AppConfig(
 //    val baseUrl: String,
 //    val isDebug: Boolean
-//)
+// )

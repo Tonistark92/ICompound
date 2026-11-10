@@ -14,9 +14,10 @@ android {
     }
 
     val properties = Properties()
-    val configFile = listOf("config", "Config")
-        .map { rootProject.file(it) }
-        .firstOrNull { it.isFile && it.canRead() }
+    val configFile =
+        listOf("config", "Config")
+            .map { rootProject.file(it) }
+            .firstOrNull { it.isFile && it.canRead() }
 
     configFile?.inputStream()?.use {
         properties.load(it)
@@ -31,14 +32,16 @@ android {
     // Looks in: config file -> local.properties -> gradle.properties / -P flag.
     // Fails the build with a clear message instead of silently using "".
     fun configValue(name: String): String {
-        val raw = (properties.getProperty(name)
-            ?: localProperties.getProperty(name)
-            ?: providers.gradleProperty(name).orNull)
-            ?.trim()
-            ?.takeIf { it.isNotEmpty() }
-            ?: throw GradleException(
-                "$name is missing. Add $name=<value> to the config file, local.properties or gradle.properties"
-            )
+        val raw =
+            (
+                properties.getProperty(name)
+                    ?: localProperties.getProperty(name)
+                    ?: providers.gradleProperty(name).orNull
+            )?.trim()
+                ?.takeIf { it.isNotEmpty() }
+                ?: throw GradleException(
+                    "$name is missing. Add $name=<value> to the config file, local.properties or gradle.properties",
+                )
         return if (raw.startsWith("\"") && raw.endsWith("\"")) raw else "\"$raw\""
     }
 
@@ -62,7 +65,6 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -72,13 +74,12 @@ android {
 
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
         debug {
             buildConfigField("String", "REMOTE_URL", configValue("DEBUG_REMOTE_URL"))
         }
-
     }
     buildFeatures {
         buildConfig = true
@@ -94,7 +95,6 @@ dependencies {
 
     implementation(project(":designsystem"))
     lintChecks(project(":quality:lint-rules"))
-
     // AndroidX
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)

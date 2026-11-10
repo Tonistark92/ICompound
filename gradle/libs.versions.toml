@@ -9,6 +9,9 @@ koin = "4.2.2"
 
 konsist = "0.18.1"
 detekt = "1.23.8"
+spotless = "8.10.4"
+ktlint = "1.8.0"
+composeRules = "0.4.28"
 # AndroidX Core
 coreKtx = "1.19.1"
 appCompat = "1.8.0"
@@ -271,6 +274,7 @@ androidx-compose-remote-creation-compose = { group = "androidx.compose.remote", 
 
 konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
 lint = { group = "com.android.security.lint", name = "lint", version.ref = "lint" }
+detekt-compose-rules = { module = "io.nlopez.compose.rules:detekt", version.ref = "composeRules" }
 
 [plugins]
 
@@ -285,3 +289,4 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }

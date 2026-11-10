@@ -13,12 +13,8 @@ import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import com.icompound.navigation.navigator.Navigator
 
-
 @Composable
-fun Navigation(
-    modifier: Modifier = Modifier,
-    navigator: Navigator,
-) {
+fun Navigation(modifier: Modifier = Modifier, navigator: Navigator) {
     NavDisplay(
         modifier = modifier,
         backStack = navigator.backStack,

@@ -9,9 +9,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Snackbar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -42,9 +42,9 @@ fun AppScaffold(
     val showBottomBar by remember(currentKey) {
         derivedStateOf {
             currentKey != null &&
-                    bottomBarItems.any { item ->
-                        item.navScreen::class == currentKey::class
-                    }
+                bottomBarItems.any { item ->
+                    item.navScreen::class == currentKey::class
+                }
         }
     }
 

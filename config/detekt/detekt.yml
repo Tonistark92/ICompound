@@ -1,6 +1,196 @@
+# Detekt 1.23.x configuration for ICompound.
+#
+# build.gradle uses buildUponDefaultConfig = true, so this file only holds OVERRIDES of the defaults.
+#
+# Who owns what (do not enable duplicates here):
+#   - Formatting / imports / trailing commas ... Spotless + ktlint (.editorconfig)
+#   - Architecture, naming, layering ........... Konsist (:quality konsist module)
+#   - Logging / printStackTrace / API bans ..... custom lint (NoDirectLogging)
+
 build:
   maxIssues: 0
+  excludeCorrectable: false
 
 config:
   validation: true
   warningsAsErrors: false
+
+processors:
+  active: true
+
+console-reports:
+  active: true
+
+output-reports:
+  active: true
+
+# ---------------------------------------------------------------------------
+complexity:
+  CyclomaticComplexMethod:
+    active: true
+    threshold: 15
+    ignoreSimpleWhenEntries: true
+    ignoreSingleWhenExpression: true
+  LongMethod:
+    active: true
+    threshold: 60
+    ignoreAnnotated:
+      - 'Composable'
+      - 'Preview'
+  LongParameterList:
+    active: true
+    functionThreshold: 6
+    constructorThreshold: 8
+    ignoreDefaultParameters: true
+    ignoreDataClasses: true
+    ignoreAnnotated:
+      - 'Composable'
+  NestedBlockDepth:
+    active: true
+    threshold: 4
+  ComplexCondition:
+    active: true
+    threshold: 4
+  LargeClass:
+    active: true
+    threshold: 600
+  TooManyFunctions:
+    active: true
+    thresholdInFiles: 15
+    thresholdInClasses: 15
+    thresholdInInterfaces: 15
+    thresholdInObjects: 15
+    ignorePrivate: true
+    ignoreOverridden: true
+
+# ---------------------------------------------------------------------------
+coroutines:
+  GlobalCoroutineUsage:
+    active: true
+  SleepInsteadOfDelay:
+    active: true
+  # Konsist rule "dispatchers are injected" owns this one.
+  InjectDispatcher:
+    active: false
+
+# ---------------------------------------------------------------------------
+exceptions:
+  TooGenericExceptionCaught:
+    active: true
+  SwallowedException:
+    active: true
+  # Custom lint rule NoDirectLogging already covers printStackTrace.
+  PrintStackTrace:
+    active: false
+
+# ---------------------------------------------------------------------------
+naming:
+  FunctionNaming:
+    active: true
+    ignoreAnnotated:
+      - 'Composable'
+  # ktlint's filename rule covers this.
+  MatchingDeclarationName:
+    active: false
+
+# ---------------------------------------------------------------------------
+style:
+  MagicNumber:
+    active: true
+    ignoreNumbers:
+      - '-1'
+      - '0'
+      - '1'
+      - '2'
+    ignoreAnnotation: true
+    ignoreNamedArgument: true
+    ignoreEnums: true
+    ignoreConstantDeclaration: true
+    ignoreCompanionObjectPropertyDeclaration: true
+    ignorePropertyDeclaration: false
+    excludes:
+      - '**/test/**'
+      - '**/androidTest/**'
+      - '**/*Test.kt'
+      - '**/ui/theme/**'
+      - '**/designsystem/**'
+  ReturnCount:
+    active: true
+    max: 3
+    excludeGuardClauses: true
+  ThrowsCount:
+    active: true
+    max: 3
+  ForbiddenComment:
+    active: true
+    values:
+      - 'FIXME:'
+      - 'STOPSHIP:'
+  # Formatting rules belong to Spotless/ktlint.
+  MaxLineLength:
+    active: false
+  NewLineAtEndOfFile:
+    active: false
+  WildcardImport:
+    active: false
+
+# ---------------------------------------------------------------------------
+# Compose rules (io.nlopez.compose.rules:detekt, loaded through detektPlugins).
+# They are active by default; this block documents intent and is where you tune them.
+Compose:
+  ComposableAnnotationNaming:
+    active: true
+  ComposableNaming:
+    active: true
+  ComposableParamOrder:
+    active: true
+  CompositionLocalAllowlist:
+    active: true
+  CompositionLocalNaming:
+    active: true
+  ContentEmitterReturningValues:
+    active: true
+  ContentTrailingLambda:
+    active: true
+  LambdaParameterEventTrailing:
+    active: true
+  LambdaParameterInRestartableEffect:
+    active: true
+  ModifierClickableOrder:
+    active: true
+  ModifierComposable:
+    active: true
+  ModifierMissing:
+    active: true
+  ModifierNaming:
+    active: true
+  ModifierNotUsedAtRoot:
+    active: true
+  ModifierReused:
+    active: true
+  ModifierWithoutDefault:
+    active: true
+  MultipleEmitters:
+    active: true
+  MutableParams:
+    active: true
+  MutableStateAutoboxing:
+    active: true
+  MutableStateParam:
+    active: true
+  ParameterNaming:
+    active: true
+  PreviewAnnotationNaming:
+    active: true
+  PreviewNaming:
+    active: true
+  PreviewPublic:
+    active: true
+  RememberMissing:
+    active: true
+  UnstableCollections:
+    active: true
+  ViewModelForwarding:
+    active: true
+  ViewModelInjection:
+    active: true

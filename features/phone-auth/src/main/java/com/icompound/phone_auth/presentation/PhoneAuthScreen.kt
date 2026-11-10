@@ -1,5 +1,6 @@
 package com.icompound.phone_auth.presentation
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.animateColorAsState
@@ -21,21 +22,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Apartment
-import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Refresh
-import androidx.compose.material.icons.outlined.VerifiedUser
-import androidx.compose.material.icons.outlined.WarningAmber
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -47,36 +41,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.icompound.core.presentation.base.utils.getViewModel
-import com.icompound.core.presentation.componenet.AppTextField
 import com.icompound.core.presentation.componenet.BodyText
-import com.icompound.core.presentation.componenet.PrimaryButton
-import com.icompound.core.presentation.componenet.SecondaryButton
 import com.icompound.core.presentation.componenet.SubBodyText
 import com.icompound.core.presentation.componenet.TitleText
-import com.icompound.core.presentation.utils.StatusBanner
 import com.icompound.core.presentation.utils.StatusType
 import com.icompound.core.presentation.utils.colors
 import com.icompound.core.util.dial
 import com.icompound.designsystem.ColorLightTokens
 import com.icompound.phone_auth.R
-import com.icompound.phone_auth.domain.AuthStep
-import com.icompound.phone_auth.domain.OtpStatus
-import com.icompound.phone_auth.domain.ResidentUnit
-import com.icompound.phone_auth.presentation.compoenents.OtpField
+import com.icompound.phone_auth.domain.model.AuthStep
 import com.icompound.phone_auth.presentation.compoenents.RollingNumberText
 import com.icompound.phone_auth.presentation.compoenents.SoftCard
-import com.icompound.phone_auth.presentation.state.ManagerContactState
 import com.icompound.phone_auth.presentation.state.PhoneAuthAction
 import com.icompound.phone_auth.presentation.state.PhoneAuthEvent
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.ui.semantics.Role
+import com.icompound.phone_auth.domain.model.ResidentUnit
 import com.icompound.phone_auth.presentation.compoenents.steps.LockedStep
 import com.icompound.phone_auth.presentation.compoenents.steps.NumberRejectedStep
 import com.icompound.phone_auth.presentation.compoenents.steps.OtpStep
@@ -100,6 +84,7 @@ fun PhoneAuthScreen( modifier: Modifier = Modifier,onFinished: () -> Unit) {
             }
         }
     }
+
 
     BackHandler(enabled = state.step !is AuthStep.Phone) {
         onAction(PhoneAuthAction.BackClicked)

@@ -1,12 +1,13 @@
 package com.icompound.phone_auth.presentation
 
+import android.util.Log
 import com.icompound.core.presentation.base.DispatcherProvider
 import com.icompound.core.presentation.base.mvi.MVIViewModel
-import com.icompound.phone_auth.domain.AuthStep
-import com.icompound.phone_auth.domain.Details
-import com.icompound.phone_auth.domain.ManagerContact
-import com.icompound.phone_auth.domain.OtpStatus
-import com.icompound.phone_auth.domain.ResidentUnit
+import com.icompound.phone_auth.domain.model.AuthStep
+import com.icompound.phone_auth.domain.model.Details
+import com.icompound.phone_auth.domain.model.ManagerContact
+import com.icompound.phone_auth.domain.model.OtpStatus
+import com.icompound.phone_auth.domain.model.ResidentUnit
 import com.icompound.phone_auth.presentation.state.ManagerContactState
 import com.icompound.phone_auth.presentation.state.PhoneAuthAction
 import com.icompound.phone_auth.presentation.state.PhoneAuthEvent
@@ -30,6 +31,7 @@ class PhoneAuthViewModel(
     initialState = PhoneAuthState(),
     dispatcherProvider = dispatcherProvider,
 ) {
+
     private var number = ""
     private var fullName = ""
     private var units: List<ResidentUnit> = emptyList()
@@ -253,13 +255,13 @@ class PhoneAuthViewModel(
 //import com.icompound.core.domain.model.exception.AppException
 //import com.icompound.core.presentation.base.DispatcherProvider
 //import com.icompound.core.presentation.base.mvi.MVIViewModel
-//import com.icompound.phone_auth.domain.AuthStep
-//import com.icompound.phone_auth.domain.AuthStep.*
+//import com.icompound.phone_auth.domain.model.AuthStep
+//import com.icompound.phone_auth.domain.model.AuthStep.*
 //import com.icompound.phone_auth.domain.Details
-//import com.icompound.phone_auth.domain.NumberCheck
+//import com.icompound.phone_auth.domain.model.NumberCheck
 //import com.icompound.phone_auth.domain.OtpStatus
 //import com.icompound.phone_auth.domain.ResidentUnit
-//import com.icompound.phone_auth.domain.VerifyResult
+//import com.icompound.phone_auth.domain.model.VerifyResult
 //import com.icompound.phone_auth.domain.usecase.GetManagerContactUC
 //import com.icompound.phone_auth.presentation.state.ManagerContactState
 //import com.icompound.phone_auth.presentation.state.PhoneAuthAction

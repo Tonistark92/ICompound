@@ -7,7 +7,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun calculateIndicatorOffset(selectedIndex: Int, totalItems: Int): Dp {
+internal fun calculateIndicatorOffset(
+    selectedIndex: Int,
+    totalItems: Int,
+): Dp {
     val density = LocalDensity.current
     val screenWidth = with(density) { LocalConfiguration.current.screenWidthDp.dp }
     val itemWidth = screenWidth / totalItems

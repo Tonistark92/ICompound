@@ -14,17 +14,18 @@ data class KaiTechAppShapes(
     val medium: CornerBasedShape,
     val large: CornerBasedShape,
     val extraLarge: CornerBasedShape,
-    val full: CornerBasedShape
+    val full: CornerBasedShape,
 )
 
-val KaiTechShapes = KaiTechAppShapes(
-    none = RectangleShape,
-    extraSmall = RoundedCornerShape(2.dp),
-    small = RoundedCornerShape(8.dp),
-    medium = RoundedCornerShape(12.dp),
-    large = RoundedCornerShape(20.dp),
-    extraLarge = RoundedCornerShape(30.dp),
-    full = RoundedCornerShape(80)
-)
+val KaiTechShapes =
+    KaiTechAppShapes(
+        none = RectangleShape,
+        extraSmall = RoundedCornerShape(2.dp),
+        small = RoundedCornerShape(8.dp),
+        medium = RoundedCornerShape(12.dp),
+        large = RoundedCornerShape(20.dp),
+        extraLarge = RoundedCornerShape(30.dp),
+        full = RoundedCornerShape(80),
+    )
 
 internal val LocalKaiTechAppShapes = staticCompositionLocalOf { KaiTechShapes }

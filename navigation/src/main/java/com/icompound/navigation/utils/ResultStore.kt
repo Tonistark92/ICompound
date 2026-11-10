@@ -4,11 +4,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
+
 @Stable
 class ResultStore {
     private val results = mutableMapOf<Any, Any?>()
 
-    fun <T> setResult(key: Any, t: T) {
+    fun <T> setResult(
+        key: Any,
+        t: T,
+    ) {
         results[key] = t
     }
 
@@ -19,23 +23,25 @@ class ResultStore {
     fun removeResult(key: Any) = results.remove(key)
 
     companion object {
-        val saver = Saver<ResultStore, Map<Any, Any?>>(
-            save = { it.results.toMap() },
-            restore = {
-                ResultStore().apply {
-                    results.putAll(it)
-                }
-            }
-        )
+        val saver =
+            Saver<ResultStore, Map<Any, Any?>>(
+                save = { it.results.toMap() },
+                restore = {
+                    ResultStore().apply {
+                        results.putAll(it)
+                    }
+                },
+            )
     }
 }
 
 @Composable
-fun rememberResultStore() = rememberSaveable(saver = ResultStore.saver) {
-    ResultStore()
-}
+fun rememberResultStore() =
+    rememberSaveable(saver = ResultStore.saver) {
+        ResultStore()
+    }
 
-enum class ResultKeys(){
+enum class ResultKeys {
     LOCATION,
-    UPDATE
+    UPDATE,
 }

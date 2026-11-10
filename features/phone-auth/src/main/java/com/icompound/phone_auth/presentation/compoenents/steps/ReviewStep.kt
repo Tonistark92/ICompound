@@ -18,8 +18,8 @@ import com.icompound.core.presentation.componenet.SubBodyText
 import com.icompound.core.presentation.componenet.TitleText
 import com.icompound.designsystem.ICompoundTheme
 import com.icompound.phone_auth.R
-import com.icompound.phone_auth.domain.AuthStep
-import com.icompound.phone_auth.domain.Details
+import com.icompound.phone_auth.domain.model.AuthStep
+import com.icompound.phone_auth.domain.model.Details
 import com.icompound.phone_auth.presentation.AuthStepLayout
 import com.icompound.phone_auth.presentation.DetailRow
 import com.icompound.phone_auth.presentation.compoenents.SoftCard

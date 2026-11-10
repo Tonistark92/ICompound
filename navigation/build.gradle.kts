@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.compose)
-
 }
 
 android {
@@ -23,16 +22,13 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
-
     }
-
 }
 
 dependencies {
 
     implementation(project(":core"))
     implementation(project(":designsystem"))
-
 
     // AndroidX
     implementation(libs.androidx.appcompat)

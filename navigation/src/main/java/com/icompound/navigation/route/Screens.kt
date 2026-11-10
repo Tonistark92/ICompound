@@ -13,18 +13,19 @@ sealed class NavScreen(
     @Transient open val hasBottomPadding: Boolean = true,
 ) : NavKey
 
-val bottomBarItems = listOf(
-    BottomAppBarModel.Home(),
-    BottomAppBarModel.Access(),
-    BottomAppBarModel.Bills(),
-    BottomAppBarModel.Location(),
-    BottomAppBarModel.Services(),
-)
+val bottomBarItems =
+    listOf(
+        BottomAppBarModel.Home(),
+        BottomAppBarModel.Access(),
+        BottomAppBarModel.Bills(),
+        BottomAppBarModel.Location(),
+        BottomAppBarModel.Services(),
+    )
 
 @Serializable
 object SplashNavKey : NavScreen(
     hasTopPadding = false,
-    hasBottomPadding = false
+    hasBottomPadding = false,
 )
 
 @Serializable
@@ -32,6 +33,7 @@ object OnBoardingNavKey : NavScreen(
     hasTopPadding = false,
     hasBottomPadding = false,
 )
+
 @Serializable
 object LoginNavKey : NavScreen()
 
@@ -44,7 +46,6 @@ object SignUpNavKey : NavScreen()
 @Serializable
 object HomeNavKey : NavScreen()
 
-
 @Serializable
 object ServicesNavKey : NavScreen()
 
@@ -56,6 +57,3 @@ object BillsNavKey : NavScreen()
 
 @Serializable
 object LocationNavKey : NavScreen()
-
-
-

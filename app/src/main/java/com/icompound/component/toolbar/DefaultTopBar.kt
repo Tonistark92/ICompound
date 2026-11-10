@@ -29,9 +29,8 @@ fun DefaultTopBar(
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp, vertical = 6.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-
             when {
                 centerContent != null -> centerContent()
 
@@ -60,7 +59,7 @@ fun DefaultTopBar(
         }
         HorizontalDivider(
             color = Color(0xFFC0C7D2),
-            thickness = 0.5.dp
+            thickness = 0.5.dp,
         )
     }
 }

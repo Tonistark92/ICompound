@@ -14,9 +14,9 @@ import com.icompound.core.presentation.utils.StatusBanner
 import com.icompound.core.presentation.utils.StatusType
 import com.icompound.designsystem.ICompoundTheme
 import com.icompound.phone_auth.R
-import com.icompound.phone_auth.domain.AuthStep
-import com.icompound.phone_auth.domain.OtpStatus
-import com.icompound.phone_auth.domain.toUi
+import com.icompound.phone_auth.domain.model.AuthStep
+import com.icompound.phone_auth.domain.model.OtpStatus
+import com.icompound.phone_auth.domain.model.toUi
 import com.icompound.phone_auth.presentation.AuthStepLayout
 import com.icompound.phone_auth.presentation.ResendCard
 import com.icompound.phone_auth.presentation.compoenents.OtpField

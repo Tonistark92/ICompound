@@ -13,13 +13,14 @@ data class KaiTechAppRadius(
     val full: Dp,
 )
 
-val KaiTechRadius = KaiTechAppRadius(
-    none = 0.dp,
-    small = 4.dp,
-    medium = 8.dp,
-    large = 12.dp,
-    extraLarge = 20.dp,
-    full = 999.dp,
-)
+val KaiTechRadius =
+    KaiTechAppRadius(
+        none = 0.dp,
+        small = 4.dp,
+        medium = 8.dp,
+        large = 12.dp,
+        extraLarge = 20.dp,
+        full = 999.dp,
+    )
 
-internal val LocalKaiTechAppRadius= staticCompositionLocalOf { KaiTechRadius }
+internal val LocalKaiTechAppRadius = staticCompositionLocalOf { KaiTechRadius }

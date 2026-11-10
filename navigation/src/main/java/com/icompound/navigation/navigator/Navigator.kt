@@ -7,9 +7,7 @@ import kotlin.reflect.KClass
 interface Navigator {
     val backStack: NavBackStack<NavKey>
 
-    fun dropAllOfType(
-        routeClass: KClass<out NavKey>,
-    )
+    fun dropAllOfType(routeClass: KClass<out NavKey>)
 
     fun replaceTop(route: NavKey)
 
@@ -31,7 +29,6 @@ interface Navigator {
 
     fun popUpTo(
         route: NavKey,
-        inclusive: Boolean = false
+        inclusive: Boolean = false,
     )
-
 }

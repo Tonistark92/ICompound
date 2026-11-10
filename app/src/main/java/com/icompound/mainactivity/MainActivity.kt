@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -26,8 +25,9 @@ import com.icompound.navigation.navigator.Navigator
 import com.icompound.navigation.navigator.NavigatorImpl
 import com.icompound.navigation.route.OnBoardingNavKey
 import com.icompound.navigation.route.SplashNavKey
-import kotlinx.coroutines.flow.collectLatest
 import kotlin.getValue
+import kotlinx.coroutines.flow.collectLatest
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
     private val viewModel: MainViewModel by viewModel()
@@ -36,7 +36,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ICompoundTheme {
-
                 val isLoading by viewModel.isLoading.collectAsState()
                 val snackBarHostState = remember {
                     SnackbarHostState()
@@ -62,7 +61,7 @@ class MainActivity : ComponentActivity() {
                                     message.type.getSnackbarColor()
 
                                 snackBarHostState.showSnackbar(
-                                    message.message
+                                    message.message,
                                 )
                             }
 
@@ -71,7 +70,7 @@ class MainActivity : ComponentActivity() {
                                     message.type.getSnackbarColor()
 
                                 snackBarHostState.showSnackbar(
-                                    getString(message.messageResId)
+                                    getString(message.messageResId),
                                 )
                             }
                         }
@@ -82,7 +81,6 @@ class MainActivity : ComponentActivity() {
                 val backStack = rememberNavBackStack(OnBoardingNavKey)
 
                 val navigator = remember(backStack) { NavigatorImpl(backStack) }
-
 
                 // Process a notification deferred during the splash screen.
 //                LaunchedEffect(viewModel, navigator) {
@@ -144,10 +142,7 @@ class MainActivity : ComponentActivity() {
 //        }
     }
 
-    private fun handleNavigationEvent(
-        event: NavigationEvent,
-        navigator: Navigator,
-    ) {
+    private fun handleNavigationEvent(event: NavigationEvent, navigator: Navigator) {
         when (event) {
 //            is NavigationEvent.NavigateToLogin -> {
 //                navigator.navigateAndClearBackStack(LoginNavKey)
@@ -158,6 +153,4 @@ class MainActivity : ComponentActivity() {
 //            }
         }
     }
-
-
 }

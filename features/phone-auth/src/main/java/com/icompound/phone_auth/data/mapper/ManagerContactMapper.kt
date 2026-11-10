@@ -2,7 +2,7 @@ package com.icompound.phone_auth.data.mapper
 
 import com.icompound.core.data.mapper.Mapper
 import com.icompound.phone_auth.data.model.dto.ManagerContactResponseDto
-import com.icompound.phone_auth.domain.ManagerContact
+import com.icompound.phone_auth.domain.model.ManagerContact
 
 /** No local database for this feature, so the Entity type is Unit. */
 class ManagerContactMapper : Mapper<ManagerContactResponseDto, ManagerContact, Unit>() {

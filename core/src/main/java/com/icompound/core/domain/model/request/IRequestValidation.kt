@@ -58,12 +58,13 @@ interface IRequestValidation {
                 if (isRequired && key !in requestBody) {
                     throwWhenMissingKey(contractType, key)
                 }
-                when (value) {
-                    is String, is ByteArray -> {
-                        if (isRequired && (value as? String)?.isEmpty() == true || (value as? ByteArray)?.isEmpty() == true) {
-                            throwWhenKeyHasEmptyValue(contractType, key)
-                        }
-                    }
+                val isEmpty = when (value) {
+                    is String -> value.isEmpty()
+                    is ByteArray -> value.isEmpty()
+                    else -> false
+                }
+                if (isRequired && isEmpty) {
+                    throwWhenKeyHasEmptyValue(contractType, key)
                 }
             }
         }

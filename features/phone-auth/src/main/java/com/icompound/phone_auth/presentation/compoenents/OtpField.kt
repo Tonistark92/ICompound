@@ -51,7 +51,6 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.icompound.designsystem.ColorLightTokens
 import com.icompound.designsystem.ICompoundTheme
-import com.icompound.phone_auth.domain.OtpStatus
 import kotlinx.coroutines.delay
 
 

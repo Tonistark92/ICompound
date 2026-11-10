@@ -1,4 +1,4 @@
-package com.icompound.phone_auth.domain
+package com.icompound.phone_auth.domain.model
 
 sealed interface NumberCheck {
 

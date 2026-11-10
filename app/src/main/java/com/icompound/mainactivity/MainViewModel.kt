@@ -6,9 +6,7 @@ import com.icompound.core.presentation.utils.UiEventManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class MainViewModel(
-    private val uiEventManager: UiEventManager,
-) : ViewModel() {
+class MainViewModel(private val uiEventManager: UiEventManager) : ViewModel() {
 
     // Observe general application UI state.
     val isLoading = uiEventManager.isLoading
@@ -24,7 +22,6 @@ class MainViewModel(
     val pendingNavigationEvent =
         _pendingNavigationEvent.asStateFlow()
 
-
     fun setPendingNavigationEvent(event: NavigationEvent) {
         _pendingNavigationEvent.value = event
     }
@@ -34,5 +31,4 @@ class MainViewModel(
         _pendingNavigationEvent.value = null
         return event
     }
-
 }
