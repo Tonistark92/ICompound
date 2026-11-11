@@ -10,8 +10,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 
-class UiEventManager{
-
+class UiEventManager {
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
@@ -19,10 +18,11 @@ class UiEventManager{
     val navigationEvent = _navigationEvent.receiveAsFlow()
 
     // One-time UI messages (snack bar/toast)
-    private val _uiMessage = MutableSharedFlow<MessageTypeUi>(
-        replay = 0,
-        extraBufferCapacity = 1
-    )
+    private val _uiMessage =
+        MutableSharedFlow<MessageTypeUi>(
+            replay = 0,
+            extraBufferCapacity = 1,
+        )
     val uiMessage: SharedFlow<MessageTypeUi> = _uiMessage.asSharedFlow()
 
     fun showLoading() {
@@ -33,11 +33,17 @@ class UiEventManager{
         _isLoading.value = false
     }
 
-    suspend fun showMsg(message: String, type: UIMessageState = UIMessageState.NORMAL) {
+    suspend fun showMsg(
+        message: String,
+        type: UIMessageState = UIMessageState.NORMAL,
+    ) {
         _uiMessage.emit(MessageTypeUi.Text(message, type = type))
     }
 
-    suspend fun showMsg(messageResId: Int, type: UIMessageState = UIMessageState.NORMAL) {
+    suspend fun showMsg(
+        messageResId: Int,
+        type: UIMessageState = UIMessageState.NORMAL,
+    ) {
         _uiMessage.emit(MessageTypeUi.Resource(messageResId, type = type))
     }
 
@@ -48,7 +54,7 @@ class UiEventManager{
         messageResId: Int? = null,
         positiveButtonText: String? = null,
         positiveButtonResId: Int? = null,
-        onPositiveAction: (() -> Unit)? = null
+        onPositiveAction: (() -> Unit)? = null,
     ) {
         _uiMessage.emit(
             MessageTypeUi.Dialog(
@@ -58,9 +64,8 @@ class UiEventManager{
                 messageResId,
                 positiveButtonText,
                 positiveButtonResId,
-                onPositiveAction
-            )
+                onPositiveAction,
+            ),
         )
     }
-
 }

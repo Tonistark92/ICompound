@@ -26,18 +26,28 @@ import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.unit.dp
 import com.icompound.designsystem.ICompoundTheme
 
-
 @Composable
 @ReadOnlyComposable
 fun contentColorForContainer(container: Color): Color {
     val ext = ICompoundTheme.colors
     val scheme = MaterialTheme.colorScheme
     return when (container) {
-        ext.warning -> ext.onWarning
-        ext.success -> ext.onSuccess
-        ext.info -> ext.onInfo
-        else -> scheme.contentColorFor(container).takeOrElse {
-            if (container.luminance() < 0.5f) Color.White else scheme.onSurface
+        ext.warning -> {
+            ext.onWarning
+        }
+
+        ext.success -> {
+            ext.onSuccess
+        }
+
+        ext.info -> {
+            ext.onInfo
+        }
+
+        else -> {
+            scheme.contentColorFor(container).takeOrElse {
+                if (container.luminance() < 0.5f) Color.White else scheme.onSurface
+            }
         }
     }
 }
@@ -48,7 +58,7 @@ fun AppButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     containerColor: Color = MaterialTheme.colorScheme.primary,
-    contentColor: Color = contentColorForContainer(containerColor),  // override only if needed
+    contentColor: Color = contentColorForContainer(containerColor), // override only if needed
     borderColor: Color? = null,
     leadingIcon: (@Composable () -> Unit)? = null,
     enabled: Boolean = true,
@@ -56,55 +66,64 @@ fun AppButton(
 ) {
     // Disabled look from your image: tinted container, muted text of the same hue
     val darkContainer = containerColor.luminance() < 0.5f
-    val disabledContainer = containerColor.copy(alpha = .12f)
-        .compositeOver(MaterialTheme.colorScheme.background)
+    val disabledContainer =
+        containerColor
+            .copy(alpha = .12f)
+            .compositeOver(MaterialTheme.colorScheme.background)
     val disabledContent = (if (darkContainer) containerColor else contentColor).copy(alpha = .45f)
 
     Button(
-        onClick = { if (!loading) onClick() },   // loading keeps normal colors
+        onClick = { if (!loading) onClick() }, // loading keeps normal colors
         enabled = enabled,
-        modifier = modifier
-            .fillMaxWidth()
-            .height(48.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .height(48.dp),
         shape = RoundedCornerShape(8.dp),
         border = borderColor?.let { BorderStroke(1.dp, if (enabled) it else it.copy(alpha = .4f)) },
-        colors = ButtonDefaults.buttonColors(
-            containerColor = containerColor,
-            contentColor = contentColor,
-            disabledContainerColor = disabledContainer,
-            disabledContentColor = disabledContent,
-        ),
+        colors =
+            ButtonDefaults.buttonColors(
+                containerColor = containerColor,
+                contentColor = contentColor,
+                disabledContainerColor = disabledContainer,
+                disabledContentColor = disabledContent,
+            ),
     ) {
         Box(contentAlignment = Alignment.Center) {
             Row(
-                Modifier.alpha(if (loading) 0f else 1f),   // keeps width while loading
+                Modifier.alpha(if (loading) 0f else 1f), // keeps width while loading
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 leadingIcon?.invoke()
                 Text(text, style = MaterialTheme.typography.labelLarge)
             }
-            if (loading) CircularProgressIndicator(
-                Modifier.size(18.dp),
-                strokeWidth = 2.dp,
-                color = contentColor
-            )
+            if (loading) {
+                CircularProgressIndicator(
+                    Modifier.size(18.dp),
+                    strokeWidth = 2.dp,
+                    color = contentColor,
+                )
+            }
         }
     }
 }
 
 @Composable
 fun PrimaryButton(
-    text: String, onClick: () -> Unit, modifier: Modifier = Modifier,
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
     leadingIcon: (@Composable () -> Unit)? = null,
-    enabled: Boolean = true, loading: Boolean = false,
+    enabled: Boolean = true,
+    loading: Boolean = false,
 ) = AppButton(
     text,
     onClick,
     modifier,
     leadingIcon = leadingIcon,
     enabled = enabled,
-    loading = loading
+    loading = loading,
 )
 
 @Composable

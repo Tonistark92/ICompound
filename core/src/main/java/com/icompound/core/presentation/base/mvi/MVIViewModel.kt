@@ -12,24 +12,23 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 abstract class MVIViewModel<
-        A : ViewAction,
-        E : ViewEvent,
-        S : ViewState
-        >(
+    A : ViewAction,
+    E : ViewEvent,
+    S : ViewState,
+>(
     initialState: S,
-    dispatcherProvider: DispatcherProvider
+    dispatcherProvider: DispatcherProvider,
 ) : BaseViewModel(dispatcherProvider) {
-
     // ------------------------------------------------------------------------
     // State
     // ------------------------------------------------------------------------
 
-    private val _viewState = MutableStateFlow(initialState)
+    private val _state = MutableStateFlow(initialState)
 
-    val state: StateFlow<S> = _viewState.asStateFlow()
+    val state: StateFlow<S> = _state.asStateFlow()
 
     val currentViewState: S
-        get() = _viewState.value
+        get() = _state.value
 
     // ------------------------------------------------------------------------
     // Actions
@@ -70,11 +69,11 @@ abstract class MVIViewModel<
     // ------------------------------------------------------------------------
 
     protected fun setState(newState: S) {
-        _viewState.value = newState
+        _state.value = newState
     }
 
     protected fun updateState(transform: S.() -> S) {
-        _viewState.update { current ->
+        _state.update { current ->
             current.transform()
         }
     }

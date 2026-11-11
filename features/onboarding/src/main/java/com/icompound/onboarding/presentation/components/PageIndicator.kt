@@ -20,7 +20,11 @@ import androidx.compose.ui.unit.dp
 import com.icompound.designsystem.ICompoundTheme
 
 @Composable
-fun PageIndicator(pageCount: Int, current: Int, modifier: Modifier = Modifier) {
+fun PageIndicator(
+    pageCount: Int,
+    current: Int,
+    modifier: Modifier = Modifier,
+) {
     Row(modifier, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
         repeat(pageCount) { i ->
             val selected = i == current
@@ -38,7 +42,7 @@ fun PageIndicator(pageCount: Int, current: Int, modifier: Modifier = Modifier) {
                     .height(6.dp)
                     .width(width)
                     .clip(CircleShape)
-                    .background(color)
+                    .background(color),
             )
         }
     }

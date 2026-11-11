@@ -6,7 +6,11 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
 }
-
+// Also read local.properties, so keys placed there are picked up too
+val localProperties = Properties()
+project.rootProject.file("local.properties").takeIf { it.canRead() }?.let { file ->
+    FileInputStream(file).use { localProperties.load(it) }
+}
 android {
     namespace = "com.icompound.core"
     compileSdk {
@@ -21,12 +25,6 @@ android {
 
     configFile?.inputStream()?.use {
         properties.load(it)
-    }
-
-    // Also read local.properties, so keys placed there are picked up too
-    val localProperties = Properties()
-    project.rootProject.file("local.properties").takeIf { it.canRead() }?.let { file ->
-        FileInputStream(file).use { localProperties.load(it) }
     }
 
     // Looks in: config file -> local.properties -> gradle.properties / -P flag.

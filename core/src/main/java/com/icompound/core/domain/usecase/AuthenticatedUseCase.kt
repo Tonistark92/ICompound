@@ -1,6 +1,5 @@
 package com.icompound.core.domain.usecase
 
-
 import com.icompound.core.domain.model.User
 import com.icompound.core.domain.model.error.ErrorHandler
 import com.icompound.core.domain.repo.local.IPreferenceRepository
@@ -20,9 +19,8 @@ abstract class AuthenticatedUseCase<Domain, in Body>(
     errorHandler: ErrorHandler,
     dispatchers: DispatcherProvider,
 ) : BaseUseCase<Domain, Body>(errorHandler, dispatchers) {
-
     protected open val preferenceRepository: IPreferenceRepository by lazy(
-        LazyThreadSafetyMode.NONE
+        LazyThreadSafetyMode.NONE,
     ) {
         getKoin().get<IPreferenceRepository>()
     }
@@ -36,16 +34,13 @@ abstract class AuthenticatedUseCase<Domain, in Body>(
         }
     }
 
-    protected suspend fun getUserId(): String {
-        return preferenceRepository.getUserId().first()
-    }
+    protected suspend fun getUserId(): String = preferenceRepository.getUserId().first()
+
     protected suspend fun saveUserId(userId: String) {
         preferenceRepository.setUserId(userId)
     }
-    protected suspend fun getUserToken(): String {
-        return preferenceRepository.getToken().first()
-    }
 
+    protected suspend fun getUserToken(): String = preferenceRepository.getToken().first()
 }
 
 /*

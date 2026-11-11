@@ -20,9 +20,10 @@ import com.icompound.navigation.navigator.Navigator
  * }
  * ```
  */
-val LocalNavigator = staticCompositionLocalOf<Navigator> {
-    error("Navigator was not provided")
-}
+val LocalNavigator =
+    staticCompositionLocalOf<Navigator> {
+        error("Navigator was not provided")
+    }
 
 /**
  * Generic display function for main navigation.

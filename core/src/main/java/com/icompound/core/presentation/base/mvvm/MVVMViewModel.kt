@@ -9,9 +9,8 @@ import kotlinx.coroutines.flow.update
 
 abstract class MVVMViewModel<S : Any>(
     initialState: S,
-    dispatcherProvider: DispatcherProvider
+    dispatcherProvider: DispatcherProvider,
 ) : BaseViewModel(dispatcherProvider) {
-
     // ------------------------------------------------------------------------
     // State
     // ------------------------------------------------------------------------

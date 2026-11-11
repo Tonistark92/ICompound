@@ -9,14 +9,11 @@ fun <M> M.toJson(): String = Gson().toJson(this)
 
 fun <M> String.getModelFromJSON(tokenType: Type): M = Gson().fromJson(this, tokenType)
 
-fun <M> JSONObject.getModelFromJSON(tokenType: Type): M =
-    this.toString().getModelFromJSON(tokenType)
+fun <M> JSONObject.getModelFromJSON(tokenType: Type): M = this.toString().getModelFromJSON(tokenType)
 
-fun <M> String.getListOfModelFromJSON(tokenType: Type): ArrayList<M> =
-    Gson().fromJson(this, tokenType)
+fun <M> String.getListOfModelFromJSON(tokenType: Type): ArrayList<M> = Gson().fromJson(this, tokenType)
 
-fun <M> JSONArray.getListOfModelFromJSON(tokenType: Type): ArrayList<M> =
-    this.toString().getListOfModelFromJSON(tokenType)
+fun <M> JSONArray.getListOfModelFromJSON(tokenType: Type): ArrayList<M> = this.toString().getListOfModelFromJSON(tokenType)
 
 fun JSONArray.jsonArrayToHashMap(): HashMap<String, String> {
     val hashMap = HashMap<String, String>()

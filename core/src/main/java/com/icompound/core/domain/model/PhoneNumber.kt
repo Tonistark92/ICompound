@@ -1,23 +1,22 @@
 package com.icompound.core.domain.model
 
-
+import androidx.annotation.Keep
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import androidx.annotation.Keep
 
 @Keep
 @Serializable
 data class PhoneNumber(
     @SerialName("countryCode")
-    val countryCode: String? = "", // EG
+    val countryCode: String? = "",
     @SerialName("dialCode")
-    val dialCode: String? = "", // +20
+    val dialCode: String? = "",
     @SerialName("e164Number")
-    val e164Number: String? = "", // +201010933063
+    val e164Number: String? = "",
     @SerialName("internationalNumber")
-    val internationalNumber: String? = "", // +20 10 10933063
+    val internationalNumber: String? = "",
     @SerialName("nationalNumber")
-    val nationalNumber: String? = "", // 010 10933063
+    val nationalNumber: String? = "",
     @SerialName("number")
-    val number: String? = "" // 01010933063
+    val number: String? = "",
 )

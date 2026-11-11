@@ -20,21 +20,23 @@ import retrofit2.http.QueryMap
 import retrofit2.http.Url
 
 interface ApiService {
-
     @DELETE("{pathUrl}")
     @JvmSuppressWildcards
     suspend fun delete(
-        @Path(value = "pathUrl", encoded = true) pathUrl: String, @Body body: Any,
-        @HeaderMap headerMap: Map<String, Any>, @QueryMap queryParams: Map<String, Any>
+        @Path(value = "pathUrl", encoded = true) pathUrl: String,
+        @Body body: Any,
+        @HeaderMap headerMap: Map<String, Any>,
+        @QueryMap queryParams: Map<String, Any>,
     ): ResponseBody
 
     @POST("{pathUrl}")
     @JvmSuppressWildcards
     suspend fun post(
-        @Path(value = "pathUrl", encoded = true) pathUrl: String, @Body body: Any,
-        @HeaderMap headerMap: Map<String, Any>, @QueryMap queryParams: Map<String, Any>
+        @Path(value = "pathUrl", encoded = true) pathUrl: String,
+        @Body body: Any,
+        @HeaderMap headerMap: Map<String, Any>,
+        @QueryMap queryParams: Map<String, Any>,
     ): ResponseBody
-
 
     @FormUrlEncoded
     @POST("{pathUrl}")
@@ -43,43 +45,50 @@ interface ApiService {
         @Path(value = "pathUrl", encoded = true) pathUrl: String,
         @FieldMap fields: Map<String, @JvmSuppressWildcards Any>,
         @HeaderMap headerMap: Map<String, Any> = emptyMap(),
-        @QueryMap queryParams: Map<String, Any> = emptyMap()
+        @QueryMap queryParams: Map<String, Any> = emptyMap(),
     ): ResponseBody
 
     @PUT("{pathUrl}")
     @JvmSuppressWildcards
     suspend fun put(
-        @Path(value = "pathUrl", encoded = true) pathUrl: String, @Body body: Any,
-        @HeaderMap headerMap: Map<String, Any>, @QueryMap queryParams: Map<String, Any>
+        @Path(value = "pathUrl", encoded = true) pathUrl: String,
+        @Body body: Any,
+        @HeaderMap headerMap: Map<String, Any>,
+        @QueryMap queryParams: Map<String, Any>,
     ): ResponseBody
 
     @PATCH("{pathUrl}")
     @JvmSuppressWildcards
     suspend fun patch(
-        @Path(value = "pathUrl", encoded = true) pathUrl: String, @Body body: Any,
-        @HeaderMap headerMap: Map<String, Any>, @QueryMap queryParams: Map<String, Any>
+        @Path(value = "pathUrl", encoded = true) pathUrl: String,
+        @Body body: Any,
+        @HeaderMap headerMap: Map<String, Any>,
+        @QueryMap queryParams: Map<String, Any>,
     ): ResponseBody
-
 
     @POST("{pathUrl}")
     @JvmSuppressWildcards
     suspend fun postWithHeaderResponse(
-        @Path(value = "pathUrl", encoded = true) pathUrl: String, @Body body: Any,
-        @HeaderMap headerMap: Map<String, Any>, @QueryMap queryParams: Map<String, Any>
+        @Path(value = "pathUrl", encoded = true) pathUrl: String,
+        @Body body: Any,
+        @HeaderMap headerMap: Map<String, Any>,
+        @QueryMap queryParams: Map<String, Any>,
     ): Response<ResponseBody>
 
     @GET("{pathUrl}")
     @JvmSuppressWildcards
     suspend fun get(
         @Path(value = "pathUrl", encoded = true) pathUrl: String,
-        @HeaderMap headerMap: Map<String, Any>, @QueryMap queryParams: Map<String, Any>
+        @HeaderMap headerMap: Map<String, Any>,
+        @QueryMap queryParams: Map<String, Any>,
     ): ResponseBody
 
     @GET("{pathUrl}")
     @JvmSuppressWildcards
     suspend fun getWithHeaderResponse(
         @Path(value = "pathUrl", encoded = true) pathUrl: String,
-        @HeaderMap headerMap: Map<String, Any>, @QueryMap queryParams: Map<String, Any>
+        @HeaderMap headerMap: Map<String, Any>,
+        @QueryMap queryParams: Map<String, Any>,
     ): Response<ResponseBody>
 
     @Multipart
@@ -90,7 +99,7 @@ interface ApiService {
         @Part files: List<MultipartBody.Part>,
         @Part("data") requestBody: Any,
         @HeaderMap headerMap: Map<String, Any>,
-        @QueryMap queryParams: Map<String, Any>
+        @QueryMap queryParams: Map<String, Any>,
     ): Response<ResponseBody>
 
     @Multipart
@@ -100,7 +109,7 @@ interface ApiService {
         @HeaderMap headerMap: Map<String, String>,
         @QueryMap queryParams: Map<String, String>,
         @Part("body") body: RequestBody?,
-        @Part files: List<MultipartBody.Part>
+        @Part files: List<MultipartBody.Part>,
     ): Response<ResponseBody>
 
     @Multipart
@@ -110,7 +119,6 @@ interface ApiService {
         @HeaderMap headerMap: Map<String, String>,
         @QueryMap queryParams: Map<String, String>,
         @Part("body") body: RequestBody?,
-        @Part files: List<MultipartBody.Part>
+        @Part files: List<MultipartBody.Part>,
     ): Response<ResponseBody>
-
 }

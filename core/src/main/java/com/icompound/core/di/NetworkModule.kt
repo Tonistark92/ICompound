@@ -30,83 +30,90 @@ import java.util.concurrent.TimeUnit
 
 private const val REFRESH = "refresh"
 
-internal val networkModule = module {
-    single<Gson> {
-        GsonBuilder().create()
-    }
+internal val networkModule =
+    module {
+        single<Gson> {
+            GsonBuilder().create()
+        }
 
-    single<Json> {
-        Json {
-            ignoreUnknownKeys = true
-            isLenient = true
-            explicitNulls = false
-            coerceInputValues = true
+        single<Json> {
+            Json {
+                ignoreUnknownKeys = true
+                isLenient = true
+                explicitNulls = false
+                coerceInputValues = true
+            }
+        }
+
+        single { SessionEvents() }
+
+        single<TokenStore> {
+            DefaultTokenStore(get())
+        }
+
+        single<ApiService> {
+            get<Retrofit>().create(ApiService::class.java)
+        }
+
+        single<INetworkProvider> {
+            RetrofitNetworkProvider(get())
+        }
+        single<OkHttpClient>(named(REFRESH)) { baseClient(androidContext()).build() }
+        single<AuthRefreshApi> {
+            Retrofit
+                .Builder()
+                .client(get(named(REFRESH)))
+                .baseUrl(BuildConfig.REMOTE_URL)
+                .addConverterFactory(
+                    get<Json>().asConverterFactory(
+                        "application/json".toMediaType(),
+                    ),
+                ).build()
+                .create(AuthRefreshApi::class.java)
+        }
+        single { TokenAuthenticator(get(), get(), get()) }
+
+        single<Interceptor> {
+            HeaderInterceptor(get())
+        }
+
+        single<OkHttpClient> {
+            baseClient(androidContext())
+                .addInterceptor(get<Interceptor>())
+                .authenticator(get<TokenAuthenticator>())
+                .build()
+        }
+
+        single<Cache> {
+            Cache(File(System.getProperty("java.io.tmpdir"), UUID.randomUUID().toString()), 1024)
+        }
+
+        single {
+            Retrofit
+                .Builder()
+                .baseUrl(BuildConfig.REMOTE_URL)
+                .client(get<OkHttpClient>())
+                .addConverterFactory(
+                    get<Json>().asConverterFactory(
+                        "application/json".toMediaType(),
+                    ),
+                ).build()
         }
     }
 
-    single { SessionEvents() }
-
-    single<TokenStore> {
-        DefaultTokenStore(get())
+private fun getHttpLoggingInterceptor() =
+    HttpLoggingInterceptor().apply {
+        level =
+            if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BODY
+            } else {
+                HttpLoggingInterceptor.Level.NONE
+            }
     }
-
-    single<ApiService> {
-        get<Retrofit>().create(ApiService::class.java)
-    }
-
-    single<INetworkProvider> {
-        RetrofitNetworkProvider(get())
-    }
-    single<OkHttpClient>(named(REFRESH)) { baseClient(androidContext()).build() }
-    single<AuthRefreshApi> {
-        Retrofit.Builder()
-            .client(get(named(REFRESH)))
-            .baseUrl(BuildConfig.REMOTE_URL)
-            .addConverterFactory(
-                get<Json>().asConverterFactory(
-                    "application/json".toMediaType()
-                )
-            )
-            .build()
-            .create(AuthRefreshApi::class.java)
-    }
-    single { TokenAuthenticator(get(), get(), get()) }
-
-    single<Interceptor> {
-        HeaderInterceptor(get())
-    }
-
-    single<OkHttpClient> {
-        baseClient(androidContext())
-            .addInterceptor(get<Interceptor>())
-            .authenticator(get<TokenAuthenticator>())
-            .build()
-    }
-
-    single<Cache> {
-        Cache(File(System.getProperty("java.io.tmpdir"), UUID.randomUUID().toString()), 1024)
-    }
-
-    single {
-        Retrofit.Builder()
-            .baseUrl(BuildConfig.REMOTE_URL)
-            .client(get<OkHttpClient>())
-            .addConverterFactory(
-                get<Json>().asConverterFactory(
-                    "application/json".toMediaType()
-                )
-            )
-            .build()
-    }
-}
-
-private fun getHttpLoggingInterceptor() = HttpLoggingInterceptor().apply {
-    level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
-    else HttpLoggingInterceptor.Level.NONE
-}
 
 private fun baseClient(context: Context): OkHttpClient.Builder =
-    OkHttpClient.Builder()
+    OkHttpClient
+        .Builder()
         .cache(Cache(File(context.cacheDir, "http_cache"), 10L * 1024 * 1024))
         .connectTimeout(30, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS)
@@ -114,11 +121,13 @@ private fun baseClient(context: Context): OkHttpClient.Builder =
         .retryOnConnectionFailure(true)
         .apply {
             if (BuildConfig.DEBUG) {
-                addInterceptor(HttpLoggingInterceptor().apply {
-                    level = HttpLoggingInterceptor.Level.BODY
-                    redactHeader("Authorization")
-                    redactHeader("Cookie")
-                })
+                addInterceptor(
+                    HttpLoggingInterceptor().apply {
+                        level = HttpLoggingInterceptor.Level.BODY
+                        redactHeader("Authorization")
+                        redactHeader("Cookie")
+                    },
+                )
             } else {
 //                certificatePinner(certificatePinner())   // pinning only in release
             }

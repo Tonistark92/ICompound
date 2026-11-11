@@ -13,27 +13,40 @@ import java.io.File
 import java.io.IOException
 import java.lang.reflect.Type
 
-class RetrofitNetworkProvider(private val apiService: ApiService) : INetworkProvider {
-
+class RetrofitNetworkProvider(
+    private val apiService: ApiService,
+) : INetworkProvider {
     override suspend fun <ResponseBody, RequestBody> delete(
-        responseWrappedModel: Type, pathUrl: String, headers: Map<String, Any>?,
-        queryParams: Map<String, Any>?, requestBody: RequestBody?
+        responseWrappedModel: Type,
+        pathUrl: String,
+        headers: Map<String, Any>?,
+        queryParams: Map<String, Any>?,
+        requestBody: RequestBody?,
     ): ResponseBody {
-        val response = apiService.delete(
-            pathUrl = pathUrl, headerMap = headers ?: hashMapOf(),
-            queryParams = queryParams ?: hashMapOf(), body = requestBody ?: Unit
-        )
+        val response =
+            apiService.delete(
+                pathUrl = pathUrl,
+                headerMap = headers ?: hashMapOf(),
+                queryParams = queryParams ?: hashMapOf(),
+                body = requestBody ?: Unit,
+            )
         return response.string().getModelFromJSON(responseWrappedModel)
     }
 
     override suspend fun <ResponseBody, RequestBody> post(
-        responseWrappedModel: Type, pathUrl: String, headers: Map<String, Any>?,
-        queryParams: Map<String, Any>?, requestBody: RequestBody?
+        responseWrappedModel: Type,
+        pathUrl: String,
+        headers: Map<String, Any>?,
+        queryParams: Map<String, Any>?,
+        requestBody: RequestBody?,
     ): ResponseBody {
-        val response = apiService.post(
-            pathUrl = pathUrl, headerMap = headers ?: hashMapOf(),
-            queryParams = queryParams ?: hashMapOf(), body = requestBody ?: Unit
-        )
+        val response =
+            apiService.post(
+                pathUrl = pathUrl,
+                headerMap = headers ?: hashMapOf(),
+                queryParams = queryParams ?: hashMapOf(),
+                body = requestBody ?: Unit,
+            )
 
         return response.string().getModelFromJSON(responseWrappedModel)
     }
@@ -43,24 +56,33 @@ class RetrofitNetworkProvider(private val apiService: ApiService) : INetworkProv
         pathUrl: String,
         headers: Map<String, Any>?,
         queryParams: Map<String, Any>?,
-        requestBody: Map<String, Any>?
+        requestBody: Map<String, Any>?,
     ): ResponseBody {
-        val response = apiService.postFormData(
-            pathUrl = pathUrl, headerMap = headers ?: hashMapOf(),
-            queryParams = queryParams ?: hashMapOf(), fields = requestBody?:emptyMap()
-        )
+        val response =
+            apiService.postFormData(
+                pathUrl = pathUrl,
+                headerMap = headers ?: hashMapOf(),
+                queryParams = queryParams ?: hashMapOf(),
+                fields = requestBody ?: emptyMap(),
+            )
 
         return response.string().getModelFromJSON(responseWrappedModel)
     }
 
     override suspend fun <ResponseBody, RequestBody> put(
-        responseWrappedModel: Type, pathUrl: String, headers: Map<String, Any>?,
-        queryParams: Map<String, Any>?, requestBody: RequestBody?
+        responseWrappedModel: Type,
+        pathUrl: String,
+        headers: Map<String, Any>?,
+        queryParams: Map<String, Any>?,
+        requestBody: RequestBody?,
     ): ResponseBody {
-        val response = apiService.put(
-            pathUrl = pathUrl, headerMap = headers ?: hashMapOf(),
-            queryParams = queryParams ?: hashMapOf(), body = requestBody ?: Unit
-        )
+        val response =
+            apiService.put(
+                pathUrl = pathUrl,
+                headerMap = headers ?: hashMapOf(),
+                queryParams = queryParams ?: hashMapOf(),
+                body = requestBody ?: Unit,
+            )
 
         return response.string().getModelFromJSON(responseWrappedModel)
     }
@@ -75,35 +97,41 @@ class RetrofitNetworkProvider(private val apiService: ApiService) : INetworkProv
         files: HashMap<String, File>,
     ): ResponseBody {
         // Convert HashMap to MultipartBody.Part list
-        val multipartFiles = files.map { (attributeName, file) ->
-            file.asMultipart(attributeName)
-        }
+        val multipartFiles =
+            files.map { (attributeName, file) ->
+                file.asMultipart(attributeName)
+            }
 
         // Convert request body to JSON
-        val jsonRequestBody = requestBody?.toJson()
-            ?.toRequestBody("application/json".toMediaTypeOrNull())
+        val jsonRequestBody =
+            requestBody
+                ?.toJson()
+                ?.toRequestBody("application/json".toMediaTypeOrNull())
 
         // Convert headers & query params to Map<String, String>
         val headersString = headers?.mapValues { it.value.toString() } ?: emptyMap()
         val queryParamsString = queryParams?.mapValues { it.value.toString() } ?: emptyMap()
 
         // Make API call with multipart
-        val response = apiService.putMultipart(
-            pathUrl = pathUrl,
-            headerMap = headersString,
-            queryParams = queryParamsString,
-            body = jsonRequestBody,
-            files = multipartFiles
-        )
+        val response =
+            apiService.putMultipart(
+                pathUrl = pathUrl,
+                headerMap = headersString,
+                queryParams = queryParamsString,
+                body = jsonRequestBody,
+                files = multipartFiles,
+            )
 
         // Read the raw response once
         val raw = response.body()?.string()
 
         return when {
             // 204 or explicit “no content” – return Unit
-            responseWrappedModel == Nothing::class.java
-                    || response.code() == 204
-                    || raw.isNullOrBlank() -> Unit as ResponseBody
+            responseWrappedModel == Nothing::class.java ||
+                response.code() == 204 ||
+                raw.isNullOrBlank() -> {
+                Unit as ResponseBody
+            }
 
             response.isSuccessful -> {
                 // Now parse `raw` exactly once
@@ -111,65 +139,99 @@ class RetrofitNetworkProvider(private val apiService: ApiService) : INetworkProv
                     ?: throw IOException("Empty response body after parsing -> $raw")
             }
 
-            else -> throw HttpException(response)
+            else -> {
+                throw HttpException(response)
+            }
         }
     }
 
     override suspend fun <ResponseBody, RequestBody> patch(
-        responseWrappedModel: Type, pathUrl: String, headers: Map<String, Any>?,
-        queryParams: Map<String, Any>?, requestBody: RequestBody?,
+        responseWrappedModel: Type,
+        pathUrl: String,
+        headers: Map<String, Any>?,
+        queryParams: Map<String, Any>?,
+        requestBody: RequestBody?,
     ): ResponseBody {
-        val response = apiService.patch(
-            pathUrl = pathUrl, headerMap = headers ?: hashMapOf(),
-            queryParams = queryParams ?: hashMapOf(), body = requestBody ?: Unit
-        )
+        val response =
+            apiService.patch(
+                pathUrl = pathUrl,
+                headerMap = headers ?: hashMapOf(),
+                queryParams = queryParams ?: hashMapOf(),
+                body = requestBody ?: Unit,
+            )
         return response.string().getModelFromJSON(responseWrappedModel)
     }
 
     override suspend fun <ResponseBody, RequestBody> postWithHeaderResponse(
-        responseWrappedModel: Type, pathUrl: String, headers: Map<String, Any>?,
-        queryParams: Map<String, Any>?, requestBody: RequestBody?
+        responseWrappedModel: Type,
+        pathUrl: String,
+        headers: Map<String, Any>?,
+        queryParams: Map<String, Any>?,
+        requestBody: RequestBody?,
     ): Pair<ResponseBody, Map<String, String>> {
-        val response = apiService.postWithHeaderResponse(
-            pathUrl = pathUrl, headerMap = headers ?: hashMapOf(),
-            queryParams = queryParams ?: hashMapOf(), body = requestBody ?: Unit
-        )
-        return when {
-            response.isSuccessful -> Pair(
-                (response.body() ?: "".toResponseBody()).string()
-                    .getModelFromJSON(responseWrappedModel), response.headers().toMap()
+        val response =
+            apiService.postWithHeaderResponse(
+                pathUrl = pathUrl,
+                headerMap = headers ?: hashMapOf(),
+                queryParams = queryParams ?: hashMapOf(),
+                body = requestBody ?: Unit,
             )
+        return when {
+            response.isSuccessful -> {
+                Pair(
+                    (response.body() ?: "".toResponseBody())
+                        .string()
+                        .getModelFromJSON(responseWrappedModel),
+                    response.headers().toMap(),
+                )
+            }
 
-            else -> throw HttpException(response)
+            else -> {
+                throw HttpException(response)
+            }
         }
     }
 
     override suspend fun <ResponseBody> get(
-        responseWrappedModel: Type, pathUrl: String, headers: Map<String, Any>?,
-        queryParams: Map<String, Any>?
+        responseWrappedModel: Type,
+        pathUrl: String,
+        headers: Map<String, Any>?,
+        queryParams: Map<String, Any>?,
     ): ResponseBody {
-        val response = apiService.get(
-            pathUrl = pathUrl, headerMap = headers ?: hashMapOf(),
-            queryParams = queryParams ?: hashMapOf()
-        )
+        val response =
+            apiService.get(
+                pathUrl = pathUrl,
+                headerMap = headers ?: hashMapOf(),
+                queryParams = queryParams ?: hashMapOf(),
+            )
         return response.string().getModelFromJSON(responseWrappedModel)
     }
 
     override suspend fun <ResponseBody> getWithHeaderResponse(
-        responseWrappedModel: Type, pathUrl: String, headers: Map<String, Any>?,
-        queryParams: Map<String, Any>?
+        responseWrappedModel: Type,
+        pathUrl: String,
+        headers: Map<String, Any>?,
+        queryParams: Map<String, Any>?,
     ): Pair<ResponseBody, Map<String, String>> {
-        val response = apiService.getWithHeaderResponse(
-            pathUrl = pathUrl, headerMap = headers ?: hashMapOf(),
-            queryParams = queryParams ?: hashMapOf()
-        )
-        return when {
-            response.isSuccessful -> Pair(
-                (response.body() ?: "".toResponseBody()).string()
-                    .getModelFromJSON(responseWrappedModel), response.headers().toMap()
+        val response =
+            apiService.getWithHeaderResponse(
+                pathUrl = pathUrl,
+                headerMap = headers ?: hashMapOf(),
+                queryParams = queryParams ?: hashMapOf(),
             )
+        return when {
+            response.isSuccessful -> {
+                Pair(
+                    (response.body() ?: "".toResponseBody())
+                        .string()
+                        .getModelFromJSON(responseWrappedModel),
+                    response.headers().toMap(),
+                )
+            }
 
-            else -> throw HttpException(response)
+            else -> {
+                throw HttpException(response)
+            }
         }
     }
 
@@ -219,35 +281,47 @@ class RetrofitNetworkProvider(private val apiService: ApiService) : INetworkProv
         headers: Map<String, Any>?,
         queryParams: Map<String, Any>?,
         requestBody: RequestBody?,
-        files: HashMap<String, File>
+        files: HashMap<String, File>,
     ): ResponseBody {
         // Convert HashMap to MultipartBody.Part list
-        val multipartFiles = files.map { (attributeName, file) ->
-            file.asMultipart(attributeName)
-        }
+        val multipartFiles =
+            files.map { (attributeName, file) ->
+                file.asMultipart(attributeName)
+            }
 
         // Convert request body to JSON
-        val jsonRequestBody = requestBody?.toJson()
-            ?.toRequestBody("application/json".toMediaTypeOrNull())
+        val jsonRequestBody =
+            requestBody
+                ?.toJson()
+                ?.toRequestBody("application/json".toMediaTypeOrNull())
 
         // Convert headers & query params to Map<String, String>
         val headersString = headers?.mapValues { it.value.toString() } ?: emptyMap()
         val queryParamsString = queryParams?.mapValues { it.value.toString() } ?: emptyMap()
 
         // Make API call with multipart
-        val response = apiService.postMultipart(
-            pathUrl = pathUrl,
-            headerMap = headersString,
-            queryParams = queryParamsString,
-            body = jsonRequestBody,
-            files = multipartFiles
-        )
+        val response =
+            apiService.postMultipart(
+                pathUrl = pathUrl,
+                headerMap = headersString,
+                queryParams = queryParamsString,
+                body = jsonRequestBody,
+                files = multipartFiles,
+            )
 
         return when {
-            responseWrappedModel == Nothing::class.java || response.code() == 204 || response.body()?.string().isNullOrBlank() -> Unit as ResponseBody
-            response.isSuccessful -> response.body()?.string()?.getModelFromJSON(responseWrappedModel)
-                ?: throw IOException("Empty response body")
-            else -> throw HttpException(response)
+            responseWrappedModel == Nothing::class.java || response.code() == 204 || response.body()?.string().isNullOrBlank() -> {
+                Unit as ResponseBody
+            }
+
+            response.isSuccessful -> {
+                response.body()?.string()?.getModelFromJSON(responseWrappedModel)
+                    ?: throw IOException("Empty response body")
+            }
+
+            else -> {
+                throw HttpException(response)
+            }
         }
     }
 
@@ -255,6 +329,4 @@ class RetrofitNetworkProvider(private val apiService: ApiService) : INetworkProv
         val requestBody = this.asRequestBody("image/*".toMediaTypeOrNull())
         return MultipartBody.Part.createFormData(partName, this.name, requestBody)
     }
-
-
 }

@@ -1,0 +1,213 @@
+#
+#name: ICompound Android CI/CD
+#
+#on:
+#  pull_request:
+#    branches:
+#      - develop
+#      - main
+#
+#  push:
+#    branches:
+#      - develop
+#      - main
+#    tags:
+#      - "v*"
+#
+#  workflow_dispatch:
+#
+#permissions:
+#  contents: read
+#
+#concurrency:
+#  group: android-${{ github.workflow }}-${{ github.ref }}
+#  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/tags/') }}
+#
+#env:
+#  JAVA_VERSION: "25"
+#  ORG_GRADLE_PROJECT_API_KEY: ${{ secrets.API_KEY }}
+#  ORG_GRADLE_PROJECT_SOCKET_PORT: ${{ secrets.SOCKET_PORT }}
+#  ORG_GRADLE_PROJECT_GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+#  ORG_GRADLE_PROJECT_IC_COMPOUND_DATASTORE_NAME: ${{ secrets.IC_COMPOUND_DATASTORE_NAME }}
+#  ORG_GRADLE_PROJECT_REMOTE_URL: ${{ secrets.REMOTE_URL }}
+#  ORG_GRADLE_PROJECT_DEBUG_REMOTE_URL: ${{ secrets.DEBUG_REMOTE_URL }}
+#
+#jobs:
+#  # ============================================================
+#  # 1. VALIDATION AND CODE QUALITY
+#  # ============================================================
+#  validate:
+#    name: Validate Android Project
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout source
+#        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+#        with:
+#          persist-credentials: false
+#
+#      - name: Set up JDK
+#        uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
+#        with:
+#          distribution: temurin
+#          java-version: ${{ env.JAVA_VERSION }}
+#
+#      - name: Set up Gradle
+#        uses: gradle/actions/setup-gradle@v6
+#
+#
+#      - name: Validate release version
+#        if: startsWith(github.ref, 'refs/tags/')
+#        shell: bash
+#        run: |
+#          set -euo pipefail
+#
+#          TAG_VERSION="${GITHUB_REF_NAME#v}"
+#
+#          VERSION_NAME=$(grep -E '^VERSION_NAME=' version.properties | cut -d '=' -f2-)
+#          VERSION_CODE=$(grep -E '^VERSION_CODE=' version.properties | cut -d '=' -f2-)
+#
+#          # Validate tag format: vMAJOR.MINOR.PATCH
+#          if [[ ! "$GITHUB_REF_NAME" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+#            echo "::error::Invalid release tag: $GITHUB_REF_NAME"
+#            echo "Expected format: v1.2.3"
+#            exit 1
+#          fi
+#
+#          # Validate tag matches version.properties
+#          if [[ "$TAG_VERSION" != "$VERSION_NAME" ]]; then
+#            echo "::error::Tag version ($TAG_VERSION) does not match VERSION_NAME ($VERSION_NAME)"
+#            exit 1
+#          fi
+#
+#          # Validate VERSION_CODE
+#          if [[ ! "$VERSION_CODE" =~ ^[1-9][0-9]*$ ]]; then
+#            echo "::error::VERSION_CODE must be a positive integer. Found: $VERSION_CODE"
+#            exit 1
+#          fi
+#
+#          echo "Release version validation passed."
+#          echo "VERSION_NAME: $VERSION_NAME"
+#          echo "VERSION_CODE: $VERSION_CODE"
+#
+#
+#      - name: Check formatting
+#        run: ./gradlew spotlessCheck
+#
+#      - name: Run Detekt
+#        run: ./gradlew detekt
+#
+#      - name: Run architecture tests
+#        run: ./gradlew :quality:konsist:test
+#
+#      - name: Run unit tests
+#        run: ./gradlew test
+#
+#      - name: Run Android Lint
+#        run: ./gradlew lint
+#
+#      - name: Build debug variants
+#        run: ./gradlew assembleDebug
+#
+#      - name: Upload test and lint reports
+#        if: always()
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: android-quality-reports
+#          path: |
+#            **/build/reports/tests/
+#            **/build/reports/lint-results*.html
+#            **/build/reports/detekt/
+#          if-no-files-found: ignore
+#          retention-days: 7
+#
+#  # ============================================================
+#  # 2. ANDROID UI TESTS
+#  # ============================================================
+#  ui-tests:
+#    name: Android UI Tests
+#    runs-on: ubuntu-latest
+#    needs: validate
+#
+#    steps:
+#      - name: Checkout source
+#        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+#        with:
+#          persist-credentials: false
+#
+#      - name: Set up JDK
+#        uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
+#        with:
+#          distribution: temurin
+#          java-version: ${{ env.JAVA_VERSION }}
+#
+#      - name: Enable KVM
+#        run: |
+#          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+#          sudo udevadm control --reload-rules
+#          sudo udevadm trigger --name-match=kvm
+#
+#      - name: Set up Gradle
+#        uses: gradle/actions/setup-gradle@v6
+#
+#      - name: Run UI tests
+#        uses: reactivecircus/android-emulator-runner@v2
+#        with:
+#          api-level: 35
+#          arch: x86_64
+#          target: google_apis
+#          profile: pixel_2
+#          script: ./gradlew connectedDebugAndroidTest
+#
+#  # ============================================================
+#  # 3. PRODUCTION RELEASE BUILD
+#  # ============================================================
+#  release-production:
+#    name: Build Production Release
+#    runs-on: ubuntu-latest
+#
+#    needs:
+#      - validate
+#      - ui-tests
+#
+#    if: startsWith(github.ref, 'refs/tags/v')
+#
+#    environment: production
+#
+#    steps:
+#      - name: Checkout source
+#        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+#        with:
+#          persist-credentials: false
+#
+#      - name: Set up JDK
+#        uses: actions/setup-java@77dd5b2ce225ea11469928ac317850245a74ae78 # v6.2.0
+#        with:
+#          distribution: temurin
+#          java-version: ${{ env.JAVA_VERSION }}
+#
+#      - name: Set up Gradle
+#        uses: gradle/actions/setup-gradle@v6
+#
+#      - name: Decode release keystore
+#        env:
+#          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+#        run: |
+#          echo "$ANDROID_KEYSTORE_BASE64" \
+#            | base64 --decode > "$RUNNER_TEMP/release.keystore"
+#
+#      - name: Build signed production AAB
+#        env:
+#          ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/release.keystore
+#          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+#          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+#          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+#        run: ./gradlew bundleRelease
+#
+#      - name: Upload production AAB
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: production-aab-${{ github.ref_name }}
+#          path: app/build/outputs/bundle/release/*.aab
+#          if-no-files-found: error
+#          retention-days: 30

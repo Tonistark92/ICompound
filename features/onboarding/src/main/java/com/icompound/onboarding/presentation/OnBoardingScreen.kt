@@ -83,25 +83,27 @@ fun OnBoardingScreen(
     val facilities = stringResource(R.string.facilities)
 
     // keyed on the strings so a language change rebuilds the list
-    val pages = remember(title1, description1, title2, requests, qrPasses, bills, facilities) {
-        listOf(
-            OnboardingPageUi(
-                image = R.drawable.img_onboarding1,
-                title = title1,
-                subtitle = description1,
-            ),
-            OnboardingPageUi(
-                image = R.drawable.img_onboarding2,
-                title = title2,
-                tiles = listOf(
-                    FeatureTile(requests, R.drawable.ic_wrench),
-                    FeatureTile(qrPasses, R.drawable.ic_qrcode),
-                    FeatureTile(bills, R.drawable.ic_bills),
-                    FeatureTile(facilities, R.drawable.ic_city),
+    val pages =
+        remember(title1, description1, title2, requests, qrPasses, bills, facilities) {
+            listOf(
+                OnboardingPageUi(
+                    image = R.drawable.img_onboarding1,
+                    title = title1,
+                    subtitle = description1,
                 ),
-            ),
-        )
-    }
+                OnboardingPageUi(
+                    image = R.drawable.img_onboarding2,
+                    title = title2,
+                    tiles =
+                        listOf(
+                            FeatureTile(requests, R.drawable.ic_wrench),
+                            FeatureTile(qrPasses, R.drawable.ic_qrcode),
+                            FeatureTile(bills, R.drawable.ic_bills),
+                            FeatureTile(facilities, R.drawable.ic_city),
+                        ),
+                ),
+            )
+        }
 
     val pagerState = rememberPagerState(pageCount = { pages.size })
     val scope = rememberCoroutineScope()
@@ -121,11 +123,11 @@ fun OnBoardingScreen(
     }
 
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(media.scrim)
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(media.scrim),
     ) {
-
         // 1) Backgrounds: image + its own gradient move together
         pages.forEachIndexed { index, page ->
             Box(
@@ -137,7 +139,7 @@ fun OnBoardingScreen(
                         val delta = index - position
                         translationX = delta.coerceAtLeast(0f) * size.width * 0.35f
                         alpha = if (delta > 0f) (1f - delta).coerceIn(0f, 1f) else 1f
-                    }
+                    },
             ) {
                 KenBurnsImage(res = page.image)
                 CustomGradientOverlay()
@@ -152,12 +154,13 @@ fun OnBoardingScreen(
             PageContent(
                 page = pages[page],
                 visible = started && pagerState.currentPage == page,
-                modifier = Modifier.graphicsLayer {
-                    val pageOffset =
-                        (pagerState.currentPage - page) + pagerState.currentPageOffsetFraction
-                    translationX = pageOffset * size.width * 0.1f
-                    alpha = 1f - abs(pageOffset).coerceIn(0f, 1f)
-                },
+                modifier =
+                    Modifier.graphicsLayer {
+                        val pageOffset =
+                            (pagerState.currentPage - page) + pagerState.currentPageOffsetFraction
+                        translationX = pageOffset * size.width * 0.1f
+                        alpha = 1f - abs(pageOffset).coerceIn(0f, 1f)
+                    },
             )
         }
 
@@ -166,10 +169,11 @@ fun OnBoardingScreen(
             visible = !isLast,
             enter = fadeIn(),
             exit = fadeOut(),
-            modifier = Modifier
-                .align(Alignment.TopEnd)
-                .statusBarsPadding()
-                .padding(horizontal = 24.dp, vertical = 16.dp),
+            modifier =
+                Modifier
+                    .align(Alignment.TopEnd)
+                    .statusBarsPadding()
+                    .padding(horizontal = 24.dp, vertical = 16.dp),
         ) {
             Text(
                 text = stringResource(R.string.skip),
@@ -183,10 +187,11 @@ fun OnBoardingScreen(
         AnimatedContent(
             targetState = isLast,
             label = "controls",
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .navigationBarsPadding()
-                .padding(horizontal = 24.dp, vertical = 16.dp),
+            modifier =
+                Modifier
+                    .align(Alignment.BottomCenter)
+                    .navigationBarsPadding()
+                    .padding(horizontal = 24.dp, vertical = 16.dp),
         ) { last ->
             if (last) {
                 Column(
@@ -235,11 +240,12 @@ private fun PageContent(
     val media = ICompoundTheme.colors.media
 
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 24.dp)
-            .navigationBarsPadding()
-            .padding(bottom = ControlsHeight),
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(horizontal = 24.dp)
+                .navigationBarsPadding()
+                .padding(bottom = ControlsHeight),
         verticalArrangement = Arrangement.Bottom,
     ) {
         Reveal(visible, index = 0) {
@@ -301,10 +307,11 @@ private fun FeatureTileCard(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(media.glassChip),
+                modifier =
+                    Modifier
+                        .size(40.dp)
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(media.glassChip),
                 contentAlignment = Alignment.Center,
             ) {
                 tile.icon?.let {
@@ -355,7 +362,7 @@ private fun PageIndicator(
                     .height(6.dp)
                     .width(width)
                     .clip(CircleShape)
-                    .background(color)
+                    .background(color),
             )
         }
     }
@@ -388,7 +395,7 @@ private fun OnboardingButton(
             Spacer(Modifier.width(8.dp))
             Icon(
                 painter = painterResource(R.drawable.ic_right),
-                contentDescription = null,          // decorative
+                contentDescription = null, // decorative
                 tint = contentColor,
             )
         }
@@ -410,40 +417,43 @@ fun CustomGradientOverlay(modifier: Modifier = Modifier) {
                 .fillMaxSize()
                 .background(
                     Brush.verticalGradient(
-                        colorStops = arrayOf(
-                            0.00f to brand.copy(alpha = 0.55f),
-                            0.18f to brand.copy(alpha = 0.20f),
-                            0.35f to brand.copy(alpha = 0.10f),
-                        )
-                    )
-                )
+                        colorStops =
+                            arrayOf(
+                                0.00f to brand.copy(alpha = 0.55f),
+                                0.18f to brand.copy(alpha = 0.20f),
+                                0.35f to brand.copy(alpha = 0.10f),
+                            ),
+                    ),
+                ),
         )
         Box(
             Modifier
                 .fillMaxSize()
                 .background(
                     Brush.verticalGradient(
-                        colorStops = arrayOf(
-                            0.35f to brand.copy(alpha = 0.25f),
-                            0.65f to brand.copy(alpha = 0.40f),
-                            1.00f to brand.copy(alpha = 1.00f),
-                        )
-                    )
-                )
+                        colorStops =
+                            arrayOf(
+                                0.35f to brand.copy(alpha = 0.25f),
+                                0.65f to brand.copy(alpha = 0.40f),
+                                1.00f to brand.copy(alpha = 1.00f),
+                            ),
+                    ),
+                ),
         )
         Box(
             Modifier
                 .fillMaxSize()
                 .background(
                     Brush.verticalGradient(
-                        colorStops = arrayOf(
-                            0.45f to scrim.copy(alpha = 0f),
-                            0.70f to scrim.copy(alpha = 0.30f),
-                            0.88f to scrim.copy(alpha = 0.60f),
-                            1.00f to scrim.copy(alpha = 0.65f),
-                        )
-                    )
-                )
+                        colorStops =
+                            arrayOf(
+                                0.45f to scrim.copy(alpha = 0f),
+                                0.70f to scrim.copy(alpha = 0.30f),
+                                0.88f to scrim.copy(alpha = 0.60f),
+                                1.00f to scrim.copy(alpha = 0.65f),
+                            ),
+                    ),
+                ),
         )
     }
 }
@@ -466,9 +476,9 @@ private data class OnboardingPageUi(
 
 private val ControlsHeight = 120.dp
 
-//@Preview(name = "Page 1 - final state", showBackground = true, showSystemUi = true)
-//@Composable
-//private fun Page1Preview() {
+// @Preview(name = "Page 1 - final state", showBackground = true, showSystemUi = true)
+// @Composable
+// private fun Page1Preview() {
 //    ICompoundTheme {
 //        Box(
 //            Modifier
@@ -487,7 +497,7 @@ private val ControlsHeight = 120.dp
 //            )
 //        }
 //    }
-//}
+// }
 
 @Preview(name = "Page 2 - final state", showBackground = true, showSystemUi = true)
 @Composable
@@ -496,33 +506,37 @@ private fun Page2Preview() {
         Box(
             Modifier
                 .fillMaxSize()
-                .background(Color.Black)
+                .background(Color.Black),
         ) {
             KenBurnsImage(res = R.drawable.img_onboarding2)
             CustomGradientOverlay()
             PageContent(
-                page = OnboardingPageUi(
-                    image = R.drawable.img_onboarding2,
-                    title = "Everything in one place.",
-                    tiles = listOf(
-                        FeatureTile("Requests"), FeatureTile("QR Passes"),
-                        FeatureTile("Bills"), FeatureTile("Facilities"),
+                page =
+                    OnboardingPageUi(
+                        image = R.drawable.img_onboarding2,
+                        title = "Everything in one place.",
+                        tiles =
+                            listOf(
+                                FeatureTile("Requests"),
+                                FeatureTile("QR Passes"),
+                                FeatureTile("Bills"),
+                                FeatureTile("Facilities"),
+                            ),
                     ),
-                ),
                 visible = true,
             )
         }
     }
 }
 
-//@Preview(name = "Small phone", device = "spec:width=360dp,height=640dp", showSystemUi = true)
-//@Composable
-//private fun SmallScreenPreview() {
+// @Preview(name = "Small phone", device = "spec:width=360dp,height=640dp", showSystemUi = true)
+// @Composable
+// private fun SmallScreenPreview() {
 //    ICompoundTheme { OnBoardingScreen() }
-//}
+// }
 
-//@Preview(name = "Full screen (use Interactive mode)", showSystemUi = true)
-//@Composable
-//private fun FullScreenPreview() {
+// @Preview(name = "Full screen (use Interactive mode)", showSystemUi = true)
+// @Composable
+// private fun FullScreenPreview() {
 //    ICompoundTheme { OnBoardingScreen() }
-//}
+// }

@@ -6,5 +6,5 @@ import android.net.Uri
 
 fun Context.dial(phone: String) {
     val intent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null))
-    runCatching { startActivity(intent) }   // devices with no dialer (tablets) would crash otherwise
+    runCatching { startActivity(intent) } // devices with no dialer (tablets) would crash otherwise
 }

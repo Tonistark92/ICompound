@@ -53,7 +53,6 @@ object SpacingDimensions {
         get() = 48.dp
 }
 
-
 object PaddingDimensions {
     /** px/6 - 24dp (button horizontal padding from Figma) */
     val extraHigh
@@ -92,9 +91,7 @@ object PaddingDimensions {
         get() = 2.dp
 }
 
-
 object CornerDimensions {
-
     /** Interactive border radius/--radius-i-xs - 4dp */
     val xs
         @Composable
@@ -131,7 +128,6 @@ object CornerDimensions {
         @Stable
         get() = 100.dp
 
-    // Legacy naming aliases
     /** Container/Card radius - 12dp */
     val high
         @Composable

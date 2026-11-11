@@ -9,25 +9,38 @@ import kotlinx.coroutines.runBlocking
 interface TokenStore {
     val accessToken: String?
     val refreshToken: String?
-    fun save(access: String, refresh: String?)
+
+    fun save(
+        access: String,
+        refresh: String?,
+    )
+
     fun clear()
 }
 
 class DefaultTokenStore(
-    private val preferenceRepository: IPreferenceRepository
+    private val preferenceRepository: IPreferenceRepository,
 ) : TokenStore {
     private var _accessToken: String? = null
     private var _refreshToken: String? = null
 
     override val accessToken: String?
-        get() = _accessToken ?: runBlocking {
-            preferenceRepository.getToken().firstOrNull()?.takeIf { it.isNotBlank() }?.also { _accessToken = it }
-        }
+        get() =
+            _accessToken ?: runBlocking {
+                preferenceRepository
+                    .getToken()
+                    .firstOrNull()
+                    ?.takeIf { it.isNotBlank() }
+                    ?.also { _accessToken = it }
+            }
 
     override val refreshToken: String?
         get() = _refreshToken
 
-    override fun save(access: String, refresh: String?) {
+    override fun save(
+        access: String,
+        refresh: String?,
+    ) {
         _accessToken = access
         _refreshToken = refresh
         runBlocking {
@@ -48,5 +61,8 @@ class DefaultTokenStore(
 class SessionEvents {
     private val _expired = MutableSharedFlow<Unit>(extraBufferCapacity = 1)
     val expired: SharedFlow<Unit> = _expired
-    fun notifyExpired() { _expired.tryEmit(Unit) }
+
+    fun notifyExpired() {
+        _expired.tryEmit(Unit)
+    }
 }

@@ -1,6 +1,5 @@
 package com.icompound.core.util.language
 
-
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -37,7 +36,7 @@ import com.icompound.designsystem.SpacingDimensions
 fun LanguageSheet(
     modifier: Modifier = Modifier,
     onDismiss: () -> Unit,
-    onLanguageSelected: (String) -> Unit
+    onLanguageSelected: (String) -> Unit,
 ) {
     val context = LocalContext.current
     val appLocaleManager = remember { AppLocaleManager(context) }
@@ -62,39 +61,42 @@ fun LanguageSheet(
 @Composable
 private fun LanguageSheetContent(
     selectedLanguageCode: String,
-    onLanguageSelected: (String) -> Unit
+    onLanguageSelected: (String) -> Unit,
 ) {
-    val languages = listOf(
-        "ar" to stringResource(R.string.arabic),
-        "en" to stringResource(R.string.english)
-    )
+    val languages =
+        listOf(
+            "ar" to stringResource(R.string.arabic),
+            "en" to stringResource(R.string.english),
+        )
 
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = PaddingDimensions.extraHigh)
-            .navigationBarsPadding()
-            .background(MaterialTheme.colorScheme.surface),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(top = PaddingDimensions.extraHigh)
+                .navigationBarsPadding()
+                .background(MaterialTheme.colorScheme.surface),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = stringResource(R.string.change_language),
             style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onSurface
+            color = MaterialTheme.colorScheme.onSurface,
         )
 
         Spacer(modifier = Modifier.height(SpacingDimensions.sp2))
 
         LazyColumn(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = PaddingDimensions.extraHigh)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = PaddingDimensions.extraHigh),
         ) {
             items(languages.size) {
                 LanguageItem(
                     label = languages[it].second,
                     isSelected = selectedLanguageCode == languages[it].first,
-                    onSelect = { onLanguageSelected(languages[it].first) }
+                    onSelect = { onLanguageSelected(languages[it].first) },
                 )
             }
         }
@@ -105,43 +107,50 @@ private fun LanguageSheetContent(
 private fun LanguageItem(
     label: String,
     isSelected: Boolean,
-    onSelect: () -> Unit
+    onSelect: () -> Unit,
 ) {
     val shape = RoundedCornerShape(12.dp)
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = PaddingDimensions.high, vertical = 6.dp)
-            .clip(shape)
-            .background(
-                if (isSelected) MaterialTheme.colorScheme.primary.copy(alpha = 0.06f)
-                else MaterialTheme.colorScheme.surface
-            )
-            .border(
-                width = if (isSelected) 1.5.dp else 1.dp,
-                color = if (isSelected) MaterialTheme.colorScheme.primary
-                else MaterialTheme.colorScheme.outlineVariant,
-                shape = shape
-            )
-            .clickable { onSelect() }
-            .padding(horizontal = PaddingDimensions.medium, vertical = 4.dp)
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = PaddingDimensions.high, vertical = 6.dp)
+                .clip(shape)
+                .background(
+                    if (isSelected) {
+                        MaterialTheme.colorScheme.primary.copy(alpha = 0.06f)
+                    } else {
+                        MaterialTheme.colorScheme.surface
+                    },
+                ).border(
+                    width = if (isSelected) 1.5.dp else 1.dp,
+                    color =
+                        if (isSelected) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.outlineVariant
+                        },
+                    shape = shape,
+                ).clickable { onSelect() }
+                .padding(horizontal = PaddingDimensions.medium, vertical = 4.dp),
     ) {
         RadioButton(
             selected = isSelected,
-            colors = RadioButtonDefaults.colors(
-                selectedColor = MaterialTheme.colorScheme.primary,
-                unselectedColor = MaterialTheme.colorScheme.onSurfaceVariant
-            ),
-            onClick = onSelect
+            colors =
+                RadioButtonDefaults.colors(
+                    selectedColor = MaterialTheme.colorScheme.primary,
+                    unselectedColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                ),
+            onClick = onSelect,
         )
 
         Text(
             text = label,
             style = MaterialTheme.typography.bodyMedium,
             color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.padding(start = SpacingDimensions.sp1)
+            modifier = Modifier.padding(start = SpacingDimensions.sp1),
         )
     }
 }

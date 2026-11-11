@@ -17,15 +17,15 @@ import kotlin.getValue
 import kotlin.jvm.java
 
 abstract class BaseViewModel(
-    protected val dispatcherProvider: DispatcherProvider
-) : ViewModel(), CoroutineExecutor {
-
-
-    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        if (throwable !is CancellationException) {
-            onError(throwable)
+    protected val dispatcherProvider: DispatcherProvider,
+) : ViewModel(),
+    CoroutineExecutor {
+    private val exceptionHandler =
+        CoroutineExceptionHandler { _, throwable ->
+            if (throwable !is CancellationException) {
+                onError(throwable)
+            }
         }
-    }
 
     protected val viewModelScopeWithHandler: CoroutineScope
         get() = viewModelScope + exceptionHandler
@@ -37,23 +37,17 @@ abstract class BaseViewModel(
     // Coroutine Execution
     // ------------------------------------------------------------------------
 
-    protected fun launchIO(
-        block: suspend CoroutineScope.() -> Unit
-    ): Job {
-        return launchCoroutine(
+    protected fun launchIO(block: suspend CoroutineScope.() -> Unit): Job =
+        launchCoroutine(
             dispatcher = dispatcherProvider.io,
-            block = block
+            block = block,
         )
-    }
 
-    protected fun launchDefault(
-        block: suspend CoroutineScope.() -> Unit
-    ): Job {
-        return launchCoroutine(
+    protected fun launchDefault(block: suspend CoroutineScope.() -> Unit): Job =
+        launchCoroutine(
             dispatcher = dispatcherProvider.default,
-            block = block
+            block = block,
         )
-    }
 
     // ------------------------------------------------------------------------
     // Error Handling

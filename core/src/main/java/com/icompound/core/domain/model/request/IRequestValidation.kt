@@ -2,7 +2,6 @@ package com.icompound.core.domain.model.request
 
 import com.icompound.core.domain.model.exception.AppException
 
-
 /*
 *  IRequestValidation
 * contract --> body api key , query client id
@@ -11,6 +10,7 @@ import com.icompound.core.domain.model.exception.AppException
 
 interface IRequestValidation {
     fun isInitialState(): Boolean
+
     val remoteMap: RemoteRequest
 
     fun getRequestContracts(): HashMap<RequestContractType, HashMap<String, Boolean>>
@@ -24,23 +24,23 @@ interface IRequestValidation {
                 val key = entry.key
                 val value = requestMap[key]
                 if (value != null) key to value else null
-            }
-            .toMap()
+            }.toMap()
     }
 
     fun validateRequestContract() {
         val contract = getRequestContracts()
         if (isInitialState()) throwIsInitialStateException()
         val requestMap = remoteMap.requestBody + remoteMap.requestQueries + remoteMap.requestHeaders
-        if (isRequestSizeValid(contract, requestMap).not())
+        if (isRequestSizeValid(contract, requestMap).not()) {
             throwWhenMapSizeNotValid()
+        }
 
         validateRemoteRequest(contract, requestMap)
     }
 
     private fun isRequestSizeValid(
         contract: HashMap<RequestContractType, HashMap<String, Boolean>>,
-        requestMap: Map<String, Any>
+        requestMap: Map<String, Any>,
     ): Boolean {
         val minExpectedSize = contract.values.sumOf { map -> map.count { it.value } }
         val maxExpectedSize = contract.values.sumOf { it.size }
@@ -50,7 +50,7 @@ interface IRequestValidation {
 
     private fun validateRemoteRequest(
         contractKeys: HashMap<RequestContractType, HashMap<String, Boolean>>,
-        requestBody: Map<String, Any>
+        requestBody: Map<String, Any>,
     ) {
         contractKeys.forEach { (contractType, keyMap) ->
             keyMap.forEach { (key, isRequired) ->
@@ -58,11 +58,12 @@ interface IRequestValidation {
                 if (isRequired && key !in requestBody) {
                     throwWhenMissingKey(contractType, key)
                 }
-                val isEmpty = when (value) {
-                    is String -> value.isEmpty()
-                    is ByteArray -> value.isEmpty()
-                    else -> false
-                }
+                val isEmpty =
+                    when (value) {
+                        is String -> value.isEmpty()
+                        is ByteArray -> value.isEmpty()
+                        else -> false
+                    }
                 if (isRequired && isEmpty) {
                     throwWhenKeyHasEmptyValue(contractType, key)
                 }
@@ -70,31 +71,33 @@ interface IRequestValidation {
         }
     }
 
-    private fun throwWhenKeyHasEmptyValue(contractType: RequestContractType, key: String) {
+    private fun throwWhenKeyHasEmptyValue(
+        contractType: RequestContractType,
+        key: String,
+    ): Unit =
         throw AppException.Local.RequestValidation(
             clazz = this::class,
-            message = "Your ${contractType.name} Request key: $key has an empty value."
+            message = "Your ${contractType.name} Request key: $key has an empty value.",
         )
-    }
 
-    private fun throwWhenMissingKey(contractType: RequestContractType, key: String) {
+    private fun throwWhenMissingKey(
+        contractType: RequestContractType,
+        key: String,
+    ): Unit =
         throw AppException.Local.RequestValidation(
             clazz = this::class,
-            message = "Your ${contractType.name} Request has a missing key: $key."
+            message = "Your ${contractType.name} Request has a missing key: $key.",
         )
-    }
 
-    private fun throwWhenMapSizeNotValid() {
+    private fun throwWhenMapSizeNotValid(): Unit =
         throw AppException.Local.RequestValidation(
             clazz = this::class,
-            message = "Your Remote Request does not meet the minimum contract requirements."
+            message = "Your Remote Request does not meet the minimum contract requirements.",
         )
-    }
 
-    private fun throwIsInitialStateException() {
+    private fun throwIsInitialStateException(): Unit =
         throw AppException.Local.RequestValidation(
             clazz = this::class,
-            message = "Your Remote Request is in initial state."
+            message = "Your Remote Request is in initial state.",
         )
-    }
 }

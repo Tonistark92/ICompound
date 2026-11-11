@@ -19,7 +19,10 @@ object AppLogger {
         }
     }
 
-    fun e(message: String, throwable: Throwable? = null) {
+    fun e(
+        message: String,
+        throwable: Throwable? = null,
+    ) {
         if (isDebuggable) {
             Log.e(TAG, message, throwable)
         }

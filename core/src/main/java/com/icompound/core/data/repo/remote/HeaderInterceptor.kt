@@ -6,19 +6,19 @@ import okhttp3.Request
 import okhttp3.Response
 
 class HeaderInterceptor(
-    private val tokenStore: TokenStore
+    private val tokenStore: TokenStore,
 ) : Interceptor {
-
     override fun intercept(chain: Interceptor.Chain): Response {
         val original: Request = chain.request()
         val token = tokenStore.accessToken
-        val requestBuilder = original.newBuilder().apply {
-            if (!token.isNullOrBlank() && original.header(AUTHORIZATION) == null) {
-                addHeader(AUTHORIZATION, "Bearer $token")
+        val requestBuilder =
+            original.newBuilder().apply {
+                if (!token.isNullOrBlank() && original.header(AUTHORIZATION) == null) {
+                    addHeader(AUTHORIZATION, "Bearer $token")
+                }
+                addHeader(ACCEPT, APP_JSON)
+                addHeader(CONTENT_TYPE, APP_JSON)
             }
-            addHeader(ACCEPT, APP_JSON)
-            addHeader(CONTENT_TYPE, APP_JSON)
-        }
         return chain.proceed(requestBuilder.build())
     }
 

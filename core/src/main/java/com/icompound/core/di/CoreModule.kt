@@ -14,36 +14,36 @@ import com.icompound.core.domain.repo.local.IPreferenceRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
+val iCompoundCoreModule =
+    module {
 
-val iCompoundCoreModule = module {
-
-    includes(
-        networkModule,
-        coroutineModule
-    )
-
-    single<DataStore<Preferences>> {
-        PreferenceDataStoreFactory.create(
-            produceFile = {
-                androidContext().preferencesDataStoreFile(
-                    BuildConfig.IC_COMPOUND_DATASTORE_NAME
-                )
-            }
+        includes(
+            networkModule,
+            coroutineModule,
         )
-    }
-    single<IPreferenceRepository> {
-        PreferenceRepositoryImpl(
-            preferenceDataSource = get()
-        )
-    }
 
-    single<IPreferenceDataSource> {
-        PreferenceDataSource(
-            dataStore = get()
-        )
-    }
+        single<DataStore<Preferences>> {
+            PreferenceDataStoreFactory.create(
+                produceFile = {
+                    androidContext().preferencesDataStoreFile(
+                        BuildConfig.IC_COMPOUND_DATASTORE_NAME,
+                    )
+                },
+            )
+        }
+        single<IPreferenceRepository> {
+            PreferenceRepositoryImpl(
+                preferenceDataSource = get(),
+            )
+        }
 
-    single<ErrorHandler> {
-        GeneralErrorHandlerImpl()
+        single<IPreferenceDataSource> {
+            PreferenceDataSource(
+                dataStore = get(),
+            )
+        }
+
+        single<ErrorHandler> {
+            GeneralErrorHandlerImpl()
+        }
     }
-}

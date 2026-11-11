@@ -26,18 +26,30 @@ import com.icompound.designsystem.ICompoundTheme
 
 enum class StatusType { Error, Warning, Success, Info }
 
-data class StatusColors(val container: Color, val border: Color, val content: Color)
+data class StatusColors(
+    val container: Color,
+    val border: Color,
+    val content: Color,
+)
 
- fun StatusType.colors() = when (this) {
-    StatusType.Error -> StatusColors(
-        ColorLightTokens.ErrorContainer, ColorLightTokens.Error.copy(alpha = .4f), ColorLightTokens.Error)
-    StatusType.Warning -> StatusColors(
-        ColorLightTokens.Warning.copy(alpha = .15f), ColorLightTokens.Warning, ColorLightTokens.OrangeDark)
-    StatusType.Success -> StatusColors(
-        ColorLightTokens.Success, ColorLightTokens.OnSuccess.copy(alpha = .4f), ColorLightTokens.OnSuccess)
-    StatusType.Info -> StatusColors(
-        ColorLightTokens.PrimaryContainer, ColorLightTokens.Info, ColorLightTokens.Primary)
-}
+fun StatusType.colors() =
+    when (this) {
+        StatusType.Error -> {
+            StatusColors(ColorLightTokens.ErrorContainer, ColorLightTokens.Error.copy(alpha = .4f), ColorLightTokens.Error)
+        }
+
+        StatusType.Warning -> {
+            StatusColors(ColorLightTokens.Warning.copy(alpha = .15f), ColorLightTokens.Warning, ColorLightTokens.OrangeDark)
+        }
+
+        StatusType.Success -> {
+            StatusColors(ColorLightTokens.Success, ColorLightTokens.OnSuccess.copy(alpha = .4f), ColorLightTokens.OnSuccess)
+        }
+
+        StatusType.Info -> {
+            StatusColors(ColorLightTokens.PrimaryContainer, ColorLightTokens.Info, ColorLightTokens.Primary)
+        }
+    }
 
 @Composable
 fun StatusBanner(
@@ -54,45 +66,45 @@ fun StatusBanner(
             .border(1.dp, c.border, RoundedCornerShape(10.dp))
             .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Icon(icon, null, tint = c.content, modifier = Modifier.size(18.dp))
         Text(text, color = c.content, style = MaterialTheme.typography.bodySmall)
     }
 }
 
-
 @Preview(
     name = "Status Banners",
-    showBackground = true
+    showBackground = true,
 )
 @Composable
 private fun StatusBannerPreview() {
     ICompoundTheme {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             StatusBanner(
                 text = "Something went wrong. Please try again.",
-                type = StatusType.Error
+                type = StatusType.Error,
             )
 
             StatusBanner(
                 text = "Your verification code will expire soon.",
-                type = StatusType.Warning
+                type = StatusType.Warning,
             )
 
             StatusBanner(
                 text = "Your phone number has been verified.",
-                type = StatusType.Success
+                type = StatusType.Success,
             )
 
             StatusBanner(
                 text = "A verification code has been sent to your phone.",
-                type = StatusType.Info
+                type = StatusType.Info,
             )
         }
     }

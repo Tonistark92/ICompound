@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.icompound.phone_auth"
+    namespace = "com.icompound.phoneauth"
     compileSdk {
         version = release(37)
     }

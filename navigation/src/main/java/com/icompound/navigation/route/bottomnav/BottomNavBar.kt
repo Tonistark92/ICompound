@@ -33,10 +33,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.icompound.navigation.route.NavScreen
 import com.icompound.designsystem.ICompoundTheme
-
-
+import com.icompound.navigation.route.NavScreen
 
 @Composable
 fun BottomAppBar(
@@ -44,10 +42,12 @@ fun BottomAppBar(
     items: List<BottomAppBarModel>,
     onItemSelected: (BottomAppBarModel) -> Unit,
 ) {
-    val selectedIndex = remember(currentKey) {
-        items.indexOfFirst { it.navScreen::class == currentKey?.let { k -> k::class } }
-            .coerceAtLeast(0)
-    }
+    val selectedIndex =
+        remember(currentKey) {
+            items
+                .indexOfFirst { it.navScreen::class == currentKey?.let { k -> k::class } }
+                .coerceAtLeast(0)
+        }
     val centerIndex = items.size / 2
     val fabSize = 64.dp
     val shape = remember { NotchedBarShape(notchRadius = fabSize / 2 + 8.dp) }
@@ -56,22 +56,23 @@ fun BottomAppBar(
     val centerShadow by animateDpAsState(
         targetValue = if (isCenterSelected) 24.dp else 6.dp,
         animationSpec = tween(durationMillis = 300),
-        label = "centerShadow"
+        label = "centerShadow",
     )
 
     Box(modifier = Modifier.fillMaxWidth()) {
         Row(
-            modifier = Modifier
-                .padding(top = fabSize / 2)               // room for the half of the circle above the bar
-                .shadow(8.dp, shape)
-                .background(MaterialTheme.colorScheme.background, shape)
-                .windowInsetsPadding(NavigationBarDefaults.windowInsets)
-                .height(72.dp)
-                .fillMaxWidth(),
+            modifier =
+                Modifier
+                    .padding(top = fabSize / 2) // room for the half of the circle above the bar
+                    .shadow(8.dp, shape)
+                    .background(MaterialTheme.colorScheme.background, shape)
+                    .windowInsetsPadding(NavigationBarDefaults.windowInsets)
+                    .height(72.dp)
+                    .fillMaxWidth(),
         ) {
             items.forEachIndexed { index, item ->
                 if (index == centerIndex) {
-                    Spacer(Modifier.weight(1f))           // the hole under the circle
+                    Spacer(Modifier.weight(1f)) // the hole under the circle
                 } else {
                     NavigationBarItem(
                         selected = index == selectedIndex,
@@ -79,9 +80,10 @@ fun BottomAppBar(
                         interactionSource = remember { NoRippleInteractionSource() },
                         icon = {
                             Icon(
-                                painter = painterResource(
-                                    if (index == selectedIndex) item.iconSelected else item.icon
-                                ),
+                                painter =
+                                    painterResource(
+                                        if (index == selectedIndex) item.iconSelected else item.icon,
+                                    ),
                                 contentDescription = stringResource(item.title),
                             )
                         },
@@ -89,13 +91,18 @@ fun BottomAppBar(
                             Text(
                                 text = stringResource(item.title),
                                 style = MaterialTheme.typography.labelSmall,
-                                color = if (index == selectedIndex) MaterialTheme.colorScheme.primary
-                                else Color(0xFF434654),
+                                color =
+                                    if (index == selectedIndex) {
+                                        MaterialTheme.colorScheme.primary
+                                    } else {
+                                        Color(0xFF434654)
+                                    },
                             )
                         },
-                        colors = NavigationBarItemDefaults.colors(
-                            indicatorColor = MaterialTheme.colorScheme.secondaryContainer // the pill behind Home
-                        ),
+                        colors =
+                            NavigationBarItemDefaults.colors(
+                                indicatorColor = MaterialTheme.colorScheme.secondaryContainer, // the pill behind Home
+                            ),
                     )
                 }
             }
@@ -109,22 +116,23 @@ fun BottomAppBar(
             shape = CircleShape,
             color = MaterialTheme.colorScheme.primary,
             shadowElevation = centerShadow,
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .size(fabSize),
+            modifier =
+                Modifier
+                    .align(Alignment.TopCenter)
+                    .size(fabSize),
         ) {
             Box(contentAlignment = Alignment.Center) {
                 Image(
-                    painter = painterResource(
-                        if (isCenterSelected) center.iconSelected else center.icon
-                    ),
+                    painter =
+                        painterResource(
+                            if (isCenterSelected) center.iconSelected else center.icon,
+                        ),
                     contentDescription = stringResource(center.title),
                 )
             }
         }
     }
 }
-
 
 @Preview(
     name = "Bottom App Bar",
@@ -134,28 +142,30 @@ fun BottomAppBar(
 @Composable
 private fun BottomAppBarPreview() {
     ICompoundTheme {
-        val items = listOf(
-            BottomAppBarModel.Home(),
-            BottomAppBarModel.Services(),
-            BottomAppBarModel.Location(),   // center slot
-            BottomAppBarModel.Bills(),
-            BottomAppBarModel.Access(),
-        )
+        val items =
+            listOf(
+                BottomAppBarModel.Home(),
+                BottomAppBarModel.Services(),
+                BottomAppBarModel.Location(), // center slot
+                BottomAppBarModel.Bills(),
+                BottomAppBarModel.Access(),
+            )
 
         var selectedItem by remember {
             mutableStateOf<BottomAppBarModel>(BottomAppBarModel.Home())
         }
 
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 100.dp),
-            contentAlignment = Alignment.BottomCenter
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 100.dp),
+            contentAlignment = Alignment.BottomCenter,
         ) {
             BottomAppBar(
                 currentKey = selectedItem.navScreen,
                 items = items,
-                onItemSelected = { selectedItem = it }
+                onItemSelected = { selectedItem = it },
             )
         }
     }

@@ -1,0 +1,20 @@
+#pre-commit:
+#  parallel: false
+#  commands:
+#    spotless:
+#      run: ./gradlew spotlessCheck --console=plain
+#
+#pre-push:
+#  parallel: false
+#  commands:
+#    detekt:
+#      run: ./gradlew detekt --console=plain
+#
+#    architecture:
+#      run: ./gradlew :quality:konsist:test --console=plain
+#
+#    unit-tests:
+#      run: ./gradlew test --console=plain
+#
+#    android-lint:
+#      run: ./gradlew lint --console=plain

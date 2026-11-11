@@ -10,15 +10,21 @@ class TokenAuthenticator(
     private val refreshApi: AuthRefreshApi,
     private val sessionEvents: SessionEvents,
 ) : Authenticator {
-
-    override fun authenticate(route: Route?, response: Response): Request? {
+    override fun authenticate(
+        route: Route?,
+        response: Response,
+    ): Request? {
         // Requests that must never be retried with a refreshed token (login / refresh itself).
         if (response.request.header(NO_AUTH_HEADER) != null) return null
         // Give up after one retry to avoid infinite loops.
         if (response.responseCount() >= 2) return expire()
 
         synchronized(this) {
-            val sentToken = response.request.header("Authorization")?.removePrefix("Bearer ")?.trim()
+            val sentToken =
+                response.request
+                    .header("Authorization")
+                    ?.removePrefix("Bearer ")
+                    ?.trim()
             val currentToken = tokenStore.accessToken
 
             // Another request already refreshed the token while we were waiting for the lock.
@@ -27,9 +33,10 @@ class TokenAuthenticator(
             }
 
             val refreshToken = tokenStore.refreshToken ?: return expire()
-            val refreshed = runCatching {
-                refreshApi.refresh(RefreshRequest(refreshToken)).execute()
-            }.getOrNull()?.takeIf { it.isSuccessful }?.body() ?: return expire()
+            val refreshed =
+                runCatching {
+                    refreshApi.refresh(RefreshRequest(refreshToken)).execute()
+                }.getOrNull()?.takeIf { it.isSuccessful }?.body() ?: return expire()
 
             tokenStore.save(refreshed.accessToken, refreshed.refreshToken ?: refreshToken)
             return response.request.withToken(refreshed.accessToken)
@@ -42,15 +49,19 @@ class TokenAuthenticator(
         return null
     }
 
-    private fun Request.withToken(token: String) =
-        newBuilder().header("Authorization", "Bearer $token").build()
+    private fun Request.withToken(token: String) = newBuilder().header("Authorization", "Bearer $token").build()
 
     private fun Response.responseCount(): Int {
         var count = 0
         var r: Response? = this
-        while (r != null) { count++; r = r.priorResponse }
+        while (r != null) {
+            count++
+            r = r.priorResponse
+        }
         return count
     }
 
-    companion object { const val NO_AUTH_HEADER = "X-No-Auth" }
+    companion object {
+        const val NO_AUTH_HEADER = "X-No-Auth"
+    }
 }

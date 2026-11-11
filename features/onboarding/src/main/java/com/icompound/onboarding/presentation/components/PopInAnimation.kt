@@ -16,17 +16,19 @@ fun PopIn(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
-    val delay = 300 + index * 90        // after the title
+    val delay = 300 + index * 90 // after the title
     AnimatedVisibility(
         visible = visible,
         modifier = modifier,
-        enter = fadeIn(tween(400, delayMillis = delay)) +
+        enter =
+            fadeIn(tween(400, delayMillis = delay)) +
                 scaleIn(
                     initialScale = 0.9f,
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioMediumBouncy,
-                        stiffness = Spring.StiffnessLow,
-                    ),
+                    animationSpec =
+                        spring(
+                            dampingRatio = Spring.DampingRatioMediumBouncy,
+                            stiffness = Spring.StiffnessLow,
+                        ),
                 ),
     ) { content() }
 }

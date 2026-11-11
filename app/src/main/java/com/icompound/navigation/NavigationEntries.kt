@@ -3,11 +3,10 @@ package com.icompound.navigation
 import androidx.navigation3.runtime.EntryProviderScope
 import androidx.navigation3.runtime.NavKey
 import com.icompound.navigation.compose.LocalNavigator
-import com.icompound.navigation.route.LoginNavKey
 import com.icompound.navigation.route.OnBoardingNavKey
 import com.icompound.navigation.route.PhoneAuthNavKey
 import com.icompound.onboarding.presentation.OnBoardingScreen
-import com.icompound.phone_auth.presentation.PhoneAuthScreen
+import com.icompound.phoneauth.presentation.PhoneAuthScreen
 
 fun EntryProviderScope<NavKey>.appNavigationEntries() {
 //    entry<SplashNavKey> {

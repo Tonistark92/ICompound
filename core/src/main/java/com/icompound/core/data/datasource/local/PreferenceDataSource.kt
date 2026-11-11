@@ -13,11 +13,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class PreferenceDataSource(
-    private val dataStore: DataStore<Preferences>
+    private val dataStore: DataStore<Preferences>,
 ) : IPreferenceDataSource {
-
-    override suspend fun getValue(key: String, default: Any?): Flow<Any?> {
-        return dataStore.data.map {
+    override suspend fun getValue(
+        key: String,
+        default: Any?,
+    ): Flow<Any?> =
+        dataStore.data.map {
             when (default) {
                 is String -> {
                     it[stringPreferencesKey(key)] ?: default
@@ -43,12 +45,16 @@ class PreferenceDataSource(
                     it[longPreferencesKey(key)] ?: default
                 }
 
-                else -> default
+                else -> {
+                    default
+                }
             }
         }
-    }
 
-    override suspend fun setValue(key: String, value: Any?) {
+    override suspend fun setValue(
+        key: String,
+        value: Any?,
+    ) {
         dataStore.edit {
             when (value) {
                 is String -> {

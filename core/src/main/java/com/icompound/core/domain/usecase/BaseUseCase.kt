@@ -19,7 +19,7 @@ import org.koin.core.component.KoinComponent
 abstract class BaseUseCase<Domain, in Body>(
     private val errorHandler: ErrorHandler,
     private val dispatchers: DispatcherProvider,
-): KoinComponent {
+) : KoinComponent {
     protected fun requireBody(body: Body?): @UnsafeVariance Body =
         body ?: throw IllegalArgumentException("UseCase body is required and was null")
 
@@ -45,21 +45,22 @@ abstract class BaseUseCase<Domain, in Body>(
     operator fun invoke(
         body: Body? = null,
         multipleInvoke: Boolean = false,
-    ): Flow<Resource<Domain>> = channelFlow {
-        if (!multipleInvoke) send(Resource.loading())
-        runFlow(executeDS(body)) { send(it) }.collect {
-            send(Resource.success(it))
-            if (!multipleInvoke) send(Resource.loading(false))
+    ): Flow<Resource<Domain>> =
+        channelFlow {
+            if (!multipleInvoke) send(Resource.loading())
+            runFlow(executeDS(body)) { send(it) }.collect {
+                send(Resource.success(it))
+                if (!multipleInvoke) send(Resource.loading(false))
+            }
         }
-    }
 
     private fun <M> runFlow(
         requestExecution: Flow<M>,
         onResult: suspend (Resource<Domain>) -> Unit,
-    ): Flow<M> = requestExecution
-        .catch { e ->
-            onResult(Resource.failure(errorHandler.getError(e)))
-            onResult(Resource.loading(false))
-        }
-        .flowOn(dispatchers.io)
+    ): Flow<M> =
+        requestExecution
+            .catch { e ->
+                onResult(Resource.failure(errorHandler.getError(e)))
+                onResult(Resource.loading(false))
+            }.flowOn(dispatchers.io)
 }

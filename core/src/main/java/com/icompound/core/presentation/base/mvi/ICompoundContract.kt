@@ -1,6 +1,5 @@
 package com.icompound.core.presentation.base.mvi
 
-
 /**
  * Marker interface for user interactions or UI events
  */

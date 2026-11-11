@@ -27,7 +27,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.icompound.designsystem.ICompoundTheme
 
-
 @Composable
 fun AppTextField(
     value: String,
@@ -36,26 +35,30 @@ fun AppTextField(
     label: String? = null,
     placeholder: String? = null,
     error: String? = null,
-    leading: (@Composable () -> Unit)? = null,   // image, icon, flag + "+20", anything
+    leading: (@Composable () -> Unit)? = null, // image, icon, flag + "+20", anything
     trailing: (@Composable () -> Unit)? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Done,
     onImeAction: () -> Unit = {},
-    autoFocus: Boolean = false,                  // focus when the screen opens
-    focusRequester: FocusRequester? = null,      // focus from outside, on demand
+    autoFocus: Boolean = false, // focus when the screen opens
+    focusRequester: FocusRequester? = null, // focus from outside, on demand
 ) {
     val requester = focusRequester ?: remember { FocusRequester() }
 
     if (autoFocus) LaunchedEffect(Unit) { requester.requestFocus() }
 
     Column(modifier) {
-        label?.let { LabelText(it); Spacer(Modifier.height(6.dp)) }
+        label?.let {
+            LabelText(it)
+            Spacer(Modifier.height(6.dp))
+        }
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
-            modifier = Modifier
-                .fillMaxWidth()
-                .focusRequester(requester),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .focusRequester(requester),
             isError = error != null,
             placeholder = placeholder?.let { { SubBodyText(it) } },
             leadingIcon = leading,
@@ -65,22 +68,25 @@ fun AppTextField(
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
             keyboardActions = KeyboardActions(onAny = { onImeAction() }),
             shape = RoundedCornerShape(8.dp),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
-                errorBorderColor = MaterialTheme.colorScheme.error,
-                focusedContainerColor = MaterialTheme.colorScheme.surface,
-                unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-            )
+            colors =
+                OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.outlineVariant,
+                    errorBorderColor = MaterialTheme.colorScheme.error,
+                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                ),
         )
-        if (error != null) { Spacer(Modifier.height(4.dp)); ErrorText(error) }
+        if (error != null) {
+            Spacer(Modifier.height(4.dp))
+            ErrorText(error)
+        }
     }
 }
 
-
 @Preview(
     name = "App TextField",
-    showBackground = true
+    showBackground = true,
 )
 @Composable
 private fun AppTextFieldPreview() {
@@ -90,17 +96,18 @@ private fun AppTextFieldPreview() {
         }
 
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp),
-            verticalArrangement = Arrangement.spacedBy(20.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
             AppTextField(
                 value = phoneNumber,
                 onValueChange = { phoneNumber = it },
                 label = "Mobile Number",
                 placeholder = "Enter your mobile number",
-                keyboardType = KeyboardType.Phone
+                keyboardType = KeyboardType.Phone,
             )
 
             AppTextField(
@@ -109,14 +116,14 @@ private fun AppTextFieldPreview() {
                 label = "Mobile Number",
                 placeholder = "Enter your mobile number",
                 error = "Please enter a valid phone number.",
-                keyboardType = KeyboardType.Phone
+                keyboardType = KeyboardType.Phone,
             )
 
             AppTextField(
                 value = "",
                 onValueChange = {},
                 label = "Full Name",
-                placeholder = "Enter your full name"
+                placeholder = "Enter your full name",
             )
         }
     }

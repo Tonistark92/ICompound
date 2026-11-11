@@ -4,7 +4,6 @@ import com.icompound.core.data.model.dto.BaseDto
 import com.icompound.core.domain.model.BaseDomain
 
 abstract class Mapper<Dto, Domain, Entity> {
-
     /**
      * Mapping Dto to Domain
      *
@@ -19,8 +18,7 @@ abstract class Mapper<Dto, Domain, Entity> {
      * @param model is the domain class.
      * @return Dto class of the Domain Feature.
      */
-    open fun domainToDto(model: Domain): Dto =
-        throw NotImplementedError("override and implement this method")
+    open fun domainToDto(model: Domain): Dto = throw NotImplementedError("override and implement this method")
 
     /**
      * Mapping Dto list to Domain list
@@ -38,15 +36,13 @@ abstract class Mapper<Dto, Domain, Entity> {
      */
     fun domainToDto(list: List<Domain>?): List<Dto> = (list ?: emptyList()).map(::domainToDto)
 
-
     /**
      * Mapping Entity to Domain class.
      *
      * @param model is the entity class.
      * @return Domain class.
      */
-    open fun entityToDomain(model: Entity): Domain =
-        throw NotImplementedError("override and implement this method")
+    open fun entityToDomain(model: Entity): Domain = throw NotImplementedError("override and implement this method")
 
     /**
      * Mapping Domain to Entity class.
@@ -54,8 +50,7 @@ abstract class Mapper<Dto, Domain, Entity> {
      * @param model is the domain class.
      * @return Entity class.
      */
-    open fun domainToEntity(model: Domain): Entity =
-        throw NotImplementedError("override and implement this method")
+    open fun domainToEntity(model: Domain): Entity = throw NotImplementedError("override and implement this method")
 
     /**
      * Mapping Entity list to Domain list
@@ -79,8 +74,7 @@ abstract class Mapper<Dto, Domain, Entity> {
      * @param model is the entity class.
      * @return Dto class.
      */
-    open fun entityToDto(model: Entity): Dto =
-        throw NotImplementedError("override and implement this method")
+    open fun entityToDto(model: Entity): Dto = throw NotImplementedError("override and implement this method")
 
     /**
      * Mapping Dto to Entity class.
@@ -88,9 +82,7 @@ abstract class Mapper<Dto, Domain, Entity> {
      * @param model is the dto class.
      * @return Entity class of the Dto Feature.
      */
-    open fun dtoToEntity(model: Dto): Entity =
-        throw NotImplementedError("override and implement this method")
-
+    open fun dtoToEntity(model: Dto): Entity = throw NotImplementedError("override and implement this method")
 
     /**
      * Mapping Entity list to Dto list

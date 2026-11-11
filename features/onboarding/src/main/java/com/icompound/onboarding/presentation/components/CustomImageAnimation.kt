@@ -16,7 +16,6 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 
-
 @Composable
 fun KenBurnsImage(
     @DrawableRes res: Int,
@@ -24,18 +23,20 @@ fun KenBurnsImage(
 ) {
     val transition = rememberInfiniteTransition(label = "kenburns")
     val scale by transition.animateFloat(
-        initialValue = 1.12f,                 // never below 1.12, so there's always overflow
+        initialValue = 1.12f, // never below 1.12, so there's always overflow
         targetValue = 1.24f,
         animationSpec = infiniteRepeatable(tween(12_000, easing = LinearEasing), RepeatMode.Reverse),
         label = "scale",
     )
     val driftX by transition.animateFloat(
-        initialValue = -1f, targetValue = 1f,
+        initialValue = -1f,
+        targetValue = 1f,
         animationSpec = infiniteRepeatable(tween(14_000, easing = LinearEasing), RepeatMode.Reverse),
         label = "driftX",
     )
     val driftY by transition.animateFloat(
-        initialValue = -1f, targetValue = 1f,
+        initialValue = -1f,
+        targetValue = 1f,
         animationSpec = infiniteRepeatable(tween(17_000, easing = LinearEasing), RepeatMode.Reverse),
         label = "driftY",
     )
@@ -44,14 +45,15 @@ fun KenBurnsImage(
         painter = painterResource(res),
         contentDescription = null,
         contentScale = ContentScale.Crop,
-        modifier = modifier
-            .fillMaxSize()
-            .graphicsLayer {
-                scaleX = scale
-                scaleY = scale
-                // the most the scaled image can move before an edge shows
-                translationX = driftX * size.width * (scale - 1f) / 2f
-                translationY = driftY * size.height * (scale - 1f) / 2f
-            },
+        modifier =
+            modifier
+                .fillMaxSize()
+                .graphicsLayer {
+                    scaleX = scale
+                    scaleY = scale
+                    // the most the scaled image can move before an edge shows
+                    translationX = driftX * size.width * (scale - 1f) / 2f
+                    translationY = driftY * size.height * (scale - 1f) / 2f
+                },
     )
 }

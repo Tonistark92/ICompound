@@ -9,11 +9,10 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
-
 @Composable
 fun Reveal(
     visible: Boolean,
-    index: Int,   // 0, 1, 2... controls the delay
+    index: Int, // 0, 1, 2... controls the delay
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
@@ -21,11 +20,12 @@ fun Reveal(
     AnimatedVisibility(
         visible = visible,
         modifier = modifier,
-        enter = fadeIn(tween(600, delayMillis = delay)) +
+        enter =
+            fadeIn(tween(600, delayMillis = delay)) +
                 slideInVertically(
                     animationSpec = tween(600, delayMillis = delay, easing = FastOutSlowInEasing),
                     initialOffsetY = { 60 },
                 ),
-        exit = fadeOut(tween(150))
+        exit = fadeOut(tween(150)),
     ) { content() }
 }

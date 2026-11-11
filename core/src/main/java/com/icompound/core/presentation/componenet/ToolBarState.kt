@@ -1,7 +1,5 @@
 package com.icompound.core.presentation.componenet
 
-
-import androidx.compose.ui.graphics.Color
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -13,22 +11,23 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.icompound.core.R
 import com.icompound.designsystem.ICompoundTheme
 
-
 @Preview(showBackground = true)
 @Composable
 fun DefaultToolBarPreview() {
     ICompoundTheme {
         DefaultAppBar(
-            state = ToolBarState.AuthTitleWithBack(
-                title = "Title",
-                onBackButtonClicked = {}
-            )
+            state =
+                ToolBarState.AuthTitleWithBack(
+                    title = "Title",
+                    onBackButtonClicked = {},
+                ),
         )
     }
 }
@@ -37,7 +36,7 @@ fun DefaultToolBarPreview() {
 @Composable
 fun DefaultAppBar(
     state: ToolBarState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     if (state is ToolBarState.Hidden) return
 
@@ -62,7 +61,7 @@ fun DefaultAppBar(
                 IconAction(
                     resId = R.drawable.ic_left_arrow,
                     contentDescription = "Back",
-                    onClick = { state.onBackButtonClicked?.invoke() }
+                    onClick = { state.onBackButtonClicked?.invoke() },
                 )
             }
         },
@@ -81,44 +80,54 @@ fun DefaultAppBar(
                     state.actions.forEach { action -> action() }
                 }
 
-                else -> Unit
+                else -> {
+                    Unit
+                }
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = if (state is ToolBarState.AuthTitleWithBack)
-                MaterialTheme.colorScheme.background
-            else
-                MaterialTheme.colorScheme.surface,
-            scrolledContainerColor = Color.Unspecified,
-            navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
-            titleContentColor = MaterialTheme.colorScheme.onSurface,
-            actionIconContentColor = MaterialTheme.colorScheme.onSurface
-        )
+        colors =
+            TopAppBarDefaults.topAppBarColors(
+                containerColor =
+                    if (state is ToolBarState.AuthTitleWithBack) {
+                        MaterialTheme.colorScheme.background
+                    } else {
+                        MaterialTheme.colorScheme.surface
+                    },
+                scrolledContainerColor = Color.Unspecified,
+                navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+                titleContentColor = MaterialTheme.colorScheme.onSurface,
+                actionIconContentColor = MaterialTheme.colorScheme.onSurface,
+            ),
     )
-
 }
 
 @Composable
-private fun ToolBarState.resolvedTitle(): String {
-    return when (this) {
-        is ToolBarState.TitleWithBack ->
+private fun ToolBarState.resolvedTitle(): String =
+    when (this) {
+        is ToolBarState.TitleWithBack -> {
             title ?: titleResId?.let { stringResource(it) }.orEmpty()
+        }
 
-        is ToolBarState.TitleWithNotification ->
+        is ToolBarState.TitleWithNotification -> {
             title ?: titleResId?.let { stringResource(it) }.orEmpty()
+        }
 
-        is ToolBarState.AuthTitleWithBack ->
+        is ToolBarState.AuthTitleWithBack -> {
             title ?: titleResId?.let { stringResource(it) }.orEmpty()
+        }
 
-        is ToolBarState.Title ->
+        is ToolBarState.Title -> {
             title ?: titleResId?.let { stringResource(it) }.orEmpty()
+        }
 
-        else -> title.orEmpty()
+        else -> {
+            title.orEmpty()
+        }
     }
-}
 
 private val ToolBarState.hasBackButton: Boolean
-    get() = this is ToolBarState.TitleWithBack ||
+    get() =
+        this is ToolBarState.TitleWithBack ||
             this is ToolBarState.TitleWithNotification ||
             this is ToolBarState.AuthTitleWithBack ||
             this is ToolBarState.TitleWithBackAndActions
@@ -134,7 +143,7 @@ private fun IconAction(
         Icon(
             painter = painterResource(id = resId),
             tint = null,
-            contentDescription = contentDescription
+            contentDescription = contentDescription,
         )
     }
 }
@@ -153,19 +162,18 @@ sealed class ToolBarState(
 ) : ToolbarCommonState {
     override val onBackButtonClicked: (() -> Unit)? = _onBackButtonClicked
 
-    fun updateBackButtonClicked(newOnBackButtonClicked: () -> Unit): ToolBarState {
-        return when (this) {
+    fun updateBackButtonClicked(newOnBackButtonClicked: () -> Unit): ToolBarState =
+        when (this) {
             is TitleWithBack -> copy(onBackButtonClicked = newOnBackButtonClicked)
             is AuthTitleWithBack -> copy(onBackButtonClicked = newOnBackButtonClicked)
             is TitleWithBackAndActions -> copy(onBackButtonClicked = newOnBackButtonClicked)
             else -> this // Hidden state doesn't need back button updates
         }
-    }
 
     data object Hidden : ToolBarState()
 
     data class Title(
-        @field:StringRes val titleResId: Int? = null
+        @field:StringRes val titleResId: Int? = null,
     ) : ToolBarState()
 
     data class TitleWithBack(
