@@ -1,8 +1,20 @@
+# Local git hooks (https://lefthook.dev). Install once per clone:  lefthook install
+# Hooks are a fast safety net. CI is the source of truth.
+#min_version: 1.6.0
+#
 #pre-commit:
 #  parallel: false
 #  commands:
 #    spotless:
 #      run: ./gradlew spotlessCheck --console=plain
+#      # Prefer auto-fixing instead of failing? Use:
+#      #   run: ./gradlew spotlessApply --console=plain
+#      #   stage_fixed: true
+#
+#commit-msg:
+#  commands:
+#    conventional-commit:
+#      run: scripts/check-commit-msg.sh {1}      # {1} = path of the commit message file
 #
 #pre-push:
 #  parallel: false
@@ -14,7 +26,8 @@
 #      run: ./gradlew :quality:konsist:test --console=plain
 #
 #    unit-tests:
-#      run: ./gradlew test --console=plain
+#      # Konsist already ran in the previous step; `test` would run it again in a separate Gradle call.
+#      run: ./gradlew test -x :quality:konsist:test --console=plain
 #
 #    android-lint:
 #      run: ./gradlew lint --console=plain

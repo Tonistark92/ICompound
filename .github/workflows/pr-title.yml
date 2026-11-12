@@ -1,0 +1,25 @@
+name: PR title
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+permissions:
+  contents: read
+
+jobs:
+  conventional-title:
+    name: PR title follows the commit standard
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Check PR title
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}   # passed through env, never interpolated into the script
+        run: |
+          pattern='^(feat|fix|refactor|perf|test|docs|style|build|ci|chore|revert)(\([a-z0-9_./-]+\))?!?: .{1,72}$'
+          if [[ ! "$PR_TITLE" =~ $pattern ]] || [[ "$PR_TITLE" == *. ]]; then
+            echo "::error::PR title must look like: feat(phone_auth): add manager contact use case"
+            echo "See docs/contributing.md#4-commit-standard"
+            exit 1
+          fi
