@@ -98,3 +98,9 @@ Commit standard: Conventional Commits (`feat(phone_auth): add GetManagerContactU
 ## Changing a base class
 
 Base classes in `core` affect every feature. Change them only in a dedicated PR that also updates `docs/core-components.md`, the Konsist rules that mention them, and any affected tests.
+
+---
+
+## License
+
+Copyright © 2026 Kaitech. All rights reserved. This is proprietary software; see [LICENSE](LICENSE). Unauthorized use, copying or distribution is prohibited.
