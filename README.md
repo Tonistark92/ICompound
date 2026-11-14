@@ -91,7 +91,7 @@ Full walkthrough with code: [docs/adding-a-feature.md](docs/adding-a-feature.md)
 
 ## Workflow in one picture
 
-![From commit to release: local hooks, pull request checks, merge, tag and release](docs/images/dev-workflow.png)
+![From commit to release: local hooks, pull request checks, merge, tag and release](docs/images/dev-workflow.svg)
 
 Commit standard: Conventional Commits (`feat(phone_auth): add GetManagerContactUC`). Hooks: Spotless on commit, Detekt + Konsist + unit tests + lint on push (`lefthook.yml`). CI repeats them and adds instrumented tests. Details: [contributing.md](docs/contributing.md), [ci-cd.md](docs/ci-cd.md).
 
