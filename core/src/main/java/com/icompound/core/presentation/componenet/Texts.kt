@@ -23,7 +23,7 @@ fun TitleText(
     text,
     modifier,
     color = MaterialTheme.colorScheme.onBackground,
-    style = MaterialTheme.typography.titleSmall,
+    style = MaterialTheme.typography.titleLarge,
     textAlign = textAlign,
 )
 

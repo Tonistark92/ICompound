@@ -12,6 +12,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -60,11 +61,11 @@ fun AppTextField(
                     .fillMaxWidth()
                     .focusRequester(requester),
             isError = error != null,
-            placeholder = placeholder?.let { { SubBodyText(it) } },
+            placeholder = { Text(placeholder!!, style = MaterialTheme.typography.bodyMedium) },
             leadingIcon = leading,
             trailingIcon = trailing,
             singleLine = true,
-            textStyle = MaterialTheme.typography.bodyMedium,
+            textStyle = MaterialTheme.typography.bodyLarge,
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType, imeAction = imeAction),
             keyboardActions = KeyboardActions(onAny = { onImeAction() }),
             shape = RoundedCornerShape(8.dp),

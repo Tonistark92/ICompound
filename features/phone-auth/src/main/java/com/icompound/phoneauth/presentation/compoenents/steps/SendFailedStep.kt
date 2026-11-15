@@ -4,24 +4,28 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.WarningAmber
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_NO
+import androidx.compose.ui.tooling.preview.AndroidUiModes.UI_MODE_NIGHT_YES
+import androidx.compose.ui.tooling.preview.Preview
 import com.icompound.core.presentation.componenet.PrimaryButton
 import com.icompound.core.presentation.componenet.SecondaryButton
 import com.icompound.core.presentation.utils.StatusBanner
 import com.icompound.core.presentation.utils.StatusType
+import com.icompound.designsystem.ICompoundTheme
 import com.icompound.phoneauth.R
 import com.icompound.phoneauth.presentation.state.ManagerContactState
 import com.icompound.phoneauth.presentation.state.PhoneAuthAction
 
 @Composable
 fun SendFailedStep(
-    manager: ManagerContactState,
     onAction: (PhoneAuthAction) -> Unit,
 ) = StatusStep(
     type = StatusType.Warning,
-    icon = Icons.Outlined.WarningAmber,
-    title = stringResource(R.string.phone_verification_failed),
+    icon = painterResource(R.drawable.ic_wifi),
+    title = stringResource(R.string.sms_sending_failed),
     body = stringResource(R.string.sms_sending_failed_description),
     details = {
         StatusBanner(
@@ -46,5 +50,18 @@ fun SendFailedStep(
             text = stringResource(R.string.contact_support),
             onClick = { onAction(PhoneAuthAction.ContactSupportClicked) },
         )
-    }, // swap for SecondaryButton "Contact Support" if different
+    },
 )
+
+
+
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_NO)
+@Composable
+private fun SendFailedStepPreview(modifier: Modifier = Modifier) {
+    ICompoundTheme {
+
+    SendFailedStep{
+
+    }
+    }
+}

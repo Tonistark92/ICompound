@@ -1,16 +1,20 @@
 package com.icompound.phoneauth.presentation.compoenents.steps
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.VerifiedUser
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,6 +23,7 @@ import com.icompound.core.presentation.componenet.AppTextField
 import com.icompound.core.presentation.componenet.PrimaryButton
 import com.icompound.core.presentation.componenet.SubBodyText
 import com.icompound.core.presentation.componenet.TitleText
+import com.icompound.designsystem.ICompoundExtendedColors
 import com.icompound.designsystem.ICompoundTheme
 import com.icompound.phoneauth.R
 import com.icompound.phoneauth.domain.model.AuthStep
@@ -54,29 +59,23 @@ fun PhoneStep(
             keyboardType = KeyboardType.Phone,
             autoFocus = true,
             error = step.error,
-            leading = { /* flag + "+20" */ },
+            leading = {
+                Surface(
+                    modifier = Modifier.size(25.dp),
+                    shadowElevation = 50.dp
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.img_eg),
+                        contentDescription = "",
+                        modifier = Modifier.padding(1.dp)
+                    )
+                }
+            },
         )
     }
 }
 
-val previewUnits =
-    listOf(
-        ResidentUnit(
-            id = "unit-1",
-            title = "Villa 14",
-            subtitle = "Palm Hills Compound",
-        ),
-        ResidentUnit(
-            id = "unit-2",
-            title = "Apartment 302",
-            subtitle = "Building B",
-        ),
-        ResidentUnit(
-            id = "unit-3",
-            title = "Villa 21",
-            subtitle = "Garden District",
-        ),
-    )
+
 
 @Preview(showBackground = true, name = "Phone - Empty")
 @Composable
@@ -97,7 +96,7 @@ private fun PhoneStepErrorPreview() {
             step =
                 AuthStep.Phone(
                     number = "01012345678",
-                    error = "Please enter a valid phone number",
+                    error = stringResource(R.string.invalid_phone_number),
                 ),
             onAction = {},
         )

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Switch
 import androidx.compose.runtime.Composable
@@ -21,7 +22,6 @@ import com.icompound.phoneauth.R
 import com.icompound.phoneauth.domain.model.AuthStep
 import com.icompound.phoneauth.domain.model.Details
 import com.icompound.phoneauth.presentation.AuthStepLayout
-import com.icompound.phoneauth.presentation.DetailRow
 import com.icompound.phoneauth.presentation.compoenents.SoftCard
 import com.icompound.phoneauth.presentation.state.PhoneAuthAction
 
@@ -67,6 +67,18 @@ fun ReviewStep(
         }
     }
 }
+
+@Composable
+fun DetailRow(
+    label: String,
+    value: String,
+) {
+    Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+        SubBodyText(label)
+        BodyText(value)
+    }
+}
+
 
 @Preview(showBackground = true, name = "Review Details")
 @Composable

@@ -28,6 +28,7 @@ android {
 dependencies {
     implementation(project(":designsystem"))
     implementation(project(":core"))
+    implementation(libs.androidx.animation)
     lintChecks(project(":quality:lint-rules"))
 
     // AndroidX

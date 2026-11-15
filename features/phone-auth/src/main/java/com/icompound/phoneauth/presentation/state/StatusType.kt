@@ -24,6 +24,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.icompound.designsystem.ICompoundTheme
 import com.icompound.phoneauth.R
+import com.icompound.phoneauth.domain.model.AuthStep
+import com.icompound.phoneauth.presentation.compoenents.StepProgress
 
 enum class StatusType { Error, Warning, Success, Info }
 
@@ -73,7 +75,23 @@ fun StatusType.colors(): StatusColors {
         }
     }
 }
+const val TOTAL_STEPS = 4
 
+fun AuthStep.progress(): StepProgress? = when (this) {
+    is AuthStep.Phone,
+    AuthStep.CheckingNumber -> StepProgress(1, TOTAL_STEPS)
+
+    is AuthStep.SendingCode,
+    is AuthStep.Otp -> StepProgress(2, TOTAL_STEPS)
+
+    is AuthStep.PickUnit -> StepProgress(3, TOTAL_STEPS)
+    is AuthStep.Review -> StepProgress(4, TOTAL_STEPS)
+
+    // dead-end / error screens: no bar
+    is AuthStep.NumberRejected,
+    is AuthStep.SendFailed,
+    AuthStep.Locked -> null
+}
 @Composable
 fun StatusType.defaultIcon(): Painter =
     when (this) {

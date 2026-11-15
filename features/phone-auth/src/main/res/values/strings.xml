@@ -7,7 +7,7 @@
     <string name="mobile_number">Mobile Number</string>
     <string name="unit_privacy_notice">Your unit details stay hidden until you verify the code.</string>
     <string name="send_code">Send Code</string>
-    <string name="invalid_phone_number">That number doesn’t look right.</string>
+    <string name="invalid_phone_number">That number doesn’t look right.\n Enter 9 digits starting with 1, for example 1XXX XX</string>
     <string name="phone_number_format_hint">Enter 9 digits starting with 1, for example 1XXX XX</string>
     <string name="checking_phone_number">Checking Your Number...</string>
     <string name="unit_privacy_multiline">Nothing about your unit\nis shown until you verify the code.</string>

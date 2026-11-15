@@ -18,8 +18,8 @@ import com.icompound.phoneauth.domain.model.AuthStep
 import com.icompound.phoneauth.domain.model.OtpStatus
 import com.icompound.phoneauth.domain.model.toUi
 import com.icompound.phoneauth.presentation.AuthStepLayout
-import com.icompound.phoneauth.presentation.ResendCard
 import com.icompound.phoneauth.presentation.compoenents.OtpField
+import com.icompound.phoneauth.presentation.compoenents.ResendCard
 import com.icompound.phoneauth.presentation.state.PhoneAuthAction
 
 @Composable

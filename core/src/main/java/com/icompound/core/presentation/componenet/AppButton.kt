@@ -57,7 +57,7 @@ fun AppButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    containerColor: Color = MaterialTheme.colorScheme.primary,
+    containerColor: Color = ICompoundTheme.colorScheme.primary,
     contentColor: Color = contentColorForContainer(containerColor), // override only if needed
     borderColor: Color? = null,
     leadingIcon: (@Composable () -> Unit)? = null,

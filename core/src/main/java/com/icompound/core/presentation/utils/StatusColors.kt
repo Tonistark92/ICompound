@@ -35,11 +35,11 @@ data class StatusColors(
 fun StatusType.colors() =
     when (this) {
         StatusType.Error -> {
-            StatusColors(ColorLightTokens.ErrorContainer, ColorLightTokens.Error.copy(alpha = .4f), ColorLightTokens.Error)
+            StatusColors(ColorLightTokens.ErrorContainer.copy(alpha = .5f), ColorLightTokens.Error.copy(alpha = .6f), ColorLightTokens.Error)
         }
 
         StatusType.Warning -> {
-            StatusColors(ColorLightTokens.Warning.copy(alpha = .15f), ColorLightTokens.Warning, ColorLightTokens.OrangeDark)
+            StatusColors(ColorLightTokens.Warning.copy(alpha = .15f), ColorLightTokens.Warning, ColorLightTokens.Orange.copy(alpha = 1.2f))
         }
 
         StatusType.Success -> {

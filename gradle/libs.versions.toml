@@ -1,6 +1,6 @@
 [versions]
 # Android & Kotlin
-agp = "9.4.1"
+agp = "9.5.1"
 kotlin = "2.4.21"
 ksp = "2.3.6"
 
@@ -92,6 +92,7 @@ uiToolingPreview = "1.12.1"
 uiTooling = "1.12.1"
 remoteCreationCompose = "1.0.0-alpha22"
 lint = "1.0.4"
+animation = "1.12.1"
 
 
 [libraries]
@@ -275,6 +276,7 @@ androidx-compose-remote-creation-compose = { group = "androidx.compose.remote", 
 konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
 lint = { group = "com.android.security.lint", name = "lint", version.ref = "lint" }
 detekt-compose-rules = { module = "io.nlopez.compose.rules:detekt", version.ref = "composeRules" }
+androidx-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "animation" }
 
 [plugins]
 
