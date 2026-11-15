@@ -62,20 +62,18 @@ fun PhoneStep(
             leading = {
                 Surface(
                     modifier = Modifier.size(25.dp),
-                    shadowElevation = 50.dp
+                    shadowElevation = 50.dp,
                 ) {
                     Image(
                         painter = painterResource(R.drawable.img_eg),
                         contentDescription = "",
-                        modifier = Modifier.padding(1.dp)
+                        modifier = Modifier.padding(1.dp),
                     )
                 }
             },
         )
     }
 }
-
-
 
 @Preview(showBackground = true, name = "Phone - Empty")
 @Composable

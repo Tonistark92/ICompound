@@ -101,13 +101,11 @@ fun UnitOptionCard(
                     width = if (selected) 2.dp else 1.dp,
                     color = border,
                     shape = shape,
-                )
-                .selectable(
+                ).selectable(
                     selected = selected,
                     role = Role.RadioButton,
                     onClick = onClick,
-                )
-                .padding(16.dp),
+                ).padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
     ) {

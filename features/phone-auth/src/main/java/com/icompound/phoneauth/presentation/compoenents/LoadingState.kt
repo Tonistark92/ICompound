@@ -17,7 +17,6 @@ import com.icompound.core.presentation.componenet.SubBodyText
 import com.icompound.core.presentation.componenet.TitleText
 import com.icompound.designsystem.ColorLightTokens
 
-
 @Composable
 fun LoadingState(
     title: String,
@@ -40,4 +39,3 @@ fun LoadingState(
         subtitle?.let { SubBodyText(it, textAlign = TextAlign.Center) }
     }
 }
-

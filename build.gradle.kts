@@ -57,14 +57,16 @@ subprojects {
     extensions.configure<SpotlessExtension> {
         kotlin {
             target("src/**/*.kt")
-            targetExclude("**/build/**", "**/generated/**")
-            ktlint(rootProject.libs.versions.ktlint.get()) // style comes from .editorconfig
+            targetExclude(
+                "**/build/**",
+                "**/generated/**",
+            )
+            ktlint(rootProject.libs.versions.ktlint.get())
         }
+
         kotlinGradle {
             target("*.gradle.kts")
             ktlint(rootProject.libs.versions.ktlint.get())
         }
-        // Optional while adopting: only check files changed compared to main
-        // ratchetFrom("origin/main")
     }
 }

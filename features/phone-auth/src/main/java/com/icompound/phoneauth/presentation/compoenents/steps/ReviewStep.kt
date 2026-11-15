@@ -79,7 +79,6 @@ fun DetailRow(
     }
 }
 
-
 @Preview(showBackground = true, name = "Review Details")
 @Composable
 private fun ReviewStepPreview() {

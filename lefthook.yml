@@ -2,7 +2,7 @@ pre-commit:
   parallel: false
   commands:
     spotless:
-      run: ./gradlew spotlessCheck --console=plain
+      run: ./gradlew spotlessApply spotlessCheck --console=plain
 
 pre-push:
   parallel: false

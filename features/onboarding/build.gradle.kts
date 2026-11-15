@@ -25,7 +25,6 @@ android {
         compose = true
     }
 }
-
 dependencies {
 
     implementation(project(":designsystem"))

@@ -29,7 +29,6 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun LockedStep(
-
     lockSeconds: Int = 15 * 60, // later: pass this from the state / backend
     onAction: (PhoneAuthAction) -> Unit,
 ) = StatusStep(
@@ -74,9 +73,7 @@ private fun rememberCountdown(totalSeconds: Int): Int {
 @Composable
 private fun LockedStepPreview(modifier: Modifier = Modifier) {
     ICompoundTheme {
-        LockedStep() {
-
+        LockedStep {
         }
     }
-
 }

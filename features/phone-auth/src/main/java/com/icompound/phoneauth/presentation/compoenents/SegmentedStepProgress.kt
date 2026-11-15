@@ -25,7 +25,10 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-data class StepProgress(val current: Int, val total: Int)
+data class StepProgress(
+    val current: Int,
+    val total: Int,
+)
 
 @Composable
 fun SegmentedStepProgress(
@@ -37,9 +40,10 @@ fun SegmentedStepProgress(
     gap: Dp = 6.dp,
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .semantics { contentDescription = "Step ${progress.current} of ${progress.total}" },
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .semantics { contentDescription = "Step ${progress.current} of ${progress.total}" },
         horizontalArrangement = Arrangement.spacedBy(gap),
     ) {
         repeat(progress.total) { index ->

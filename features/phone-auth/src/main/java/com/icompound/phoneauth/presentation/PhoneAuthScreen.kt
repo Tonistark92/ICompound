@@ -94,7 +94,6 @@ fun PhoneAuthScreen(
     var lastProgress by remember { mutableStateOf(StepProgress(1, TOTAL_STEPS)) }
     if (progress != null) lastProgress = progress
 
-
     LaunchedEffect(Unit) {
         viewModel.event.collect {
             when (it) {
@@ -108,9 +107,11 @@ fun PhoneAuthScreen(
         onAction(PhoneAuthAction.BackClicked)
     }
 
-    Column(modifier
-        .fillMaxSize()
-        .background(color = ICompoundTheme.colorScheme.background)) {
+    Column(
+        modifier
+            .fillMaxSize()
+            .background(color = ICompoundTheme.colorScheme.background),
+    ) {
         AnimatedVisibility(
             visible = progress != null,
             enter = fadeIn(tween(300)) + expandVertically(tween(300)),
@@ -118,9 +119,10 @@ fun PhoneAuthScreen(
         ) {
             SegmentedStepProgress(
                 progress = lastProgress,
-                modifier = Modifier
-                    .padding(horizontal = 20.dp)
-                    .padding(top = 16.dp),
+                modifier =
+                    Modifier
+                        .padding(horizontal = 20.dp)
+                        .padding(top = 16.dp),
             )
         }
         AnimatedContent(
@@ -174,7 +176,6 @@ fun PhoneAuthScreen(
                 }
             }
         }
-
     }
 }
 
@@ -201,7 +202,3 @@ fun AuthStepLayout(
         Column(verticalArrangement = Arrangement.spacedBy(10.dp), content = bottom)
     }
 }
-
-
-
-

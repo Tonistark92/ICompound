@@ -23,7 +23,6 @@ import com.icompound.core.presentation.componenet.SubBodyText
 import com.icompound.designsystem.ColorLightTokens
 import com.icompound.phoneauth.R
 
-
 @Composable
 fun ResendCard(
     secondsLeft: Int,

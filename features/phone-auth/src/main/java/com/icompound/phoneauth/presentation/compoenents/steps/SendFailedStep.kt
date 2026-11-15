@@ -20,48 +20,43 @@ import com.icompound.phoneauth.presentation.state.ManagerContactState
 import com.icompound.phoneauth.presentation.state.PhoneAuthAction
 
 @Composable
-fun SendFailedStep(
-    onAction: (PhoneAuthAction) -> Unit,
-) = StatusStep(
-    type = StatusType.Warning,
-    icon = painterResource(R.drawable.ic_wifi),
-    title = stringResource(R.string.sms_sending_failed),
-    body = stringResource(R.string.sms_sending_failed_description),
-    details = {
-        StatusBanner(
-            stringResource(R.string.sms_retry_hint),
-            StatusType.Warning,
-        )
-    },
-    primary = {
-        PrimaryButton(
-            stringResource(R.string.try_again),
-            { onAction(PhoneAuthAction.RetrySend) },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(R.drawable.ic_retry_white),
-                    contentDescription = null,
-                )
-            },
-        )
-    },
-    secondary = {
-        SecondaryButton(
-            text = stringResource(R.string.contact_support),
-            onClick = { onAction(PhoneAuthAction.ContactSupportClicked) },
-        )
-    },
-)
-
-
+fun SendFailedStep(onAction: (PhoneAuthAction) -> Unit) =
+    StatusStep(
+        type = StatusType.Warning,
+        icon = painterResource(R.drawable.ic_wifi),
+        title = stringResource(R.string.sms_sending_failed),
+        body = stringResource(R.string.sms_sending_failed_description),
+        details = {
+            StatusBanner(
+                stringResource(R.string.sms_retry_hint),
+                StatusType.Warning,
+            )
+        },
+        primary = {
+            PrimaryButton(
+                stringResource(R.string.try_again),
+                { onAction(PhoneAuthAction.RetrySend) },
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_retry_white),
+                        contentDescription = null,
+                    )
+                },
+            )
+        },
+        secondary = {
+            SecondaryButton(
+                text = stringResource(R.string.contact_support),
+                onClick = { onAction(PhoneAuthAction.ContactSupportClicked) },
+            )
+        },
+    )
 
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_NO)
 @Composable
 private fun SendFailedStepPreview(modifier: Modifier = Modifier) {
     ICompoundTheme {
-
-    SendFailedStep{
-
-    }
+        SendFailedStep {
+        }
     }
 }

@@ -28,39 +28,38 @@ import com.icompound.phoneauth.presentation.state.ManagerContactState
 import com.icompound.phoneauth.presentation.state.PhoneAuthAction
 
 @Composable
-fun NumberRejectedStep(
-    onAction: (PhoneAuthAction) -> Unit,
-) = StatusStep(
-    type = StatusType.Error,
-    icon = painterResource(R.drawable.ic_apartment_blue),
-    title = stringResource(R.string.phone_verification_failed),
-    body = stringResource(R.string.phone_verification_failed_description),
-    details = {
-        SoftCard {
-            LabelText(stringResource(R.string.what_can_you_do))
-            NumberedStep(1, stringResource(R.string.register_phone_with_management))
-            NumberedStep(2, stringResource(R.string.retry_registered_phone))
-        }
-    },
-    primary = {
-        PrimaryButton(
-            stringResource(R.string.contact_compound_management),
-            { onAction(PhoneAuthAction.ContactManagerClicked) },
-        )
-    },
-    secondary = {
-        SecondaryButton(
-            stringResource(R.string.try_different_number),
-            { onAction(PhoneAuthAction.TryDifferentNumber) },
-        )
-    },
-)
+fun NumberRejectedStep(onAction: (PhoneAuthAction) -> Unit) =
+    StatusStep(
+        type = StatusType.Error,
+        icon = painterResource(R.drawable.ic_apartment_blue),
+        title = stringResource(R.string.phone_verification_failed),
+        body = stringResource(R.string.phone_verification_failed_description),
+        details = {
+            SoftCard {
+                LabelText(stringResource(R.string.what_can_you_do))
+                NumberedStep(1, stringResource(R.string.register_phone_with_management))
+                NumberedStep(2, stringResource(R.string.retry_registered_phone))
+            }
+        },
+        primary = {
+            PrimaryButton(
+                stringResource(R.string.contact_compound_management),
+                { onAction(PhoneAuthAction.ContactManagerClicked) },
+            )
+        },
+        secondary = {
+            SecondaryButton(
+                stringResource(R.string.try_different_number),
+                { onAction(PhoneAuthAction.TryDifferentNumber) },
+            )
+        },
+    )
+
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 private fun NumberRejectedStepPreview(modifier: Modifier = Modifier) {
     ICompoundTheme {
-        NumberRejectedStep{
-
+        NumberRejectedStep {
         }
     }
 }
