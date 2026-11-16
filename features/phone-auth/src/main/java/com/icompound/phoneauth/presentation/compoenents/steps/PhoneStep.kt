@@ -57,6 +57,7 @@ fun PhoneStep(
             label = stringResource(R.string.mobile_number),
             placeholder = "1xxx xxx xxx",
             keyboardType = KeyboardType.Phone,
+            onImeAction ={ onAction(PhoneAuthAction.SendCodeClicked)},
             autoFocus = true,
             error = step.error,
             leading = {
